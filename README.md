@@ -37,18 +37,18 @@ This is an application I created in 2013 for [Extra Life](http://extra-life.org)
 
 ### Screenshots
 
-![](https://github.com/breadweb/extralifehelper/blob/master/images/helper1.jpg)
-Counts down the days.
-![](https://github.com/breadweb/extralifehelper/blob/master/images/helper2.jpg)
-Counts down the hours.
-![](https://github.com/breadweb/extralifehelper/blob/master/images/helper3.jpg)
-Counts the hours you have played.
-![](https://github.com/breadweb/extralifehelper/blob/master/images/helper4.jpg)
-Shows new donations as they come in.
-![](https://github.com/breadweb/extralifehelper/blob/master/images/helper5.jpg)
-Occasionally shows the Extra Life logo.
-![](https://github.com/breadweb/extralifehelper/blob/master/images/helper6.jpg)
-Occasionally shows the CMNH logo.
+![](https://github.com/breadweb/extralifehelper/blob/master/images/helper1.jpg)  
+Counts down the days.  
+![](https://github.com/breadweb/extralifehelper/blob/master/images/helper2.jpg)  
+Counts down the hours.  
+![](https://github.com/breadweb/extralifehelper/blob/master/images/helper3.jpg)  
+Counts the hours you have played.  
+![](https://github.com/breadweb/extralifehelper/blob/master/images/helper4.jpg)  
+Shows new donations as they come in.  
+![](https://github.com/breadweb/extralifehelper/blob/master/images/helper5.jpg)  
+Occasionally shows the Extra Life logo.  
+![](https://github.com/breadweb/extralifehelper/blob/master/images/helper6.jpg)  
+Occasionally shows the CMNH logo.  
 
 
 ### XSplit Instructions
@@ -63,8 +63,10 @@ Instructions:
 1. Personalize the Helper using the instructions below.
 1. Open up XSplit.
 1. Select a scene.
-1. In the scene sources section, click "Add" and then click "Webpage..." ![](https://github.com/breadweb/extralifehelper/blob/master/images/xsplit1.jpg)
-1. Click the "Browse" button and select **ExtraLifeHelper.html** from the location you extracted the files. ![](https://github.com/breadweb/extralifehelper/blob/master/images/xsplit2.jpg)
+1. In the scene sources section, click "Add" and then click "Webpage..."  
+![](https://github.com/breadweb/extralifehelper/blob/master/images/xsplit1.jpg)  
+1. Click the "Browse" button and select **ExtraLifeHelper.html** from the location you extracted the files.  
+![](https://github.com/breadweb/extralifehelper/blob/master/images/xsplit2.jpg)  
 
 
 ### OBS Studio Instructions
@@ -80,10 +82,13 @@ Instructions:
 1. Personalize the Helper using the instructions below.
 1. Open up OBS Studio.
 1. Select a scene in the "Scenes" section.
-1. Right-click in the "Sources" section, select "Add" and then select "BrowserSource". ![](https://github.com/breadweb/extralifehelper/blob/master/images/obs1.jpg)
-1. Select "Create New", type in a name such as "Helper" and click OK. ![](https://github.com/breadweb/extralifehelper/blob/master/images/obs2.jpg)
-1. In the Properties screen, check the box that says "Local file", click the "Browse" button and select **ExtraLifeHelper.html** from the files you extracted. ![](https://github.com/breadweb/extralifehelper/blob/master/images/obs3.jpg)
-1. Set the Width and Height to whatever is specified in the HTML file. Delete everything in the CSS field. Click OK. ![](https://github.com/breadweb/extralifehelper/blob/master/images/obs4.jpg)
+1. Right-click in the "Sources" section, select "Add" and then select "BrowserSource".   ![](https://github.com/breadweb/extralifehelper/blob/master/images/obs1.jpg)  
+1. Select "Create New", type in a name such as "Helper" and click OK.  
+![](https://github.com/breadweb/extralifehelper/blob/master/images/obs2.jpg)  
+1. In the Properties screen, check the box that says "Local file", click the "Browse" button and select **ExtraLifeHelper.html** from the files you extracted.  
+![](https://github.com/breadweb/extralifehelper/blob/master/images/obs3.jpg)  
+1. Set the Width and Height to whatever is specified in the HTML file. Delete everything in the CSS field. Click OK. 
+![](https://github.com/breadweb/extralifehelper/blob/master/images/obs4.jpg)
 
 
 ### Personalizing the Helper
@@ -118,8 +123,8 @@ For OBS Studio, avoid resizing the Helper by dragging it. Open the properties an
 
 There are a few more options for customizing the Helper to suit your streaming setup.
 
-* **Color Themes**: There are four color themes available that respect the Extra Life brand guidelines.
-![](https://github.com/breadweb/extralifehelper/blob/master/images/themes.jpg)
+* **Color Themes**: There are four color themes available that respect the Extra Life brand guidelines.  
+![](https://github.com/breadweb/extralifehelper/blob/master/images/themes.jpg)  
 The values that can be set are "blue1", "blue2", "white1", and "gray1".
 * **Borders**: By default, there is a border with rounded corners. You can change it to have square corners or remove it completely. The values are "rounded", "square", or "none".
 * **Sounds**:
@@ -179,6 +184,6 @@ I'd also love to see the Helper being used on your stream. Let me know your broa
 
 Adam "Bread" Slesinger
 
-Twitch: [http://www.twitch.tv/bread_man](http://www.twitch.tv/bread_man)
-Extra Life: [https://extra-life.org/participant/bread](https://extra-life.org/participant/bread)
-Steam: [https://steamcommunity.com/id/breadweb](https://steamcommunity.com/id/breadweb)
+* Twitch: [http://www.twitch.tv/bread_man](http://www.twitch.tv/bread_man)
+* Extra Life: [https://extra-life.org/participant/bread](https://extra-life.org/participant/bread)
+* Steam: [https://steamcommunity.com/id/breadweb](https://steamcommunity.com/id/breadweb)
