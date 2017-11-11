@@ -108,7 +108,31 @@ If you want to use the Helper in team mode, get your team ID. It can be found in
 
 Open the **ExtraLifeHelper.html** file using a text editor such as Notepad and enter in your participant ID, start date, start time, etc.
 
-![](https://github.com/breadweb/extralifehelper/blob/master/images/config-obs.jpg)
+```
+// Extra Life Helper
+// ============================================================================================
+// For use details and use instructions, visit https://github.com/breadweb/extralifehelper
+// For help or feature requests, visit http://bit.ly/helper-forum/
+// 
+var participantId = "265671";              // Set this to blank to run in team mode
+var teamId = "";                           // Set this to blank to run in participant mode
+var startDate = "11-04-2017";              // Set to your local Extra Life start date
+var startTime = "10:00:00";                // Set to your local Extra Life start time
+var helperTheme = "blue1";                 // Color theme: white1, gray1, blue1, or blue2
+var helperBorder = "none";                 // Border type: rounded, square, or none
+var helperWidth = 264;                     // Width of the Helper, in pixels
+var helperHeight = 110;                    // Height of the Helper, in pixels
+var donationSounds = "cash.mp3,kids.mp3";  // Set this to your custom set of sounds, separated
+//                                         // by commas. Or set to blank to have no sounds play
+// ============================================================================================
+
+// If you would like additional things to happen when a new donation is 
+// received, put them in this function.
+function onNewDonation(donorName, donationAmount, message, avatarImageURL, createdOn)
+{
+    // Your custom logic here.
+}
+```
 
 Some special notes about editing this file:
 
