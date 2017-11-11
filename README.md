@@ -39,14 +39,19 @@ This is an application I created in 2013 for [Extra Life](http://extra-life.org)
 
 ![](https://github.com/breadweb/extralifehelper/blob/master/images/helper1.jpg)  
 Counts down the days.  
+
 ![](https://github.com/breadweb/extralifehelper/blob/master/images/helper2.jpg)  
 Counts down the hours.  
+
 ![](https://github.com/breadweb/extralifehelper/blob/master/images/helper3.jpg)  
 Counts the hours you have played.  
+
 ![](https://github.com/breadweb/extralifehelper/blob/master/images/helper4.jpg)  
 Shows new donations as they come in.  
+
 ![](https://github.com/breadweb/extralifehelper/blob/master/images/helper5.jpg)  
 Occasionally shows the Extra Life logo.  
+
 ![](https://github.com/breadweb/extralifehelper/blob/master/images/helper6.jpg)  
 Occasionally shows the CMNH logo.  
 
