@@ -10,32 +10,39 @@ All rights reserved.
 
 Date: 9/11/2017 11:24:17
 
+<br>
 
 ### Introduction
 
-This is an application I created in 2013 for [Extra Life](http://extra-life.org). I wanted something to track the time until Extra Life, track my total time playing on game day, and show my fundraising information. The following year I made it available to the community and I was excited to see it adopted by many participants.
+This is an application I created in 2013 for [Extra Life](http://extra-life.org). I wanted something to track the time until Extra Life, track my total time playing on game day, and show my fundraising information. The following year I made it available to the community and I was excited to see it adopted by so many participants.
 
-
+<br>
+  
 ### Download
 
-[ExtraLifeHelper.zip](https://github.com/breadweb/extralifehelper/blob/master/ExtraLife.zip) (312 KB)
+Right-click the following link and select "Save link as..."
 
+[ExtraLifeHelper.zip](https://github.com/breadweb/extralifehelper/blob/master/ExtraLifeHelper.zip) (312 KB)
 
+<br>
+  
 ### Features
 
 * Counts down the days until Extra Life if there are three or more days left.
 * Counts down the hours until Extra Life if there are less than four days left.
 * Counts the total hours played if the start time has passed.
-* Shows your total amount raised in real-time.
-* Shows new donations as they arrive in real-time and plays a happy kids sound effect.
-* Allows specifying a custom donation alert sound.
+* Shows total amount raised and updates in real-time.
+* Shows new donation alerts as they arrive in real-time.
+* Allows specifying custom sound effects for the donation alert.
+* Provides a hook to run custom JavaScript when a new donation arrives.
 * Occasionally shows the Extra Life and Children's Miracle Network Hospital logos.
-* Works in "participant" mode or "team" mode. You can show totals for yourself or your team.
-* Supports four color themes and different border styles to compliment your stream setup.
-* Works in XSplit and OBS Studio (Windows and OSX)
+* Works in "participant" mode or "team" mode.
+* Supports four color themes and three border styles.
+* Works in XSplit, OBS Studio, and in any modern browser.
+* Runs locally without dependency on any remote service besides the Extra Life website.
+* Core functionality and appearance can be modified with little JavaScript exprience.
 
-
-### Screenshots
+<br>
 
 ![](https://github.com/breadweb/extralifehelper/blob/master/images/helper1.jpg)  
 Counts down the days.  
@@ -55,7 +62,16 @@ Occasionally shows the Extra Life logo.
 ![](https://github.com/breadweb/extralifehelper/blob/master/images/helper6.jpg)  
 Occasionally shows the CMNH logo.  
 
+<br>
+  
+### Screenshots
 
+To see how some Extra Life participants have used the Helper in their live stream presentations, check out the screenshot gallery:
+
+[http://github.com/breadweb/extralifehelper/blob/master/Examples.md](http://github.com/breadweb/extralifehelper/blob/master/Examples.md)
+
+<br>
+  
 ### XSplit Instructions
 
 Requirements:
@@ -73,7 +89,8 @@ Instructions:
 1. Click the "Browse" button and select **ExtraLifeHelper.html** from the location you extracted the files.  
 ![](https://github.com/breadweb/extralifehelper/blob/master/images/xsplit2.jpg)  
 
-
+<br>
+  
 ### OBS Studio Instructions
 
 Requirements:
@@ -95,7 +112,8 @@ Instructions:
 1. Set the Width and Height to whatever is specified in the HTML file. Delete everything in the CSS field. Click OK. 
 ![](https://github.com/breadweb/extralifehelper/blob/master/images/obs4.jpg)
 
-
+<br>
+  
 ### Personalizing the Helper
 
 First, get your participant ID. It can be found in the URL for your fundraising page. Look for the "participantID" in the URL towards the end. For example:
@@ -140,14 +158,16 @@ Some special notes about editing this file:
 * If specifying multiple sound files for the **donationSounds** value, be sure to separate them with commas.
 * If you know JavaScript and have some smart devices in your house (such as programmable lights or displays) or a remote API you want to work with when you receive a new donation, you can add custom code in the **onNewDonation** function.
 
-
+<br>
+  
 ### Resizing the Helper
 
 The Helper is made with vector art so when stretched, it should always remain sharp no matter what size. The trick to making this work is to be sure that the width and height values for the Helper in XSplit or OBS match what is in the **ExtraLifeHelper.html** file. After you change the values in your streaming software, don't forget to update the html file! 
 
 For OBS Studio, avoid resizing the Helper by dragging it. Open the properties and specify the values there until the size is what you want. This is because resizing by dragging will not update the values in the properties and so you won't know what to set in the html file.
 
-
+<br>
+  
 ### Color Themes, Borders and Sound
 
 There are a few more options for customizing the Helper to suit your streaming setup.
@@ -162,38 +182,42 @@ The values that can be set are "blue1", "blue2", "white1", and "gray1".
         
 These options can be changed in the ExtraLifeHelper.html file that you edited during the steps to personalize the Helper. 
 
-
+<br>
+  
 ### Example Videos
 
 Coming soon...
 
-
+<br>
+  
 ### Troubleshooting
 
 **You see a "CHECK CONFIG" message instead of your donation total.**
 
 There are two common reasons for this:
 * Your participant ID is not correct or you made an accidental typo.
-* You are trying to use the Helper in an unsupported way. Please see the OBS Studio instructions for proper use.
+* You are trying to use the Helper in an unsupported way. Please review the instructions.
 
 **You see $0 for your donations received.**
 
 There are a few known reasons for this:
-* You haven't actually received any donations yet. Keep up the fundraising efforts!
+* You haven't received any donations yet. Keep up the fundraising efforts!
 * You got your first donation, but it hasn't registered fully on the Extra Life site. Just give it a few minutes to show up.
 * The Extra Life website timed out when the Helper was trying to contact it. This can happen if the Extra Life website is under high load. Just be patient and the Helper will get the current total again when the Extra Life website responds.
-* You are trying to use the Helper in an unsupported way. Please see the OBS Studio instructions for proper use.
+* You are trying to use the Helper in an unsupported way. Please review the instructions for proper use.
 
 **The Helper looks blurry.**
 
 This is usually because you have streched the Helper in your presentation but forgot to update the width and height values in the **ExtraLifeHelper.html** file to match.
 
-
+<br>
+  
 ### Donations
 
-It's been really rewarding to see the Helper being used by so many people who are raising money for a great cause. I do not expect anything in return, but if you are determined, you could always make a donation on my [Extra Life page](https://www.extra-life.org/participant/bread) since this is all For The Kids! Thank you!
+It's been really rewarding to see the Helper being used by so many people who are raising money for a great cause. I do not expect anything in return, but if you are determined, you could always make a donation on my [Extra Life page](https://www.extra-life.org/participant/bread) since this is all for the kids! Thank you!
 
-
+<br>
+  
 ### Modifying and Contributing Back
 
 Because the source is freely available here, you are welcome to modify the Helper however you see fit. Some modifications that have been done by other participants so far include:
@@ -201,15 +225,17 @@ Because the source is freely available here, you are welcome to modify the Helpe
 * Adding a third hour digit to the clock to support a 100+ hour long marathon
 * Changing the fonts or color themes to match a stream presentation
 * Adding a background image to match a steam presentation
+* Adding donation alerts while running in team mode
 
-If you make a change that you think would benefit all users of the Helper, please make a pull request and I would be happy to review it. Thank you!
+If you make a change that would benefit all users of the Helper, please make a pull request and I would be happy to review it. Thank you!
 
-
+<br>
+  
 ### Contact
 
 If you see any issues that are not covered in the troubleshooting section, please visit the [Helper forum thread](http://bit.ly/helper-forum) and I'll do my best to fix it quickly.
 
-I'd also love to see the Helper being used on your stream. Let me know your broadcasting URL so I can watch and cheer you on during the marathon. Thanks, enjoy, and good luck with your fundraising for Extra Life!
+I'd also love to see the Helper being used on your stream. Let me know your broadcasting URL so I can watch and cheer you on during the marathon. Good luck with your fundraising for Extra Life!
 
 Adam "Bread" Slesinger
 
