@@ -1,0 +1,10 @@
+{
+   "displayName":"BreadMan",
+   "totalRaisedAmount":300.78,
+   "fundraisingGoal":500.00,
+   "participantID":265671,
+   "createdOn":"2017-08-20T21:24:10-0400",
+   "avatarImageURL":"//assets.donordrive.com/extralife/images/$avatars$/constituent_574EE92A-C29F-F29A-60B307827DB9F948.jpg",
+   "teamID":35479,
+   "isTeamCaptain":true
+}
