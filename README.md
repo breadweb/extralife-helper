@@ -184,9 +184,11 @@ These options can be changed in the ExtraLifeHelper.html file that you edited du
 
 <br>
   
-### Example Videos
+### Example Video
 
-Coming soon...
+The following video is a compilation of donations received during the Extra Life 2017 marathon. I use the donation hook to make a call to my light bridge and make my office lights flash.
+
+[![Alt text for your video](https://img.youtube.com/vi/YUu3rBl8ug0/0.jpg)](https://www.youtube.com/watch?v=YUu3rBl8ug0)
 
 <br>
   
