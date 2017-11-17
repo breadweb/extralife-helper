@@ -621,7 +621,7 @@ function showNewDonor()
 
     donorAmountText.content = donorAmount == null
          ? "A Gift"
-         : formatMoney(donorAmount);
+         : formatMoney(donorAmount, true);
     donorNameText.content = donorName == null
          ? "Anonymous"
          : donorName;
@@ -739,15 +739,26 @@ function onGeneralInfoSuccess(res)
 {
     log(res);
     var raised = res['totalRaisedAmount'];
+    var goal = res['fundraisingGoal'];
 
     // If the amount raised is more than the last recorded value, then one or
     // more donations have come in since the last time general info was polled.
     // This is always true at startup, but the processing of donations will 
     // ensure we don't treat all donations as new the first time.
     if (raised > lastRaised)
-    {    
-        moneyText.content = formatMoney(raised);
-        requestDonorInfo();
+    {
+        moneyText.content = formatMoney(raised, false);
+
+        if (showGoal == "true")
+        {
+            moneyText.content += " / " + formatMoney(goal, false);
+        }
+
+        if (showDonationAlerts == "true")
+        {
+            requestDonorInfo();
+        }
+
         lastRaised = raised;
     }    
 }
@@ -853,9 +864,10 @@ function zeroPad(value, length = 2)
     return value;
 }
 
-function formatMoney(amount)
+function formatMoney(amount, showCents)
 {
-    return '$' + String(amount.toFixed(2)).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    amount = showCents ? amount.toFixed(2) : amount.toFixed(0);
+    return '$' + String(amount).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 function log(message)
