@@ -45,17 +45,20 @@ var KEY_DONOR_AMOUNT = "donationAmount";
 var KEY_DONOR_MESSAGE = "message";
 var KEY_DONOR_AVATAR = "avatarImageUrl";
 var KEY_DONOR_CREATED_ON = "createdOn";
+var KEY_TIMESTAMP = "timestamp";
 
 var BASE_URL = "https://www.extra-life.org/index.cfm?format=json&fuseaction=";
 var PARTICIPANT_INFO_URL = BASE_URL + "donorDrive.participant&participantID={1}";
 var DONOR_INFO_URL = BASE_URL + "donorDrive.participantDonations&participantID={1}";
 var TEAM_INFO_URL = BASE_URL + "donorDrive.team&teamID={1}";
 var TEAM_ROSTER_URL = BASE_URL + "donorDrive.teamParticipants&teamID={1}";
+var TEAM_DONOR_INFO_URL = BASE_URL + "donorDrive.teamDonations&teamID={1}";
 
 var participantInfoUrl;
 var donorInfoUrl;
 var teamInfoUrl;
 var teamRosterUrl;
+var teamDonorInfoUrl;
 var backgroundRect;
 var titleText;
 var daysText;
@@ -93,6 +96,7 @@ function init()
     donorInfoUrl = DONOR_INFO_URL.replace("{1}", participantId);
     teamInfoUrl = TEAM_INFO_URL.replace("{1}", teamId);
     teamRosterUrl = TEAM_ROSTER_URL.replace("{1}", teamId);
+    teamDonorInfoUrl = TEAM_DONOR_INFO_URL.replace("{1}", teamId);
 
     // Create new start date/time by parsing user-specified values.
     var dateParts = startDate.split("-");
@@ -120,6 +124,8 @@ function init()
     {
         participantInfoUrl = "http://localhost/participant.txt";
         donorInfoUrl = "http://localhost/donors.txt";
+        teamInfoUrl = "http://localhost/team.txt";
+        teamDonorInfoUrl = "http://localhost/teamDonors.txt";
 
         CLOCK_TIMER_INTERVAL = 1000;
         ACTION_TIMER_INTERVAL = 10000;
@@ -127,24 +133,24 @@ function init()
 
         paper.project.activeLayer.onMouseDown = function(event)
         {
-            //stopTimer("action");
-            //stopTimer("clock");        
-            //infoGroup.visible = false;
-            //donorGroup.visible = false;
-
-            //logoCounter = 59;
-
-            //logoGroup.visible = true;
-            //cmnhLogoItem.visible = false;
-
-            //donorGroup.visible = true;
-            //donorAmountText.content = "A Gift";
-            //donorNameText.content = "Adam Slesinger"
-            //message = "Awesome job guys! Keep up the hard work! " +
-            //          "Go go go go go! w00t! I can't. Believe.";
-            //updateDonorGroup(message);
-            //updateDonorGroup(null);
-            //startTimer("donor");
+//            stopTimer("action");
+//            stopTimer("clock");        
+//            infoGroup.visible = false;
+//            donorGroup.visible = false;
+//
+//            logoCounter = 59;
+//
+//            logoGroup.visible = true;
+//            cmnhLogoItem.visible = false;
+//
+//            donorGroup.visible = true;
+//            donorAmountText.content = "A Gift";
+//            donorNameText.content = "Adam Slesinger"
+//            message = "Awesome job guys! Keep up the hard work! " +
+//                      "Go go go go go! w00t! I can't. Believe.";
+//            updateDonorGroup(message);
+//            updateDonorGroup(null);
+//            startTimer("donor");
         }
     }   
 
@@ -604,6 +610,12 @@ function onDonorTimer()
 
 function showNewDonor()
 {
+    if (newDonors.length < 1)
+    {
+        console.log("A new donation was expected but NOT found...");
+        return;
+    }
+
     stopTimer("action");
     stopTimer("clock");
     startTimer("donor");
@@ -618,6 +630,7 @@ function showNewDonor()
     var donorMessage = donorEntry[KEY_DONOR_MESSAGE];
     var donorAvatar = donorEntry[KEY_DONOR_AVATAR];
     var donorCreatedOn = donorEntry[KEY_DONOR_CREATED_ON];
+    var donorTimestamp = donorEntry[KEY_TIMESTAMP];
 
     donorAmountText.content = donorAmount == null
          ? "A Gift"
@@ -634,7 +647,9 @@ function showNewDonor()
 
     playSounds();
 
-    onNewDonation(donorName, donorAmount, donorMessage, donorAvatar, donorCreatedOn);
+    // Call the function that participants can use to run their own code when
+    // a new donation arrives.
+    onNewDonation(donorName, donorAmount, donorMessage, donorAvatar, donorCreatedOn, donorTimestamp);
 }
 
 function updateDonorGroup(message)
@@ -717,22 +732,38 @@ function updateDonorGroup(message)
 function requestGeneralInfo()
 {
     var url = participantId ? participantInfoUrl : teamInfoUrl;
-    url = addCacheBusting(url);        
+    makeRequest(url, onGeneralInfoSuccess, onRequestError);          
+}
+
+function requestDonorInfo()
+{
+    var url = participantId ? donorInfoUrl : teamDonorInfoUrl;
+    makeRequest(url, onDonorInfoSuccess, onRequestError);
+}
+
+function makeRequest(url, onSuccess, onError)
+{
+    url = addCacheBusting(url);
     log(url);
-    
+
+    // Using post request method is an additional way to help
+    // prevent getting a cached response. But setting to GET
+    // is required for my local webserver.
+    requestType = IS_DEBUG ? 'GET' : 'POST';
+        
     $.ajax({
         url: url,
-        type: 'POST',
+        type: requestType,
         data: '',
         dataType: 'json',
         cache: false,
         success: function(res) {
-            onGeneralInfoSuccess(res);
+            onSuccess(res);
         },
         error: function(res) {
-            onRequestError(res);    
+            onError(res);    
         }
-    });              
+    });
 }
 
 function onGeneralInfoSuccess(res)
@@ -741,26 +772,26 @@ function onGeneralInfoSuccess(res)
     var raised = res['totalRaisedAmount'];
     var goal = res['fundraisingGoal'];
 
+    moneyText.content = formatMoney(raised, false);
+
+    if (showGoal == "true")
+    {
+        moneyText.content += " / " + formatMoney(goal, false);
+    }
+
     // If the amount raised is more than the last recorded value, then one or
     // more donations have come in since the last time general info was polled.
     // This is always true at startup, but the processing of donations will 
     // ensure we don't treat all donations as new the first time.
     if (raised > lastRaised)
     {
-        moneyText.content = formatMoney(raised, false);
-
-        if (showGoal == "true")
-        {
-            moneyText.content += " / " + formatMoney(goal, false);
-        }
-
         if (showDonationAlerts == "true")
         {
             requestDonorInfo();
         }
-
-        lastRaised = raised;
     }    
+
+    lastRaised = raised;
 }
 
 function onRequestError(res)
@@ -768,26 +799,6 @@ function onRequestError(res)
     // Errors are usually due to transient network failures so ignore and try 
     // again at the next timer tick.
     log(res);
-}
-
-function requestDonorInfo()
-{
-    var url = addCacheBusting(donorInfoUrl);        
-    log(url);
-        
-    $.ajax({
-        url: url,
-        type: 'POST',
-        data: '',
-        dataType: 'json',
-        cache: false,
-        success: function(res) {
-            onDonorInfoSuccess(res);
-        },
-        error: function(res) {
-            onRequestError(res);    
-        }
-    });    
 }
 
 function onDonorInfoSuccess(res)
@@ -808,10 +819,7 @@ function onDonorInfoSuccess(res)
         var wasFound = false;
         for (j = 0; j < shownDonors.length; j++)
         {
-            // A unique ID is not provided by Extra Life for donations so the best
-            // way to uniquely identify a donation is by a combination of who and when.
-            if (res[i][KEY_DONOR_NAME] == shownDonors[j][KEY_DONOR_NAME] &&
-                res[i][KEY_DONOR_CREATED_ON] == shownDonors[j][KEY_DONOR_CREATED_ON])
+            if (res[i][KEY_TIMESTAMP] == shownDonors[j][KEY_TIMESTAMP])
             {
                 wasFound = true;
                 break;
@@ -823,7 +831,7 @@ function onDonorInfoSuccess(res)
             newDonors.unshift(res[i]);
         }
     }
-    
+   
     // Since this is not the first time getting donors, we have at least one new 
     // donation. Show it immediately.
     showNewDonor();
@@ -850,6 +858,11 @@ function setScale(group, amount, anchorPoint = "topCenter")
 
 function addCacheBusting(url)
 {
+    if (IS_DEBUG)
+    {
+        return url;
+    }
+
     // Add a timestamp parameter to the query string with a uniquely incrementing
     // number so it will bust caching. The Extra Life website will ignore it.
     return url + "&cb=" + new Date().getTime();

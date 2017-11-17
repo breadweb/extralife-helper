@@ -19,19 +19,19 @@
         var startDate = "11-04-2017";              // Set to your local Extra Life start date
         var startTime = "10:00:00";                // Set to your local Extra Life start time
         var helperTheme = "blue1";                 // Color theme: white1, gray1, blue1, or blue2
-        var helperBorder = "none";                 // Border type: rounded, square, or none
+        var helperBorder = "rounded";              // Border type: rounded, square, or none
         var helperWidth = 264;                     // Width of the Helper, in pixels
         var helperHeight = 110;                    // Height of the Helper, in pixels
         var showDonationAlerts = "true";           // Set to "false" to suppress donation alerts
         var showGoal = "true";                     // Set to "false" to only show amount raised on the
         //                                         // main screen and not also your goal
         var donationSounds = "cash.mp3,kids.mp3";  // Set this to your custom set of sounds, separated
-        //                                         // by commas. Or set to blank to have no sounds play
+        //                                         // by commas. Or set to "" to have no sounds play
         // ============================================================================================
 
         // If you would like additional things to happen when a new donation is 
         // received, put them in this function.
-        function onNewDonation(donorName, donationAmount, message, avatarImageURL, createdOn)
+        function onNewDonation(donorName, donationAmount, message, avatarImageURL, createdOn, timestamp)
         {
             // Your custom logic here.
         }
