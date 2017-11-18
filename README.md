@@ -137,11 +137,14 @@ var teamId = "";                           // Set this to blank to run in partic
 var startDate = "11-04-2017";              // Set to your local Extra Life start date
 var startTime = "10:00:00";                // Set to your local Extra Life start time
 var helperTheme = "blue1";                 // Color theme: white1, gray1, blue1, or blue2
-var helperBorder = "none";                 // Border type: rounded, square, or none
+var helperBorder = "rounded";              // Border type: rounded, square, or none
 var helperWidth = 264;                     // Width of the Helper, in pixels
 var helperHeight = 110;                    // Height of the Helper, in pixels
+var showDonationAlerts = "true";           // Set to "false" to suppress donation alerts
+var showGoal = "true";                     // Set to "false" to only show amount raised on the
+//                                         // main screen and not also your goal
 var donationSounds = "cash.mp3,kids.mp3";  // Set this to your custom set of sounds, separated
-//                                         // by commas. Or set to blank to have no sounds play
+//                                         // by commas. Or set to "" to have no sounds play
 // ============================================================================================
 
 // If you would like additional things to happen when a new donation is 
@@ -177,8 +180,8 @@ There are a few more options for customizing the Helper to suit your streaming s
 The values that can be set are "blue1", "blue2", "white1", and "gray1".
 * **Borders**: By default, there is a border with rounded corners. You can change it to have square corners or remove it completely. The values are "rounded", "square", or "none".
 * **Sounds**:
-  * You can mute the Helper by removing references to sound files in the html file.
-  * To use your own donation sounds, place your mp3, wav, or ogg files in the **audio** directory and update the html file.
+  * To use your own donation sounds, place your mp3, wav, or ogg files in the **audio** directory and update the donationSounds value in the ExtraLifeHelper.html file.
+  * You can mute the Helper by setting the donationSounds value to "".
         
 These options can be changed in the ExtraLifeHelper.html file that you edited during the steps to personalize the Helper. 
 
