@@ -138,6 +138,7 @@ function init()
 //            stopTimer("action");
 //            stopTimer("clock");        
 //            infoGroup.visible = false;
+//            logoYearGroup.visible = false;
 //            donorGroup.visible = false;
 //
 //            logoCounter = 59;
@@ -605,6 +606,7 @@ function onActionTimer()
     }   
     
     infoGroup.visible = true;
+    logoYearGroup.visible = true;
     donorGroup.visible = false;
     logoGroup.visible = false;
     
@@ -619,6 +621,7 @@ function animateLogos()
     stopTimer("clock");
 
     infoGroup.visible = false;
+    logoYearGroup.visible = false;
     donorGroup.visible = false;
     logoGroup.visible = true;
     
@@ -683,6 +686,7 @@ function showNewDonor()
     updateDonorGroup(donorMessage);
 
     infoGroup.visible = false;
+    logoYearGroup.visible = false;
     donorGroup.visible = true;
     logoGroup.visible = false;
 
@@ -860,7 +864,13 @@ function onDonorInfoSuccess(res)
         var wasFound = false;
         for (j = 0; j < shownDonors.length; j++)
         {
-            if (res[i][KEY_TIMESTAMP] == shownDonors[j][KEY_TIMESTAMP])
+            // A unique ID is provided by Extra Life for donations (timestamp) but for 
+            // some reason, jquery ajax response objects sometimes show the wrong timestamp
+            // value and this can cause donation alerts to now show. Until we can figure
+            // out why, resort to the old method of uniquely identifying a donation by a
+            // combination of who and when.
+            if (res[i][KEY_DONOR_NAME] == shownDonors[j][KEY_DONOR_NAME] &&
+                res[i][KEY_DONOR_CREATED_ON] == shownDonors[j][KEY_DONOR_CREATED_ON])
             {
                 wasFound = true;
                 break;

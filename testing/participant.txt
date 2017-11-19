@@ -1,6 +1,6 @@
 {
    "displayName":"Bread Man",
-   "totalRaisedAmount":250.78,
+   "totalRaisedAmount":822.90,
    "fundraisingGoal":500.00,
    "participantID":265671,
    "createdOn":"2017-08-20T21:24:10-0400",
