@@ -382,18 +382,20 @@ function initScreen()
         extraLifeLogoYearItem = item;            
         extraLifeLogoYearItem.position = [155, 71];
         extraLifeLogoYearItem.scale(0.52, [0, 0]);
+        extraLifeLogoYearItem.visible = yearMode;
     });
 
     paper.project.importSVG(cmnhLogo, function(item) {
         cmnhLogoYearItem = item;
         cmnhLogoYearItem.position = [417, 79];
         cmnhLogoYearItem.scale(0.52, [0, 0]);
+        cmnhLogoYearItem.visible = yearMode;
     });
 
     logoYearGroup = new paper.Group();    
     logoYearGroup.addChild(extraLifeLogoYearItem);
     logoYearGroup.addChild(cmnhLogoYearItem);
-    logoYearGroup.visible = yearMode;
+    
 
     // Setup the donor group which contains information about a newly
     // received donation.
