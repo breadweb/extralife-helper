@@ -16,7 +16,7 @@ package
 	[SWF(width='260', height='111', backgroundColor='#FFFFFF', frameRate='40')]
 	public class ExtraLifeHelper extends Sprite
 	{
-		private const PRIMARY_URL:String = "http://www.extra-life.org/index.cfm?format=json&cb={0}&fuseaction=";
+		private const PRIMARY_URL:String = "http://www.extra-life.org/api/";
 		// REMOVEME: Testing		
 		//private const RELAY_URL:String = "http://www.breadweb.net/files/extralife/fake.php?format=json&cb={0}&fuseaction=";
 		private const RELAY_URL:String = "http://www.breadweb.net/files/extralife/extra-life-relay.php?format=json&cb={0}&fuseaction=";
@@ -28,15 +28,15 @@ package
 		private const CLOCK_TIMER_INTERVAL:int = 1000; // Interval that the countdown should be refreshed
 		private const ACTION_TIMER_INTERVAL:int = 60000; // Interval that a new action should be taken
 		private const DONATION_TIMER_INTERVAL:int = 60000; // Timer that fires when a new donation is shown
-		private const KEY_TOTAL_RAISED_AMOUNT:String = "totalRaisedAmount";
-		private const KEY_DONOR_NAME:String = "donorName";
-		private const KEY_DONATION_AMOUNT:String = "donationAmount";
-		private const KEY_CREATED_ON:String = "createdOn";
+		private const KEY_TOTAL_RAISED_AMOUNT:String = "sumDonations";
+		private const KEY_DONOR_NAME:String = "displayName";
+		private const KEY_DONATION_AMOUNT:String = "amount";
+		private const KEY_CREATED_ON:String = "createdDateUTC";
 		
-		private var participantInfoUrl:String = PRIMARY_URL + "donorDrive.participant&participantID={1}";
-		private var participantDonationsUrl:String = PRIMARY_URL + "donorDrive.participantDonations&participantID={1}";
-		private var teamInfoUrl:String = PRIMARY_URL + "donorDrive.team&teamID={1}";
-		private var teamRosterUrl:String = PRIMARY_URL + "donorDrive.teamParticipants&teamID={1}";
+		private var participantInfoUrl:String = PRIMARY_URL + "participants/{1}";
+		private var participantDonationsUrl:String = PRIMARY_URL + "participants/{1}/donations";
+		private var teamInfoUrl:String = PRIMARY_URL + "teams/{1}";
+		private var teamRosterUrl:String = PRIMARY_URL + "teams/{1}/participants";
 		
 		private var background:Background;
 		private var debug:DebugView;

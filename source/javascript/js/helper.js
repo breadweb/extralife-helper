@@ -39,20 +39,20 @@ var DONOR_NAME_FONT_SIZE_ALT = 14;
 var DAYS_UNTIL = "DAYS UNTIL EXTRA LIFE:";
 var HOURS_UNTIL = "HOURS UNTIL EXTRA LIFE:";
 var HOURS_PLAYED = "TOTAL TIME PLAYED:";
-var KEY_TOTAL_RAISED_AMOUNT = "totalRaisedAmount";
-var KEY_DONOR_NAME = "donorName";
-var KEY_DONOR_AMOUNT = "donationAmount";
+var KEY_TOTAL_RAISED_AMOUNT = "sumDonations";
+var KEY_DONOR_NAME = "displayName";
+var KEY_DONOR_AMOUNT = "amount";
 var KEY_DONOR_MESSAGE = "message";
 var KEY_DONOR_AVATAR = "avatarImageUrl";
-var KEY_DONOR_CREATED_ON = "createdOn";
+var KEY_DONOR_CREATED_ON = "createdDateUTC";
 var KEY_TIMESTAMP = "timestamp";
 
-var BASE_URL = "https://www.extra-life.org/index.cfm?format=json&fuseaction=";
-var PARTICIPANT_INFO_URL = BASE_URL + "donorDrive.participant&participantID={1}";
-var DONOR_INFO_URL = BASE_URL + "donorDrive.participantDonations&participantID={1}";
-var TEAM_INFO_URL = BASE_URL + "donorDrive.team&teamID={1}";
-var TEAM_ROSTER_URL = BASE_URL + "donorDrive.teamParticipants&teamID={1}";
-var TEAM_DONOR_INFO_URL = BASE_URL + "donorDrive.teamDonations&teamID={1}";
+var BASE_URL = "https://www.extra-life.org/api/";
+var PARTICIPANT_INFO_URL = BASE_URL + "participants/{1}";
+var DONOR_INFO_URL = BASE_URL + "participants/{1}/donations";
+var TEAM_INFO_URL = BASE_URL + "teams/{1}";
+var TEAM_ROSTER_URL = BASE_URL + "teams/{1}/participants";
+var TEAM_DONOR_INFO_URL = BASE_URL + "teams/{1}/donations";
 
 var participantInfoUrl;
 var donorInfoUrl;
@@ -796,14 +796,14 @@ function makeRequest(url, onSuccess, onError)
     // Using post request method is an additional way to help
     // prevent getting a cached response. But setting to GET
     // is required for my local webserver.
-    requestType = IS_DEBUG ? 'GET' : 'POST';
+    requestType = IS_DEBUG ? 'GET' : 'GET';
         
     $.ajax({
         url: url,
         type: requestType,
         data: '',
         dataType: 'json',
-        cache: false,
+		cache: false,
         success: function(res) {
             onSuccess(res);
         },
@@ -816,7 +816,7 @@ function makeRequest(url, onSuccess, onError)
 function onGeneralInfoSuccess(res)
 {
     log(res);
-    var raised = res['totalRaisedAmount'];
+    var raised = res['sumDonations'];
     var goal = res['fundraisingGoal'];
 
     moneyText.content = formatMoney(raised, false);
