@@ -790,17 +790,11 @@ function requestDonorInfo()
 
 function makeRequest(url, onSuccess, onError)
 {
-    url = addCacheBusting(url);
     log(url);
-
-    // Using post request method is an additional way to help
-    // prevent getting a cached response. But setting to GET
-    // is required for my local webserver.
-    requestType = IS_DEBUG ? 'GET' : 'POST';
         
     $.ajax({
         url: url,
-        type: requestType,
+        type: 'GET',
         data: '',
         dataType: 'json',
         cache: false,
@@ -907,18 +901,6 @@ function setScale(group, amount, anchorPoint = "topCenter")
         : 0; // "topLeft"
 
     group.scale(amount, [xPos, 0]);
-}
-
-function addCacheBusting(url)
-{
-    if (IS_DEBUG)
-    {
-        return url;
-    }
-
-    // Add a timestamp parameter to the query string with a uniquely incrementing
-    // number so it will bust caching. The Extra Life API will ignore it.
-    return url + "&cb=" + new Date().getTime();
 }
 
 function zeroPad(value, length = 2)
