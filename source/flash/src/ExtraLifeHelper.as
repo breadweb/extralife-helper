@@ -16,10 +16,7 @@ package
 	[SWF(width='260', height='111', backgroundColor='#FFFFFF', frameRate='40')]
 	public class ExtraLifeHelper extends Sprite
 	{
-		private const PRIMARY_URL:String = "http://www.extra-life.org/index.cfm?format=json&cb={0}&fuseaction=";
-		// REMOVEME: Testing		
-		//private const RELAY_URL:String = "http://www.breadweb.net/files/extralife/fake.php?format=json&cb={0}&fuseaction=";
-		private const RELAY_URL:String = "http://www.breadweb.net/files/extralife/extra-life-relay.php?format=json&cb={0}&fuseaction=";
+		private const PRIMARY_URL:String = "http://www.extra-life.org/api/";
 		private const DAYS_UNTIL:String = "DAYS UNTIL EXTRA LIFE:";
 		private const HOURS_UNTIL:String = "HOURS UNTIL EXTRA LIFE:";
 		private const HOURS_PLAYED:String = "TOTAL HOURS PLAYED:";
@@ -28,15 +25,15 @@ package
 		private const CLOCK_TIMER_INTERVAL:int = 1000; // Interval that the countdown should be refreshed
 		private const ACTION_TIMER_INTERVAL:int = 60000; // Interval that a new action should be taken
 		private const DONATION_TIMER_INTERVAL:int = 60000; // Timer that fires when a new donation is shown
-		private const KEY_TOTAL_RAISED_AMOUNT:String = "totalRaisedAmount";
-		private const KEY_DONOR_NAME:String = "donorName";
-		private const KEY_DONATION_AMOUNT:String = "donationAmount";
-		private const KEY_CREATED_ON:String = "createdOn";
+		private const KEY_SUM_DONATIONS:String = "sumDonations";
+		private const KEY_DISPLAY_NAME:String = "displayName";
+		private const KEY_AMOUNT:String = "amount";
+		private const KEY_CREATED_DATE:String = "createdDateUTC";
 		
-		private var participantInfoUrl:String = PRIMARY_URL + "donorDrive.participant&participantID={1}";
-		private var participantDonationsUrl:String = PRIMARY_URL + "donorDrive.participantDonations&participantID={1}";
-		private var teamInfoUrl:String = PRIMARY_URL + "donorDrive.team&teamID={1}";
-		private var teamRosterUrl:String = PRIMARY_URL + "donorDrive.teamParticipants&teamID={1}";
+		private var participantInfoUrl:String = PRIMARY_URL + "participants/{1}";
+		private var participantDonationsUrl:String = PRIMARY_URL + "participants/{1}/donations";
+		private var teamInfoUrl:String = PRIMARY_URL + "teams/{1}";
+		private var teamRosterUrl:String = PRIMARY_URL + "teams/{1}/participants";
 		
 		private var background:Background;
 		private var debug:DebugView;
@@ -377,8 +374,8 @@ package
 			var donorEntry:Object = newDonors.shift();
 			shownDonors.push(donorEntry);
 			
-			var donationAmount:Number = donorEntry[KEY_DONATION_AMOUNT];
-			var donorName:String = donorEntry[KEY_DONOR_NAME];
+			var donationAmount:Number = donorEntry[KEY_AMOUNT];
+			var donorName:String = donorEntry[KEY_DISPLAY_NAME];
 			
 			donation.money.text = donationAmount > 0
 				? FormatAmount(donationAmount)
@@ -456,7 +453,7 @@ package
 				// problem so ignore it and try again later.
 				return;
 			}
-			var raised:Number = data["totalRaisedAmount"];
+			var raised:Number = data[SUM_DONATIONS];
 			
 			// REMOVEME: Testing
 			//if (shownDonors == null)
@@ -525,8 +522,8 @@ package
 				{
 					// A unique ID is not provided by Extra Life for donations so the best
 					// way to uniquely identify a donation is by who and when
-					if (data[i][KEY_DONOR_NAME] == shownDonors[j][KEY_DONOR_NAME] &&
-						data[i][KEY_CREATED_ON] == shownDonors[j][KEY_CREATED_ON])
+					if (data[i][KEY_DISPLAY_NAME] == shownDonors[j][KEY_DISPLAY_NAME] &&
+						data[i][KEY_CREATED_DATE] == shownDonors[j][KEY_CREATED_DATE])
 					{
 						found = true;
 						break;
@@ -555,7 +552,7 @@ package
 				return;
 			}			
 			
-			var raised:Number = data[KEY_TOTAL_RAISED_AMOUNT];
+			var raised:Number = data[KEY_SUM_DONATIONS];
 			if (raised > lastRaised)
 			{
 				clock.money.text = FormatAmount(raised);

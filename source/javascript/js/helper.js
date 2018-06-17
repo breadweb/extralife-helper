@@ -1,15 +1,15 @@
 /*!
- * Extra Life Helper v2.0
+ * Extra Life Helper v2.1
  * https://github.com/breadweb/extralifehelper
  *
- * Copyright (c) 2013 - 2017, Adam "Bread" Slesinger
+ * Copyright (c) 2013 - 2018, Adam "Bread" Slesinger
  * http://www.breadweb.net
  *
  * Distributed under the MIT license.
  *
  * All rights reserved.
  *
- * Date: 9/11/2017 11:24:17
+ * Date: 6/16/2018 20:10:19
  *
  */
 
@@ -39,20 +39,21 @@ var DONOR_NAME_FONT_SIZE_ALT = 14;
 var DAYS_UNTIL = "DAYS UNTIL EXTRA LIFE:";
 var HOURS_UNTIL = "HOURS UNTIL EXTRA LIFE:";
 var HOURS_PLAYED = "TOTAL TIME PLAYED:";
-var KEY_TOTAL_RAISED_AMOUNT = "totalRaisedAmount";
-var KEY_DONOR_NAME = "donorName";
-var KEY_DONOR_AMOUNT = "donationAmount";
-var KEY_DONOR_MESSAGE = "message";
-var KEY_DONOR_AVATAR = "avatarImageUrl";
-var KEY_DONOR_CREATED_ON = "createdOn";
+var KEY_SUM_DONATIONS = "sumDonations";
+var KEY_DISPLAY_NAME = "displayName";
+var KEY_AMOUNT = "amount";
+var KEY_MESSAGE = "message";
+var KEY_AVATAR_IMAGE_URL = "avatarImageUrl";
+var KEY_CREATED_DATE = "createdDateUTC";
 var KEY_TIMESTAMP = "timestamp";
+var KEY_FUNDRAISING_GOAL = "fundraisingGoal";
 
-var BASE_URL = "https://www.extra-life.org/index.cfm?format=json&fuseaction=";
-var PARTICIPANT_INFO_URL = BASE_URL + "donorDrive.participant&participantID={1}";
-var DONOR_INFO_URL = BASE_URL + "donorDrive.participantDonations&participantID={1}";
-var TEAM_INFO_URL = BASE_URL + "donorDrive.team&teamID={1}";
-var TEAM_ROSTER_URL = BASE_URL + "donorDrive.teamParticipants&teamID={1}";
-var TEAM_DONOR_INFO_URL = BASE_URL + "donorDrive.teamDonations&teamID={1}";
+var BASE_URL = "https://www.extra-life.org/api/";
+var PARTICIPANT_INFO_URL = BASE_URL + "participants/{1}";
+var DONOR_INFO_URL = BASE_URL + "participants/{1}/donations";
+var TEAM_INFO_URL = BASE_URL + "teams/{1}";
+var TEAM_ROSTER_URL = BASE_URL + "teams/{1}/participants";
+var TEAM_DONOR_INFO_URL = BASE_URL + "teams/{1}/donations";
 
 var participantInfoUrl;
 var donorInfoUrl;
@@ -83,7 +84,6 @@ var soundObjects;
 var newDonors;
 var lastRaised;
 var shownDonors;
-var newDonors;
 var extraLifeLogoItem;
 var cmnhLogoItem;
 var logoCounter;
@@ -671,11 +671,11 @@ function showNewDonor()
 
     // TODO: We got a undefined donorEntry once. Need to protect against it.
     // TypeError: Cannot read property 'donationAmount' of undefined
-    var donorAmount = donorEntry[KEY_DONOR_AMOUNT];
-    var donorName = donorEntry[KEY_DONOR_NAME];
-    var donorMessage = donorEntry[KEY_DONOR_MESSAGE];
-    var donorAvatar = donorEntry[KEY_DONOR_AVATAR];
-    var donorCreatedOn = donorEntry[KEY_DONOR_CREATED_ON];
+    var donorAmount = donorEntry[KEY_AMOUNT];
+    var donorName = donorEntry[KEY_DISPLAY_NAME];
+    var donorMessage = donorEntry[KEY_MESSAGE];
+    var donorAvatar = donorEntry[KEY_AVATAR_IMAGE_URL];
+    var donorCreatedOn = donorEntry[KEY_CREATED_DATE];
     var donorTimestamp = donorEntry[KEY_TIMESTAMP];
 
     donorAmountText.content = donorAmount == null
@@ -816,8 +816,8 @@ function makeRequest(url, onSuccess, onError)
 function onGeneralInfoSuccess(res)
 {
     log(res);
-    var raised = res['totalRaisedAmount'];
-    var goal = res['fundraisingGoal'];
+    var raised = res[KEY_SUM_DONATIONS];
+    var goal = res[KEY_FUNDRAISING_GOAL];
 
     moneyText.content = formatMoney(raised, false);
 
@@ -871,8 +871,8 @@ function onDonorInfoSuccess(res)
             // value and this can cause donation alerts to now show. Until we can figure
             // out why, resort to the old method of uniquely identifying a donation by a
             // combination of who and when.
-            if (res[i][KEY_DONOR_NAME] == shownDonors[j][KEY_DONOR_NAME] &&
-                res[i][KEY_DONOR_CREATED_ON] == shownDonors[j][KEY_DONOR_CREATED_ON])
+            if (res[i][KEY_DISPLAY_NAME] == shownDonors[j][KEY_DISPLAY_NAME] &&
+                res[i][KEY_CREATED_DATE] == shownDonors[j][KEY_CREATED_DATE])
             {
                 wasFound = true;
                 break;
@@ -917,7 +917,7 @@ function addCacheBusting(url)
     }
 
     // Add a timestamp parameter to the query string with a uniquely incrementing
-    // number so it will bust caching. The Extra Life website will ignore it.
+    // number so it will bust caching. The Extra Life API will ignore it.
     return url + "&cb=" + new Date().getTime();
 }
 

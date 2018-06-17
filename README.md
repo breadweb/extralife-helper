@@ -1,14 +1,14 @@
-## Extra Life Helper v2.0
+## Extra Life Helper v2.1
 https://github.com/breadweb/extralifehelper
 
-Copyright (c) 2013 - 2017, Adam "Bread" Slesinger
+Copyright (c) 2013 - 2018, Adam "Bread" Slesinger
 http://www.breadweb.net
 
 Distributed under the MIT license.
 
 All rights reserved.
 
-Date: 9/11/2017 11:24:17
+Date: 6/16/2018 20:10:19
 
 <br>
 
@@ -22,7 +22,7 @@ This is an application I created in 2013 for [Extra Life](http://extra-life.org)
 
 Right-click the following link and select "Save link as..."
 
-[ExtraLifeHelper.zip](https://github.com/breadweb/extralifehelper/blob/master/ExtraLifeHelper.zip) (312 KB)
+[ExtraLifeHelper.zip](https://github.com/breadweb/extralifehelper/releases/download/2.1/ExtraLifeHelper.zip) (312 KB)
 
 <br>
   

@@ -1,15 +1,15 @@
 /*!
- * Extra Life Helper v2.0
+ * Extra Life Helper v2.1
  * https://github.com/breadweb/extralifehelper
  *
- * Copyright (c) 2013 - 2017, Adam "Bread" Slesinger
+ * Copyright (c) 2013 - 2018, Adam "Bread" Slesinger
  * http://www.breadweb.net
  *
  * Distributed under the MIT license.
  *
  * All rights reserved.
  *
- * Date: 9/11/2017 11:24:17
+ * Date: 6/16/2018 20:10:19
  *
  */
 
