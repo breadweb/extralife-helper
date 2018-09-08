@@ -36,9 +36,13 @@ var DONOR_AMOUNT_POINT_Y_ALT = 52;
 var DONOR_AMOUNT_FONT_SIZE_ALT = 40;
 var DONOR_NAME_POINT_Y_ALT = 76;
 var DONOR_NAME_FONT_SIZE_ALT = 14;
-var DAYS_UNTIL = "DAYS UNTIL EXTRA LIFE:";
-var HOURS_UNTIL = "HOURS UNTIL EXTRA LIFE:";
-var HOURS_PLAYED = "TOTAL TIME PLAYED:";
+
+var TEXT_DAYS_UNTIL = "DAYS UNTIL EXTRA LIFE:";
+var TEXT_HOURS_UNTIL = "HOURS UNTIL EXTRA LIFE:";
+var TEXT_HOURS_PLAYED = "TOTAL TIME PLAYED:";
+var TEXT_ANONYMOUS = "Anonymous";
+var TEXT_A_GFIT = "A Gift";
+
 var KEY_SUM_DONATIONS = "sumDonations";
 var KEY_DISPLAY_NAME = "displayName";
 var KEY_AMOUNT = "amount";
@@ -135,6 +139,8 @@ function init()
 
         paper.project.activeLayer.onMouseDown = function(event)
         {
+//            // The following block can be uncommented for faster
+//            // iteration when debugging issues or making new features.            
 //            stopTimer("action");
 //            stopTimer("clock");        
 //            infoGroup.visible = false;
@@ -285,7 +291,7 @@ function initScreen()
 
     titleText = new paper.PointText({
         point: [centerX, 20],
-        content: DAYS_UNTIL,
+        content: TEXT_DAYS_UNTIL,
         fontFamily: "Furore",
         fontSize: 12,
         justification: 'center',
@@ -410,7 +416,7 @@ function initScreen()
 
     donorNameText = new paper.PointText({
         point: [centerX, DONOR_NAME_POINT_Y],
-        content: 'Anonymous',
+        content: TEXT_ANONYMOUS,
         fontFamily: "Furore",
         fontSize: DONOR_NAME_FONT_SIZE,
         justification: 'center'
@@ -539,12 +545,12 @@ function onClockTimer()
     if (timeDiff < 0)
     {        
         timeDiff = timeDiff * -1;
-        titleText.content = HOURS_UNTIL;
+        titleText.content = TEXT_HOURS_UNTIL;
         isCuntingUp = false;
     }
     else                
     {
-        titleText.content = HOURS_PLAYED;
+        titleText.content = TEXT_HOURS_PLAYED;
         isCountingUp = true;
     }
     
@@ -555,7 +561,7 @@ function onClockTimer()
     // could be counting down or up.
     if (days > 3 && !isCountingUp)
     {
-        titleText.content = DAYS_UNTIL;
+        titleText.content = TEXT_DAYS_UNTIL;
         daysText.content = days;
         daysText.visible = true;
         clockGroup.visible = false;                
@@ -679,10 +685,10 @@ function showNewDonor()
     var donorTimestamp = donorEntry[KEY_TIMESTAMP];
 
     donorAmountText.content = donorAmount == null
-         ? "A Gift"
+         ? A_GIFT
          : formatMoney(donorAmount, true);
     donorNameText.content = donorName == null
-         ? "Anonymous"
+         ? TEXT_ANONYMOUS
          : donorName;
 
     updateDonorGroup(donorMessage);
