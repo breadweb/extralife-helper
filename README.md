@@ -22,7 +22,7 @@ This is an application I created in 2013 for [Extra Life](http://extra-life.org)
 
 Right-click the following link and select "Save link as..."
 
-[ExtraLifeHelper.zip](https://github.com/breadweb/extralifehelper/releases/download/2.1/ExtraLifeHelper-v2.1.zip) (312 KB)
+[ExtraLifeHelper-v2.2.zip](https://github.com/breadweb/extralifehelper/releases/download/2.1/ExtraLifeHelper-v2.2.zip) (312 KB)
 
 <br>
   
