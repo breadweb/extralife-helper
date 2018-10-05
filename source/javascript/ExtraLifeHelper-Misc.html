@@ -19,9 +19,9 @@
         var startDate = "11-03-2018";              // Set to your local Extra Life start date
         var startTime = "10:00:00";                // Set to your local Extra Life start time
         var helperTheme = "blue1";                 // Color theme: white1, gray1, blue1, or blue2
-        var helperBorder = "rounded";              // Border type: rounded, square, or none
-        var helperWidth = 264;                     // Width of the Helper, in pixels
-        var helperHeight = 110;                    // Height of the Helper, in pixels
+        var helperBorder = "none";                 // Border type: rounded, square, or none
+        var helperWidth = 378;                     // Width of the Helper, in pixels
+        var helperHeight = 158;                    // Height of the Helper, in pixels
         var showDonationAlerts = "true";           // Set to "false" to suppress donation alerts
         var showGoal = "true";                     // Set to "false" to only show amount raised on the
         //                                         // main screen and not also your goal
@@ -29,7 +29,7 @@
         //                                         // by commas. Or set to "" to have no sounds play
         var yearMode = "false";                    // An alternate display to support fundraising all
         //                                         // year round. The count down/up timer is hidden
-        var testDonationSeconds = 0;               // Number of seconds to show a test donation after
+        var testDonationSeconds = 0;		       // Number of seconds to show a test donation after
         //                                         // the Helper loads. Set to 0 to disable.
         // ============================================================================================
 
@@ -37,7 +37,13 @@
         // received, put them in this function.
         function onNewDonation(donorName, donationAmount, message, avatarImageURL, createdOn)
         {
-            // Your custom logic here.
+			$.ajax({
+				url: 'http://192.168.1.250/api/EN36cmOnfWBbv72L5Y-bYcAsWVe7mvVHBVSFJPJ5/groups/1/action',
+				type: 'PUT',
+				data: '{ "alert": "lselect" }',
+				dataType: 'json',
+				cache: false
+			});
         }
 
     </script>

@@ -49,7 +49,6 @@ var KEY_AMOUNT = "amount";
 var KEY_MESSAGE = "message";
 var KEY_AVATAR_IMAGE_URL = "avatarImageUrl";
 var KEY_CREATED_DATE = "createdDateUTC";
-var KEY_TIMESTAMP = "timestamp";
 var KEY_FUNDRAISING_GOAL = "fundraisingGoal";
 
 var BASE_URL = "https://www.extra-life.org/api/";
@@ -128,10 +127,10 @@ function init()
 
     if (IS_DEBUG)
     {
-        participantInfoUrl = "http://localhost/participant.txt";
-        donorInfoUrl = "http://localhost/donors.txt";
-        teamInfoUrl = "http://localhost/team.txt";
-        teamDonorInfoUrl = "http://localhost/teamDonors.txt";
+        participantInfoUrl = "http://localhost:8888/participant.txt";
+        donorInfoUrl = "http://localhost:8888/donations.txt";
+        teamInfoUrl = "http://localhost:8888/team.txt";
+        teamDonorInfoUrl = "http://localhost:8888/teamDonations.txt";
 
         CLOCK_TIMER_INTERVAL = 1000;
         ACTION_TIMER_INTERVAL = 10000;
@@ -139,27 +138,7 @@ function init()
 
         paper.project.activeLayer.onMouseDown = function(event)
         {
-//            // The following block can be uncommented for faster
-//            // iteration when debugging issues or making new features.            
-//            stopTimer("action");
-//            stopTimer("clock");        
-//            infoGroup.visible = false;
-//            logoYearGroup.visible = false;
-//            donorGroup.visible = false;
-//
-//            logoCounter = 59;
-//
-//            logoGroup.visible = true;
-//            cmnhLogoItem.visible = false;
-//
-//            donorGroup.visible = true;
-//            donorAmountText.content = "A Gift";
-//            donorNameText.content = "Adam Slesinger"
-//            message = "Awesome job guys! Keep up the hard work! " +
-//                      "Go go go go go! w00t! I can't. Believe.";
-//            updateDonorGroup(message);
-//            updateDonorGroup(null);
-//            startTimer("donor");
+            // Use this to for faster testing of new features and fixes.            
         }
     }   
 
@@ -174,6 +153,22 @@ function startHelper()
 {
     startTimer("action");
     startTimer("clock");
+
+    if (!isNaN(testDonationSeconds) && testDonationSeconds != 0)
+    {
+        window.setTimeout(showTestDonation, testDonationSeconds * 1000);
+    }
+}
+
+function showTestDonation()
+{
+    testName = "John Smith";
+    testAmount = 100.00;
+    testMessage = "This is such a good cause. Good luck!";
+    testAvatar = "//assets.donordrive.com/clients/extralife/img/avatar-constituent-default.gif";
+    testCreatedOn = "2018-10-05T01:09:59.97+0000";
+
+    showNewDonor(testName, testAmount, testMessage, testAvatar, testCreatedOn);
 }
 
 function startTimer(timerType)
@@ -599,7 +594,7 @@ function onActionTimer()
     // has the highest priority over any other action.
     if (newDonors.length > 0)
     {                
-         showNewDonor();
+         getAndShowNewDonor();
          return;
     }
    
@@ -660,7 +655,7 @@ function onDonorTimer()
     startTimer("clock");
 }
 
-function showNewDonor()
+function getAndShowNewDonor()
 {
     if (newDonors.length < 1)
     {
@@ -668,21 +663,25 @@ function showNewDonor()
         return;
     }
 
-    stopTimer("action");
-    stopTimer("clock");
-    startTimer("donor");
-
     var donorEntry = newDonors.shift(); 
     shownDonors.push(donorEntry);
 
     // TODO: We got a undefined donorEntry once. Need to protect against it.
     // TypeError: Cannot read property 'donationAmount' of undefined
-    var donorAmount = donorEntry[KEY_AMOUNT];
     var donorName = donorEntry[KEY_DISPLAY_NAME];
+    var donorAmount = donorEntry[KEY_AMOUNT];    
     var donorMessage = donorEntry[KEY_MESSAGE];
     var donorAvatar = donorEntry[KEY_AVATAR_IMAGE_URL];
-    var donorCreatedOn = donorEntry[KEY_CREATED_DATE];
-    var donorTimestamp = donorEntry[KEY_TIMESTAMP];
+    var donorCreatedOn = donorEntry[KEY_CREATED_DATE]; 
+    
+    showNewDonor(donorName, donorAmount, donorMessage, donorAvatar, donorCreatedOn);
+}
+
+function showNewDonor(donorName, donorAmount, donorMessage, donorAvatar, donorCreatedOn)
+{
+    stopTimer("action");
+    stopTimer("clock");
+    startTimer("donor");
 
     donorAmountText.content = donorAmount == null
          ? A_GIFT
@@ -702,7 +701,7 @@ function showNewDonor()
 
     // Call the function that participants can use to run their own code when
     // a new donation arrives.
-    onNewDonation(donorName, donorAmount, donorMessage, donorAvatar, donorCreatedOn, donorTimestamp);
+    onNewDonation(donorName, donorAmount, donorMessage, donorAvatar, donorCreatedOn);
 }
 
 function updateDonorGroup(message)
@@ -887,7 +886,7 @@ function onDonorInfoSuccess(res)
    
     // Since this is not the first time getting donors, we have at least one new 
     // donation. Show it immediately.
-    showNewDonor();
+    getAndShowNewDonor();
 }
 
 function playSounds()
