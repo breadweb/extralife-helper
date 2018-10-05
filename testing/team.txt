@@ -1,9 +1,13 @@
 {
-   "totalRaisedAmount":14000.00,
-   "fundraisingGoal":15000.00,
-   "createdOn":"2017-08-20T21:24:10-0400",
-   "timestamp":20170821012410247,
-   "avatarImageURL":"//assets.donordrive.com/extralife/images/$event534$/avatar_team_35479.jpg",
-   "teamID":35479,
-   "name":"Best Team"
+   "fundraisingGoal":5000.00,
+   "isInviteOnly":false,
+   "captainDisplayName":"Adam and Ava",
+   "eventName":"Extra Life 2018",
+   "avatarImageURL":"//assets.donordrive.com/clients/extralife/img/avatar-team-default.gif",
+   "createdDateUTC":"2018-01-27T21:21:43.53+0000",
+   "eventID":539,
+   "sumDonations":100.00,
+   "teamID":39147,
+   "name":"Team Life Forge",
+   "numDonations":3
 }
