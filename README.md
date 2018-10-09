@@ -8,7 +8,7 @@ Distributed under the MIT license.
 
 All rights reserved.
 
-Date: 6/16/2018 20:10:19
+Date: 10/8/2018 15:39:29
 
 <br>
 
@@ -145,6 +145,10 @@ var showGoal = "true";                     // Set to "false" to only show amount
 //                                         // main screen and not also your goal
 var donationSounds = "cash.mp3,kids.mp3";  // Set this to your custom set of sounds, separated
 //                                         // by commas. Or set to "" to have no sounds play
+var yearMode = "false";                    // An alternate display to support fundraising all
+//                                         // year round. The count down/up timer is hidden
+var testDonationSeconds = 0;               // Number of seconds to show a test donation after
+//                                         // the Helper loads. Set to 0 to disable. 
 // ============================================================================================
 
 // If you would like additional things to happen when a new donation is 
@@ -206,9 +210,10 @@ There are two common reasons for this:
 **You see $0 for your donations received.**
 
 There are a few known reasons for this:
+* You are using an old version of the Helper that doesn't work with the current Extra Life API. Download the latest!
 * You haven't received any donations yet. Keep up the fundraising efforts!
-* You got your first donation, but it hasn't registered fully on the Extra Life site. Just give it a few minutes to show up.
-* The Extra Life website timed out when the Helper was trying to contact it. This can happen if the Extra Life website is under high load. Just be patient and the Helper will get the current total again when the Extra Life website responds.
+* You got your first donation, but it hasn't been registered fully by the Extra Life API. Just give it a few minutes to show up.
+* The Extra Life API timed out when the Helper was trying to contact it. This can happen if the Extra Life API is under high load. Just be patient and the Helper will get the current total again when the Extra API website responds.
 * You are trying to use the Helper in an unsupported way. Please review the instructions for proper use.
 
 **The Helper looks blurry.**
@@ -219,7 +224,7 @@ This is usually because you have streched the Helper in your presentation but fo
   
 ### Donations
 
-It's been really rewarding to see the Helper being used by so many people who are raising money for a great cause. I do not expect anything in return, but if you are determined, you could always make a donation on my [Extra Life page](https://www.extra-life.org/participant/bread) since this is all for the kids! Thank you!
+It's been really rewarding to see the Helper being used by so many people who are raising money for a great cause. I do not expect anything in return, but if you are determined, you could always make a donation on my [Extra Life page](https://www.extra-life.org/participant/bread) since this is all **F**or **T**he **K**ids! Thank you!
 
 <br>
   
@@ -245,5 +250,6 @@ I'd also love to see the Helper being used on your stream. Let me know your broa
 Adam "Bread" Slesinger
 
 * Twitch: [http://www.twitch.tv/bread_man](http://www.twitch.tv/bread_man)
+* Discord: [https://discord.gg/aArewEc](https://discord.gg/aArewEc)
 * Extra Life: [https://extra-life.org/participant/bread](https://extra-life.org/participant/bread)
 * Steam: [https://steamcommunity.com/id/breadweb](https://steamcommunity.com/id/breadweb)
