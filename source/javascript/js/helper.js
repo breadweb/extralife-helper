@@ -135,9 +135,12 @@ function init()
         ACTION_TIMER_INTERVAL = 10000;
         DONOR_TIMER_INTERVAL = 10000;
 
+        // Use this to set states and change views for faster testing
+        // of new features and fixes.        
         paper.project.activeLayer.onMouseDown = function(event)
         {
-            // Use this to for faster testing of new features and fixes.            
+            // Show the logos immediately.
+            logoCounter = LOGO_PLAY_MARK - 1;
         }
     }   
 
@@ -216,8 +219,6 @@ function initSound()
         soundObjects[i] = new Audio("audio/" + soundObjects[i].trim());
     }
 
-    console.log(responsiveVoice.getVoices());
-
     // Initialize text-to-speech.
     var mapping =
     {
@@ -228,7 +229,6 @@ function initSound()
     if (donationMessageVoice in mapping)
     {  
         selectedVoice = mapping[donationMessageVoice]; 
-        console.log("Selected Voice = " + selectedVoice);        
     }
 }
 
@@ -615,8 +615,7 @@ function onActionTimer()
          return;
     }
    
-    // Then check to see if we should be showing the logo animations
-    // instead of requesting information from the Extra Life website.
+    // Then check to see if we should be showing the logo animations.
     logoCounter++;
     if (logoCounter >= LOGO_PLAY_MARK)
     {
