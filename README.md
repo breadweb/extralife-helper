@@ -1,14 +1,12 @@
-## Extra Life Helper v2.2
+## Extra Life Helper v2.3
 https://github.com/breadweb/extralifehelper
 
 Copyright (c) 2013 - 2018, Adam "Bread" Slesinger
 http://www.breadweb.net
 
-Distributed under the MIT license.
-
 All rights reserved.
 
-Date: 10/8/2018 15:39:29
+Date: 10/19/2018 23:35:08
 
 <br>
 
@@ -22,7 +20,7 @@ This is an application I created in 2013 for [Extra Life](http://extra-life.org)
 
 Right-click the following link and select "Save link as..."
 
-[ExtraLifeHelper-v2.2.zip](https://github.com/breadweb/extralifehelper/releases/download/2.2/ExtraLifeHelper-v2.2.zip) (312 KB)
+[ExtraLifeHelper-v2.3.zip](https://github.com/breadweb/extralifehelper/releases/download/2.3/ExtraLifeHelper-v2.3.zip) (312 KB)
 
 <br>
   
@@ -238,6 +236,17 @@ Because the source is freely available here, you are welcome to modify the Helpe
 * Adding donation alerts while running in team mode
 
 If you make a change that would benefit all users of the Helper, please make a pull request and I would be happy to review it. Thank you!
+
+<br>
+
+### Credits
+
+The Helper would not be possible without the following libraries:
+
+* jQuery - [https://jquery.com/](https://jquery.com/)
+* Paper.js - [http://paperjs.org/](http://paperjs.org/)
+* TweenJS - [https://www.createjs.com/tweenjs](https://www.createjs.com/tweenjs)
+* ResponsiveVoice - [https://responsivevoice.org/](https://responsivevoice.org/)
 
 <br>
   

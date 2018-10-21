@@ -5,6 +5,7 @@
     <script type="text/javascript" src="js/paper.js"></script>
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/tweenjs.js"></script>
+    <script type="text/javascript" src="js/responsivevoice.js"></script>        
     <script type="text/javascript" src="js/helper-logos.js"></script>
     <script type="text/javascript" src="js/helper.js"></script>
     <script type="text/javascript">
@@ -26,7 +27,10 @@
         var showGoal = "true";                     // Set to "false" to only show amount raised on the
         //                                         // main screen and not also your goal
         var donationSounds = "cash.mp3,kids.mp3";  // Set this to your custom set of sounds, separated
-        //                                         // by commas. Or set to "" to have no sounds play
+        //                                         // by commas. Or set to "" to play no sounds
+        var donationMessageVoice = "UK-female";    // Voice style for the reading of donation messages.
+        //                                         // Set to US-female, UK-male, UK-female or set
+        //                                         // to "" to not read messages with text-to-speech.          
         var yearMode = "false";                    // An alternate display to support fundraising all
         //                                         // year round. The count down/up timer is hidden
         var testDonationSeconds = 0;		       // Number of seconds to show a test donation after

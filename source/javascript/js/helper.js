@@ -1,15 +1,13 @@
 /*!
- * Extra Life Helper v2.1
+ * Extra Life Helper v2.3
  * https://github.com/breadweb/extralifehelper
  *
  * Copyright (c) 2013 - 2018, Adam "Bread" Slesinger
  * http://www.breadweb.net
  *
- * Distributed under the MIT license.
- *
  * All rights reserved.
  *
- * Date: 6/16/2018 20:10:19
+ * Date: 10/19/2018 23:35:08
  *
  */
 
@@ -90,6 +88,7 @@ var shownDonors;
 var extraLifeLogoItem;
 var cmnhLogoItem;
 var logoCounter;
+var selectedVoice;
 
 $(document).ready(init);
 
@@ -210,10 +209,26 @@ function stopTimer(timerType)
 
 function initSound()
 {
+    // Load custom donation sounds.
     soundObjects = donationSounds.split(",");
     for (i = 0; i < soundObjects.length; i++)
     {
         soundObjects[i] = new Audio("audio/" + soundObjects[i].trim());
+    }
+
+    console.log(responsiveVoice.getVoices());
+
+    // Initialize text-to-speech.
+    var mapping =
+    {
+        "US-female": "US English Female",
+        "UK-male": "UK English Male",
+        "UK-female": "UK English Female"
+    };    
+    if (donationMessageVoice in mapping)
+    {  
+        selectedVoice = mapping[donationMessageVoice]; 
+        console.log("Selected Voice = " + selectedVoice);        
     }
 }
 
@@ -699,6 +714,14 @@ function showNewDonor(donorName, donorAmount, donorMessage, donorAvatar, donorCr
 
     playSounds();
 
+    if (selectedVoice)
+    {
+        setTimeout(function() {
+            speakText(donorMessage);
+        }, 5000);
+
+    }
+
     // Call the function that participants can use to run their own code when
     // a new donation arrives.
     onNewDonation(donorName, donorAmount, donorMessage, donorAvatar, donorCreatedOn);
@@ -897,6 +920,11 @@ function playSounds()
         soundObject.load();
         soundObject.play();
     }    
+}
+
+function speakText(text)
+{
+    responsiveVoice.speak(text, selectedVoice);
 }
 
 function setScale(group, amount, anchorPoint = "topCenter")
