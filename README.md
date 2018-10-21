@@ -29,15 +29,16 @@ Right-click the following link and select "Save link as..."
 * Counts down the days until Extra Life if there are three or more days left.
 * Counts down the hours until Extra Life if there are less than four days left.
 * Counts the total hours played if the start time has passed.
-* Shows total amount raised and updates in real-time.
+* Continually displays the total amount raised as it changes.
 * Shows new donation alerts as they arrive in real-time.
-* Allows specifying custom sound effects for the donation alert.
+* Donation messages are read with text-to-speech during donation alerts.
+* Custom sound effects can be specified for the donation alert.
 * Provides a hook to run custom JavaScript when a new donation arrives.
 * Occasionally shows the Extra Life and Children's Miracle Network Hospital logos.
 * Works in "participant" mode or "team" mode.
 * Supports four color themes and three border styles.
 * Works in XSplit, OBS Studio, and in any modern browser.
-* Runs locally without dependency on any remote service besides the Extra Life website.
+* Runs locally without dependency on any remote service besides the Extra Life API.
 * Core functionality and appearance can be modified with little JavaScript exprience.
 
 <br>
@@ -130,23 +131,26 @@ Open the **ExtraLifeHelper.html** file using a text editor such as Notepad and e
 // For use details and use instructions, visit https://github.com/breadweb/extralifehelper
 // For help or feature requests, visit http://bit.ly/helper-forum/
 // 
-var participantId = "265671";              // Set this to blank to run in team mode
+var participantId = "300817";              // Set this to blank to run in team mode
 var teamId = "";                           // Set this to blank to run in participant mode
-var startDate = "11-04-2017";              // Set to your local Extra Life start date
+var startDate = "11-03-2018";              // Set to your local Extra Life start date
 var startTime = "10:00:00";                // Set to your local Extra Life start time
 var helperTheme = "blue1";                 // Color theme: white1, gray1, blue1, or blue2
-var helperBorder = "rounded";              // Border type: rounded, square, or none
-var helperWidth = 264;                     // Width of the Helper, in pixels
-var helperHeight = 110;                    // Height of the Helper, in pixels
+var helperBorder = "none";                 // Border type: rounded, square, or none
+var helperWidth = 540;                     // Width of the Helper, in pixels
+var helperHeight = 225;                    // Height of the Helper, in pixels
 var showDonationAlerts = "true";           // Set to "false" to suppress donation alerts
 var showGoal = "true";                     // Set to "false" to only show amount raised on the
 //                                         // main screen and not also your goal
 var donationSounds = "cash.mp3,kids.mp3";  // Set this to your custom set of sounds, separated
-//                                         // by commas. Or set to "" to have no sounds play
+//                                         // by commas. Or set to "" to play no sounds
+var donationMessageVoice = "UK-female";    // Voice style for the reading of donation messages.
+//                                         // Set to US-female, UK-male, UK-female or set
+//                                         // to "" to not read messages with text-to-speech.      
 var yearMode = "false";                    // An alternate display to support fundraising all
 //                                         // year round. The count down/up timer is hidden
-var testDonationSeconds = 0;               // Number of seconds to show a test donation after
-//                                         // the Helper loads. Set to 0 to disable. 
+var testDonationSeconds = 0;		       // Number of seconds to show a test donation after
+//                                         // the Helper loads. Set to 0 to disable.        
 // ============================================================================================
 
 // If you would like additional things to happen when a new donation is 
