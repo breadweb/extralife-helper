@@ -434,6 +434,7 @@ function initScreen()
 
     donorMessageText1 = new paper.PointText({
         point: [centerX, 76],
+        content: "[Message]",
         fontFamily: "Cantarell-Regular",
         fontSize: 12,
         justification: 'center'
@@ -441,6 +442,7 @@ function initScreen()
     
     donorMessageText2 = new paper.PointText({
         point: [centerX, 88],
+        content: "[Message]",
         fontFamily: "Cantarell-Regular",
         fontSize: 12,
         justification: 'center'
