@@ -323,10 +323,10 @@ function initScreen()
     clockNumbers = [6];
     clockGroup = new paper.Group();
     var xPos = 0;
-    for (i = 0; i < 6; i++)
+    for (i = 0; i < 7; i++)
     {
         // A colon separator is needed after every two clock digits.
-        doesNeedSep = i > 0 && i % 2 == 0;
+        doesNeedSep = i == 3 || i == 5;
         
         if (doesNeedSep)
         {
@@ -586,19 +586,20 @@ function onClockTimer()
         timeDiff -= minutes * 1000 * 60;
         var seconds = Math.floor(timeDiff / 1000);            
         
-        var hourText = zeroPad(String(hours));
+        var hourText = zeroPad(String(hours), 3);
         var minuteText = zeroPad(String(minutes));
         var secondText = zeroPad(String(seconds));
         
-        // Special case for campaigns that might go longer than 99 hours.
-        hourText = hourText.substring(hourText.length - 2);
+        // Special case for campaigns that might go longer than 999 hours.
+        hourText = hourText.substring(hourText.length - 3);
                     
         clockNumbers[0].content = hourText.substring(0, 1);
-        clockNumbers[1].content = hourText.substring(1);
-        clockNumbers[2].content = minuteText.substring(0, 1);
-        clockNumbers[3].content = minuteText.substring(1);
-        clockNumbers[4].content = secondText.substring(0, 1);
-        clockNumbers[5].content = secondText.substring(1);    
+        clockNumbers[1].content = hourText.substring(1, 2);
+	clockNumbers[2].content = hourText.substring(2);
+        clockNumbers[3].content = minuteText.substring(0, 1);
+        clockNumbers[4].content = minuteText.substring(1);
+        clockNumbers[5].content = secondText.substring(0, 1);
+        clockNumbers[6].content = secondText.substring(1);    
         
         daysText.visible = false;
         clockGroup.visible = true;                
