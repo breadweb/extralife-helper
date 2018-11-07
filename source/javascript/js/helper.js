@@ -164,18 +164,18 @@ function init()
         DONOR_TIMER_INTERVAL = 10000;
 
         // Use this to set states and change views for faster testing
-        // of new features and fixes.
+        // of new features and fixes.        
         paper.project.activeLayer.onMouseDown = function(event)
         {
             // Show the logos immediately.
             logoCounter = LOGO_PLAY_MARK - 1;
         }
-    }
+    }   
 
     // A small delay helps prevent the jarring visual of the fonts loading
     // in over the temporary fonts in the first screen. A preloader would be
     // the clean way to do this, but hack is enough to work when the files
-    // are loaded locally.
+    // are loaded locally. 
     window.setTimeout(startHelper, 100);
 }
 
@@ -253,10 +253,10 @@ function initSound()
         "US-female": "US English Female",
         "UK-male": "UK English Male",
         "UK-female": "UK English Female"
-    };
+    };    
     if (donationMessageVoice in mapping)
-    {
-        selectedVoice = mapping[donationMessageVoice];
+    {  
+        selectedVoice = mapping[donationMessageVoice]; 
     }
 }
 
@@ -264,16 +264,16 @@ function initPage()
 {
     // Determine how much we've scaled up or down. Use that scale to change the width
     // and height. Note that the custom height values are ignored to keep the scale uniform.
-    helperScale = helperWidth / WIDTH_ORIGINAL;
+    helperScale = helperWidth / WIDTH_ORIGINAL;    
     helperHeight = HEIGHT_ORIGINAL * helperScale;
 
     if (!$('#myCanvas').length)
     {
         $(document.body).append(
-            '<canvas id="myCanvas" display="block" width="' +
-            helperWidth +
-            '" height="' +
-            helperHeight +
+            '<canvas id="myCanvas" display="block" width="' + 
+            helperWidth + 
+            '" height="' + 
+            helperHeight + 
             '"></canvas>');
 
         // Haven't figured out why custom styles for body are being ignored in chromium when
@@ -296,7 +296,7 @@ function initPaper()
 }
 
 function initScreen()
-{
+{       
     // Set up background used for all display groups and apply different style properties
     // based on user settings.
 
@@ -314,7 +314,7 @@ function initScreen()
         case "rounded":
             var backgroundPath = new paper.Path.Rectangle(backgroundRect, 6);
             backgroundPath.strokeWidth = 2;
-            break;
+            break;                 
         default: // square
             var backgroundPath = new paper.Path.Rectangle(backgroundRect);
             backgroundPath.strokeWidth = 2;
@@ -334,7 +334,7 @@ function initScreen()
         fontSize: 12,
         justification: 'center',
         visible: !yearMode
-    });
+    });    
 
     daysText = new paper.PointText({
         point: [centerX, 60],
@@ -343,10 +343,10 @@ function initScreen()
         fontSize: 50,
         justification: 'center',
         visible: !yearMode
-    });
+    });    
 
     // The clock face is set up with indvidual text items in order to
-    // keep all numbers fixed with. Otherwise the entire clock face
+    // keep all numbers fixed with. Otherwise the entire clock face 
     // will shift in minor increments when the value changes, looking weird.
     clockNumbers = [6];
     clockGroup = new paper.Group();
@@ -355,7 +355,7 @@ function initScreen()
     {
         // A colon separator is needed after every two clock digits.
         doesNeedSep = i > 0 && i % 2 == 0;
-
+        
         if (doesNeedSep)
         {
             // Add a colon separator.
@@ -383,32 +383,32 @@ function initScreen()
 
         xPos += 28;
     }
-
+    
     clockGroup.position = [centerX, 45];
     clockGroup.visible = false;
-
+    
     raisedText = new paper.PointText({
         point: [centerX, 78],
         content: 'AMOUNT RAISED:',
         fontFamily: "Furore",
         fontSize: 12,
         justification: 'center'
-    });
+    });        
 
-    // Year mode is for those who want to fundraise all year long and so a
+    // Year mode is for those who want to fundraise all year long and so a 
     // count down timer does not make sense. Instead, we show the logos.
     if (yearMode)
     {
         raisedText.content = new Date().getFullYear() + " " + raisedText.content;
     }
-
+    
     moneyText = new paper.PointText({
         point: [centerX, 100],
         content: '$0',
         fontFamily: "Cantarell-Bold",
         fontSize: 20,
         justification: 'center'
-    });
+    });    
 
     infoGroup = new paper.Group();
     infoGroup.addChild(titleText);
@@ -422,8 +422,8 @@ function initScreen()
     var extraLifeLogoYearItem;
     var cmnhLogoYearItem;
 
-    paper.project.importSVG(extraLifeLogo, function(item) {
-        extraLifeLogoYearItem = item;
+    paper.project.importSVG(extraLifeLogo, function(item) {        
+        extraLifeLogoYearItem = item;            
         extraLifeLogoYearItem.position = [155, 71];
         extraLifeLogoYearItem.scale(0.52, [0, 0]);
         extraLifeLogoYearItem.visible = yearMode;
@@ -436,10 +436,10 @@ function initScreen()
         cmnhLogoYearItem.visible = yearMode;
     });
 
-    logoYearGroup = new paper.Group();
+    logoYearGroup = new paper.Group();    
     logoYearGroup.addChild(extraLifeLogoYearItem);
     logoYearGroup.addChild(cmnhLogoYearItem);
-
+    
 
     // Setup the donor group which contains information about a newly
     // received donation.
@@ -450,7 +450,7 @@ function initScreen()
         fontFamily: "Cantarell-Bold",
         fontSize: DONOR_AMOUNT_FONT_SIZE,
         justification: 'center'
-    });
+    });    
 
     donorNameText = new paper.PointText({
         point: [centerX, DONOR_NAME_POINT_Y],
@@ -458,7 +458,7 @@ function initScreen()
         fontFamily: "Furore",
         fontSize: DONOR_NAME_FONT_SIZE,
         justification: 'center'
-    });
+    });    
 
     donorMessageText1 = new paper.PointText({
         point: [centerX, 76],
@@ -466,15 +466,15 @@ function initScreen()
         fontFamily: "Cantarell-Regular",
         fontSize: 12,
         justification: 'center'
-    });
-
+    });   
+    
     donorMessageText2 = new paper.PointText({
         point: [centerX, 88],
         content: "[Message]",
         fontFamily: "Cantarell-Regular",
         fontSize: 12,
         justification: 'center'
-    });
+    });    
 
     donorGroup = new paper.Group();
     donorGroup.addChild(donorAmountText);
@@ -526,9 +526,9 @@ function initScreen()
 
     // Setup the animating logos.
 
-    paper.project.importSVG(extraLifeLogo, function(item) {
-        extraLifeLogoItem = item;
-        extraLifeLogoItem.position = [142, 62];
+    paper.project.importSVG(extraLifeLogo, function(item) {        
+        extraLifeLogoItem = item;            
+        extraLifeLogoItem.position = [142, 62];  
         extraLifeLogoItem.opacity = 0;
     });
 
@@ -538,7 +538,7 @@ function initScreen()
         cmnhLogoItem.opacity = 0;
     });
 
-    logoGroup = new paper.Group();
+    logoGroup = new paper.Group();    
     logoGroup.addChild(extraLifeLogoItem);
     logoGroup.addChild(cmnhLogoItem);
     logoGroup.visible = false;
@@ -581,11 +581,11 @@ function initScreen()
             daysText.fillColor = WHITE;
             clockGroup.fillColor = WHITE;
             raisedText.fillColor = DARK_BLUE;
-            moneyText.fillColor = DARK_BLUE;
+            moneyText.fillColor = DARK_BLUE;    
             donorAmountText.fillColor = WHITE;
             donorNameText.fillColor = DARK_BLUE;
-            donorMessageText1.fillColor = DARK_BLUE;
-            donorMessageText2.fillColor = DARK_BLUE;
+            donorMessageText1.fillColor = DARK_BLUE;            
+            donorMessageText2.fillColor = DARK_BLUE;    
             thankYouText.fillColor = DARK_BLUE;
             thankYouName.fillColor = WHITE;
             thankYouAmount.fillColor = DARK_BLUE;
@@ -603,7 +603,7 @@ function initScreen()
             moneyText.fillColor = DARK_BLUE;
             donorAmountText.fillColor = WHITE;
             donorNameText.fillColor = DARK_BLUE;
-            donorMessageText1.fillColor = DARK_BLUE;
+            donorMessageText1.fillColor = DARK_BLUE;            
             donorMessageText2.fillColor = DARK_BLUE;
             thankYouText.fillColor = DARK_BLUE;
             thankYouName.fillColor = WHITE;
@@ -619,11 +619,11 @@ function initScreen()
             daysText.fillColor = LIGHT_BLUE;
             clockGroup.fillColor = LIGHT_BLUE;
             raisedText.fillColor = DARK_BLUE;
-            moneyText.fillColor = DARK_BLUE;
+            moneyText.fillColor = DARK_BLUE;    
             donorAmountText.fillColor = LIGHT_BLUE;
             donorNameText.fillColor = DARK_BLUE;
-            donorMessageText1.fillColor = DARK_BLUE;
-            donorMessageText2.fillColor = DARK_BLUE;
+            donorMessageText1.fillColor = DARK_BLUE;            
+            donorMessageText2.fillColor = DARK_BLUE;    
             thankYouText.fillColor = DARK_BLUE;
             thankYouName.fillColor = LIGHT_BLUE;
             thankYouAmount.fillColor = DARK_BLUE;
@@ -641,28 +641,28 @@ function onClockTimer()
     // and the difference is the amount of time left until the start time. Otherwise,
     // the difference is the amount of time played.
     if (timeDiff < 0)
-    {
+    {        
         timeDiff = timeDiff * -1;
         titleText.content = TEXT_HOURS_UNTIL;
         isCuntingUp = false;
     }
-    else
+    else                
     {
         titleText.content = TEXT_HOURS_PLAYED;
         isCountingUp = true;
     }
-
+    
     var days = Math.floor(timeDiff / 1000 / 60 / 60 / 24);
-
-    // If there are three or more days left, the text will be updated to show how many
-    // days are left before the start time. Otherwise, we will show how the time which
+    
+    // If there are three or more days left, the text will be updated to show how many 
+    // days are left before the start time. Otherwise, we will show how the time which 
     // could be counting down or up.
     if (days > 3 && !isCountingUp)
     {
         titleText.content = TEXT_DAYS_UNTIL;
         daysText.content = days;
         daysText.visible = true;
-        clockGroup.visible = false;
+        clockGroup.visible = false;                
     }
     else
     {
@@ -670,24 +670,24 @@ function onClockTimer()
         timeDiff -= hours * 1000 * 60 * 60;
         var minutes = Math.floor(timeDiff / 1000 / 60);
         timeDiff -= minutes * 1000 * 60;
-        var seconds = Math.floor(timeDiff / 1000);
-
+        var seconds = Math.floor(timeDiff / 1000);            
+        
         var hourText = zeroPad(String(hours));
         var minuteText = zeroPad(String(minutes));
         var secondText = zeroPad(String(seconds));
-
+        
         // Special case for campaigns that might go longer than 99 hours.
         hourText = hourText.substring(hourText.length - 2);
-
+                    
         clockNumbers[0].content = hourText.substring(0, 1);
         clockNumbers[1].content = hourText.substring(1);
         clockNumbers[2].content = minuteText.substring(0, 1);
         clockNumbers[3].content = minuteText.substring(1);
         clockNumbers[4].content = secondText.substring(0, 1);
-        clockNumbers[5].content = secondText.substring(1);
-
+        clockNumbers[5].content = secondText.substring(1);    
+        
         daysText.visible = false;
-        clockGroup.visible = true;
+        clockGroup.visible = true;                
     }
 }
 
@@ -696,11 +696,11 @@ function onActionTimer()
     // First check to see if we should be showing any new donations. This
     // has the highest priority over any other action.
     if (newDonors.length > 0)
-    {
+    {                
          getAndShowNewDonor();
          return;
     }
-
+   
     // Check if it's time to start rolling thank yous
     thankYouCounter++;
     if (thankYouCounter >= THANK_YOU_PLAY_MARK && enableThankYouMode)
@@ -717,17 +717,17 @@ function onActionTimer()
         logoCounter = 0;
         animateLogos();
         return;
-    }
-
+    }   
+    
     infoGroup.visible = true;
     logoYearGroup.visible = true;
     donorGroup.visible = false;
     thankYouGroup.visible = false;
     logoGroup.visible = false;
-
+    
     // Otherwise, poll general info for player or team to see if total
     // amount raised has changed.
-    requestGeneralInfo();
+    requestGeneralInfo();        
 }
 
 function showThankYous()
@@ -857,7 +857,7 @@ function animateLogos()
     donorGroup.visible = false;
     thankYouGroup.visible = false;
     logoGroup.visible = true;
-
+    
     createjs.Tween.get(extraLifeLogoItem)
         .wait(200)
         .to({opacity:1}, 1500)
@@ -893,17 +893,17 @@ function getAndShowNewDonor()
         return;
     }
 
-    var donorEntry = newDonors.shift();
+    var donorEntry = newDonors.shift(); 
     shownDonors.push(donorEntry);
 
     // TODO: We got a undefined donorEntry once. Need to protect against it.
     // TypeError: Cannot read property 'donationAmount' of undefined
     var donorName = donorEntry[KEY_DISPLAY_NAME];
-    var donorAmount = donorEntry[KEY_AMOUNT];
+    var donorAmount = donorEntry[KEY_AMOUNT];    
     var donorMessage = donorEntry[KEY_MESSAGE];
     var donorAvatar = donorEntry[KEY_AVATAR_IMAGE_URL];
-    var donorCreatedOn = donorEntry[KEY_CREATED_DATE];
-
+    var donorCreatedOn = donorEntry[KEY_CREATED_DATE]; 
+    
     showNewDonor(donorName, donorAmount, donorMessage, donorAvatar, donorCreatedOn);
 }
 
@@ -960,14 +960,14 @@ function updateDonorGroup(message)
     donorMessageText2.content = "";
 
     // If there is a message, add it. Otherwise, we'll rescale the
-    // donor amount and name so it is bigger and fills the area more.
+    // donor amount and name so it is bigger and fills the area more. 
     if (message != null)
     {
         // Remove some characters that make things look weird.
         message = message.split("\r\n").join(" ");
 
-        // Paper doesn't support text areas yet so we'll manually fill in
-        // up to two lines of the message and support a max number of
+        // Paper doesn't support text areas yet so we'll manually fill in 
+        // up to two lines of the message and support a max number of 
         // charcters per line.
         var words = message.split(' ');
         var totalChars = 0;
@@ -986,7 +986,7 @@ function updateDonorGroup(message)
                 }
                 donorMessageText2.content += "...";
                 break;
-            }
+            }    
             else if (totalChars > maxCharsPerLine)
             {
                 donorMessageText2.content += " " + word;
@@ -1017,13 +1017,13 @@ function updateDonorGroup(message)
 
     // Re-apply scaling after making changes to text size and positions.
     setScale(infoGroup, helperScale);
-    setScale(donorGroup, helperScale);
+    setScale(donorGroup, helperScale);    
 }
 
 function requestGeneralInfo()
 {
     var url = participantId ? participantInfoUrl : teamInfoUrl;
-    makeRequest(url, onGeneralInfoSuccess, onRequestError);
+    makeRequest(url, onGeneralInfoSuccess, onRequestError);          
 }
 
 function requestDonorInfo()
@@ -1035,7 +1035,7 @@ function requestDonorInfo()
 function makeRequest(url, onSuccess, onError)
 {
     log(url);
-
+        
     $.ajax({
         url: url,
         type: 'GET',
@@ -1046,7 +1046,7 @@ function makeRequest(url, onSuccess, onError)
             onSuccess(res);
         },
         error: function(res) {
-            onError(res);
+            onError(res);    
         }
     });
 }
@@ -1067,7 +1067,7 @@ function onGeneralInfoSuccess(res)
 
     // If the amount raised is more than the last recorded value, then one or
     // more donations have come in since the last time general info was polled.
-    // This is always true at startup, but the processing of donations will
+    // This is always true at startup, but the processing of donations will 
     // ensure we don't treat all donations as new the first time.
     if (raised > lastRaised)
     {
@@ -1075,14 +1075,14 @@ function onGeneralInfoSuccess(res)
         {
             requestDonorInfo();
         }
-    }
+    }    
 
     lastRaised = raised;
 }
 
 function onRequestError(res)
 {
-    // Errors are usually due to transient network failures so ignore and try
+    // Errors are usually due to transient network failures so ignore and try 
     // again at the next timer tick.
     log(res);
 }
@@ -1098,14 +1098,14 @@ function onDonorInfoSuccess(res)
         shownDonors = res;
         return;
     }
-
-    // Go through the list and find the new ones.
+    
+    // Go through the list and find the new ones.            
     for (i = 0; i < res.length; i++)
     {
         var wasFound = false;
         for (j = 0; j < shownDonors.length; j++)
         {
-            // A unique ID is provided by Extra Life for donations (timestamp) but for
+            // A unique ID is provided by Extra Life for donations (timestamp) but for 
             // some reason, jquery ajax response objects sometimes show the wrong timestamp
             // value and this can cause donation alerts to now show. Until we can figure
             // out why, resort to the old method of uniquely identifying a donation by a
@@ -1117,14 +1117,14 @@ function onDonorInfoSuccess(res)
                 break;
             }
         }
-
+        
         if (!wasFound)
         {
             newDonors.unshift(res[i]);
         }
     }
-
-    // Since this is not the first time getting donors, we have at least one new
+   
+    // Since this is not the first time getting donors, we have at least one new 
     // donation. Show it immediately.
     getAndShowNewDonor();
 }
@@ -1136,7 +1136,7 @@ function playSounds()
         soundObject = soundObjects[i];
         soundObject.load();
         soundObject.play();
-    }
+    }    
 }
 
 function speakText(text)
