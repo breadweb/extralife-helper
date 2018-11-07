@@ -5,16 +5,15 @@
     <script type="text/javascript" src="js/paper.js"></script>
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/tweenjs.js"></script>
-    <script type="text/javascript" src="js/responsivevoice.js"></script>        
+    <script type="text/javascript" src="js/responsivevoice.js"></script>
     <script type="text/javascript" src="js/helper-logos.js"></script>
     <script type="text/javascript" src="js/helper.js"></script>
     <script type="text/javascript">
-
         // Extra Life Helper
         // ============================================================================================
         // For use details and use instructions, visit https://github.com/breadweb/extralifehelper
         // For help or feature requests, visit http://bit.ly/helper-forum/
-        // 
+        //
         var participantId = "300817";              // Set this to blank to run in team mode
         var teamId = "";                           // Set this to blank to run in participant mode
         var startDate = "11-03-2018";              // Set to your local Extra Life start date
@@ -30,20 +29,23 @@
         //                                         // by commas. Or set to "" to play no sounds
         var donationMessageVoice = "UK-female";    // Voice style for the reading of donation messages.
         //                                         // Set to US-female, UK-male, UK-female or set
-        //                                         // to "" to not read messages with text-to-speech.    
+        //                                         // to "" to not read messages with text-to-speech.
+        var voiceWait = 5000;                      // Set delay on saying donation message (milliseconds, default 5000).
+        //                                         // Change this if you have a long playing sound on your donation, and
+        //                                         // and want to wait until it's done playing to start reading message.
         var yearMode = "false";                    // An alternate display to support fundraising all
         //                                         // year round. The count down/up timer is hidden
+        var enableThankYouMode = true;             // Occasionally cycle through the list of your donors
+        //                                         // and display a thank you.
         var testDonationSeconds = 0;               // Number of seconds to show a test donation after
         //                                         // the Helper loads. Set to 0 to disable.
         // ============================================================================================
-
-        // If you would like additional things to happen when a new donation is 
+        // If you would like additional things to happen when a new donation is
         // received, put them in this function.
         function onNewDonation(donorName, donationAmount, message, avatarImageURL, createdOn)
         {
             // Your custom logic here.
         }
-
     </script>
 </head>
 <body></body>
