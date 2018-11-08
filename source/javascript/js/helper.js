@@ -732,7 +732,6 @@ function onActionTimer()
 
 function showThankYous()
 {
-    shownDonors.push({displayName: "John Doe"});
     if (typeof shownDonors == 'undefined' || shownDonors.length == 0)
     {
         // There aren't any donors yet :(
