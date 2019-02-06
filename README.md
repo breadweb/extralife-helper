@@ -12,7 +12,7 @@ Date: 10/19/2018 23:35:08
 
 ### Introduction
 
-This is an application I created in 2013 for [Extra Life](http://extra-life.org). I wanted something to track the time until Extra Life, track my total time playing on game day, and show my fundraising information. The following year I made it available to the community and I was excited to see it adopted by so many participants.
+This is an application I created in 2013 for [Extra Life](http://extra-life.org). I wanted something to track the time until Extra Life, track my total time playing on game day, and show my fundraising information. I also wanted to celebrate new donations in real time when streaming during the marathon. The following year I made it available to the community and I was excited to see it adopted by so many participants.
 
 <br>
   
@@ -37,7 +37,7 @@ Right-click the following link and select "Save link as..."
 * Occasionally shows the Extra Life and Children's Miracle Network Hospital logos.
 * Works in "participant" mode or "team" mode.
 * Supports four color themes and three border styles.
-* Works in XSplit, OBS Studio, and in any modern browser.
+* Works in XSplit, OBS Studio, and any modern browser.
 * Runs locally without dependency on any remote service besides the Extra Life API.
 * Core functionality and appearance can be modified with little JavaScript exprience.
 
