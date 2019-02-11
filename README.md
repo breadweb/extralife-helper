@@ -1,7 +1,7 @@
 ## Extra Life Helper v2.3
 https://github.com/breadweb/extralifehelper
 
-Copyright (c) 2013 - 2018, Adam "Bread" Slesinger
+Copyright (c) 2013 - 2019, Adam "Bread" Slesinger
 http://www.breadweb.net
 
 All rights reserved.
