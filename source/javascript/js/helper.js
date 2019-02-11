@@ -37,6 +37,8 @@ var DONOR_NAME_FONT_SIZE_ALT = 14;
 
 var TEXT_DAYS_UNTIL = "DAYS UNTIL EXTRA LIFE:";
 var TEXT_HOURS_UNTIL = "HOURS UNTIL EXTRA LIFE:";
+var TEXT_EXTRA_LIFE = "PLAYING GAMES TO HEAL KIDS!";
+var TEXT_AMOUNT_RAISED = "MY AMOUNT RAISED:"
 var TEXT_HOURS_PLAYED = "TOTAL TIME PLAYED:";
 var TEXT_ANONYMOUS = "Anonymous";
 var TEXT_A_GFIT = "A Gift";
@@ -73,7 +75,6 @@ var donorMessageText;
 var donorGroup
 var clockGroup;
 var logoGroup;
-var logoYearGroup;
 var actionTimerId;
 var clockTimerId;
 var donorTimerId;
@@ -301,21 +302,19 @@ function initScreen()
 
     titleText = new paper.PointText({
         point: [centerX, 20],
-        content: TEXT_DAYS_UNTIL,
+        content: yearMode ? TEXT_EXTRA_LIFE : TEXT_DAYS_UNTIL,
         fontFamily: "Furore",
         fontSize: 12,
-        justification: 'center',
-        visible: !yearMode
+        justification: 'center'
     });    
 
     daysText = new paper.PointText({
         point: [centerX, 60],
-        content: '0',
+        content: yearMode ? new Date().getFullYear() : '0',
         fontFamily: "LetsGoDigital",
         fontSize: 50,
-        justification: 'center',
-        visible: !yearMode
-    });    
+        justification: 'center'
+    });  
 
     // The clock face is set up with indvidual text items in order to
     // keep all numbers fixed with. Otherwise the entire clock face 
@@ -336,8 +335,7 @@ function initScreen()
                 content: ':',
                 fontFamily: "LetsGoDigital",
                 fontSize: 50,
-                justification: 'center',
-                visible: !yearMode
+                justification: 'center'
             });
             clockGroup.addChild(colonSep);
             xPos += 10;
@@ -348,8 +346,7 @@ function initScreen()
             content: '0',
             fontFamily: "LetsGoDigital",
             fontSize: 50,
-            justification: 'center',
-            visible: !yearMode
+            justification: 'center'
         });
         clockGroup.addChild(clockNumbers[i]);
 
@@ -361,19 +358,12 @@ function initScreen()
     
     raisedText = new paper.PointText({
         point: [centerX, 78],
-        content: 'AMOUNT RAISED:',
+        content: TEXT_AMOUNT_RAISED,
         fontFamily: "Furore",
         fontSize: 12,
         justification: 'center'
     });        
-
-    // Year mode is for those who want to fundraise all year long and so a 
-    // count down timer does not make sense. Instead, we show the logos.
-    if (yearMode)
-    {
-        raisedText.content = new Date().getFullYear() + " " + raisedText.content;
-    }
-    
+   
     moneyText = new paper.PointText({
         point: [centerX, 100],
         content: '$0',
@@ -392,26 +382,7 @@ function initScreen()
 
     // Logos for year mode
     var extraLifeLogoYearItem;
-    var cmnhLogoYearItem;
-
-    paper.project.importSVG(extraLifeLogo, function(item) {        
-        extraLifeLogoYearItem = item;            
-        extraLifeLogoYearItem.position = [155, 71];
-        extraLifeLogoYearItem.scale(0.52, [0, 0]);
-        extraLifeLogoYearItem.visible = yearMode;
-    });
-
-    paper.project.importSVG(cmnhLogo, function(item) {
-        cmnhLogoYearItem = item;
-        cmnhLogoYearItem.position = [417, 79];
-        cmnhLogoYearItem.scale(0.52, [0, 0]);
-        cmnhLogoYearItem.visible = yearMode;
-    });
-
-    logoYearGroup = new paper.Group();    
-    logoYearGroup.addChild(extraLifeLogoYearItem);
-    logoYearGroup.addChild(cmnhLogoYearItem);
-    
+    var cmnhLogoYearItem;  
 
     // Setup the donor group which contains information about a newly
     // received donation.
@@ -479,7 +450,6 @@ function initScreen()
     setScale(infoGroup, helperScale);
     setScale(donorGroup, helperScale);
     setScale(logoGroup, helperScale, "topLeft");
-    setScale(logoYearGroup, helperScale, "topLeft");
 
     // Apply the selected color theme to all items.
 
@@ -491,14 +461,13 @@ function initScreen()
             titleText.fillColor = WHITE;
             daysText.fillColor = GREEN;
             clockGroup.fillColor = GREEN;
-            raisedText.fillColor = yearMode ? GREEN : WHITE;
+            raisedText.fillColor = WHITE;
             moneyText.fillColor = WHITE;
             donorAmountText.fillColor = GREEN;
             donorNameText.fillColor = WHITE;
             donorMessageText1.fillColor = WHITE;
             donorMessageText2.fillColor = WHITE;
             logoGroup.fillColor = WHITE;
-            logoYearGroup.fillColor = WHITE;
             break;
         case "blue2":
             backgroundPath.strokeColor = DARK_BLUE;
@@ -513,7 +482,6 @@ function initScreen()
             donorMessageText1.fillColor = DARK_BLUE;            
             donorMessageText2.fillColor = DARK_BLUE;    
             logoGroup.fillColor = WHITE;
-            logoYearGroup.fillColor = WHITE;
             break;
         case "gray1":
             backgroundPath.strokeColor = DARK_BLUE;
@@ -528,7 +496,6 @@ function initScreen()
             donorMessageText1.fillColor = DARK_BLUE;            
             donorMessageText2.fillColor = DARK_BLUE;
             logoGroup.fillColor = WHITE;
-            logoYearGroup.fillColor = WHITE;
             break;
         default: // white1
             backgroundPath.strokeColor = DARK_BLUE;
@@ -625,7 +592,6 @@ function onActionTimer()
     }   
     
     infoGroup.visible = true;
-    logoYearGroup.visible = true;
     donorGroup.visible = false;
     logoGroup.visible = false;
     
@@ -640,7 +606,6 @@ function animateLogos()
     stopTimer("clock");
 
     infoGroup.visible = false;
-    logoYearGroup.visible = false;
     donorGroup.visible = false;
     logoGroup.visible = true;
     
@@ -709,7 +674,6 @@ function showNewDonor(donorName, donorAmount, donorMessage, donorAvatar, donorCr
     updateDonorGroup(donorMessage);
 
     infoGroup.visible = false;
-    logoYearGroup.visible = false;
     donorGroup.visible = true;
     logoGroup.visible = false;
 

@@ -2,6 +2,7 @@
 https://github.com/breadweb/extralifehelper
 
 Copyright (c) 2013 - 2018, Adam "Bread" Slesinger
+
 http://www.breadweb.net
 
 All rights reserved.
@@ -149,7 +150,7 @@ var donationMessageVoice = "UK-female";    // Voice style for the reading of don
 //                                         // to "" to not read messages with text-to-speech.      
 var yearMode = "false";                    // An alternate display to support fundraising all
 //                                         // year round. The count down/up timer is hidden
-var testDonationSeconds = 0;		       // Number of seconds to show a test donation after
+var testDonationSeconds = 0;               // Number of seconds to show a test donation after
 //                                         // the Helper loads. Set to 0 to disable.        
 // ============================================================================================
 
