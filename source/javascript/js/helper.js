@@ -86,10 +86,11 @@ var extraLifeLogoItem;
 var cmnhLogoItem;
 var logoCounter;
 var selectedVoice;
+var scriptsLoaded;
 
-$(document).ready(init);
+document.addEventListener('DOMContentLoaded', onReady, false);
 
-function init()
+function onReady()
 {
     // Customize the URLs.
     participantInfoUrl = PARTICIPANT_INFO_URL.replace("{1}", participantId);
@@ -116,10 +117,38 @@ function init()
     logoCounter = 0;
     yearMode = yearMode == "true" ? true : false;
 
+    loadScripts();
+}
+
+function loadScripts()
+{
+    scriptsLoaded = 0;
+    const scripts = ["js/paper.js", "js/jquery.js", "js/tweenjs.js", "js/responsivevoice.js"];
+    for (let i = 0; i < scripts.length; i++)
+    {
+        var element = document.createElement("script");
+        element.type = "text/javascript";
+        element.src = scripts[i];
+        element.onload = onScriptLoaded;
+        document.head.append(element);
+    }
+}
+
+function onScriptLoaded()
+{
+    scriptsLoaded++;
+    if (scriptsLoaded >= 4)
+    {
+        initHelper();
+    }
+}
+
+function initHelper()
+{
     initSound();
     initPage();
     initPaper();
-    initScreen();
+    initScreen(); 
 
     if (IS_DEBUG)
     {
@@ -139,13 +168,13 @@ function init()
             // Show the logos immediately.
             logoCounter = LOGO_PLAY_MARK - 1;
         }
-    }   
-
+    }     
+    
     // A small delay helps prevent the jarring visual of the fonts loading
     // in over the temporary fonts in the first screen. A preloader would be
     // the clean way to do this, but hack is enough to work when the files
     // are loaded locally. 
-    window.setTimeout(startHelper, 100);
+    window.setTimeout(startHelper, 100);    
 }
 
 function startHelper()
