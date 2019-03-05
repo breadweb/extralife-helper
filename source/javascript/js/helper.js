@@ -86,7 +86,7 @@ var extraLifeLogoItem;
 var cmnhLogoItem;
 var logoCounter;
 var selectedVoice;
-var scriptsLoaded;
+var itemsLoaded = 0;
 
 document.addEventListener('DOMContentLoaded', onReady, false);
 
@@ -117,27 +117,33 @@ function onReady()
     logoCounter = 0;
     yearMode = yearMode == "true" ? true : false;
 
-    loadScripts();
+    loadItems();
 }
 
-function loadScripts()
+function loadItems()
 {
-    scriptsLoaded = 0;
     const scripts = ["js/paper.js", "js/jquery.js", "js/tweenjs.js", "js/responsivevoice.js"];
     for (let i = 0; i < scripts.length; i++)
     {
         var element = document.createElement("script");
         element.type = "text/javascript";
         element.src = scripts[i];
-        element.onload = onScriptLoaded;
+        element.onload = onItemsLoaded;
         document.head.append(element);
     }
+
+    const fonts = ["Cantarell-Regular", "Cantarell-Bold", "LetsGoDigital", "Furore"];
+    for (let i = 0; i < fonts.length; i++)
+    {
+        document.fonts.load(fonts[i]).then(onItemsLoaded())
+    } 
 }
 
-function onScriptLoaded()
+function onItemsLoaded()
 {
-    scriptsLoaded++;
-    if (scriptsLoaded >= 4)
+    itemsLoaded++;
+    console.log(itemsLoaded);
+    if (itemsLoaded >= 8)
     {
         initHelper();
     }
@@ -171,9 +177,7 @@ function initHelper()
     }     
     
     // A small delay helps prevent the jarring visual of the fonts loading
-    // in over the temporary fonts in the first screen. A preloader would be
-    // the clean way to do this, but hack is enough to work when the files
-    // are loaded locally. 
+    // in over the temporary fonts in the first screen.
     window.setTimeout(startHelper, 100);    
 }
 
@@ -274,17 +278,11 @@ function initPage()
             helperHeight + 
             '"></canvas>');
 
-        // Haven't figured out why custom styles for body are being ignored in chromium when
-        // including in a standard way so explicitly setting them here.
+        // Haven't figured out why custom styles for body are being ignored in 
+        // chromium so explicitly setting them here.
         $("body").css("margin", "0px");
         $("body").css("overflow", "hidden");
     }
-
-    // Force some fonts to load before they're used in the paper text items.
-    $("body").append("<div style='font-family:Cantarell-Regular'> </div>");
-    $("body").append("<div style='font-family:Cantarell-Bold'> </div>");
-    $("body").append("<div style='font-family:LetsGoDigital'> </div>");
-    $("body").append("<div style='font-family:Furore'> </div>");
 }
 
 function initPaper()
