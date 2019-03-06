@@ -87,6 +87,7 @@ var cmnhLogoItem;
 var logoCounter;
 var selectedVoice;
 var itemsLoaded = 0;
+var isLocal = true;
 
 document.addEventListener('DOMContentLoaded', onReady, false);
 
@@ -120,7 +121,22 @@ function onReady() {
 }
 
 function loadItems() {
-    const scripts = ["js/paper.js", "js/jquery.js", "js/tweenjs.js", "js/responsivevoice.js"];
+    if (isLocal) {
+        var scripts = [
+            "js/paper-core.min.js",
+            "js/jquery.min.js",
+            "js/tweenjs.min.js",
+            "js/responsivevoice.js"
+        ];
+    } else {
+        var scripts = [
+            "https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.12.0/paper-core.min.js",
+            "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js",
+            "https://cdnjs.cloudflare.com/ajax/libs/tweenjs/1.0.2/tweenjs.min.js",
+            "http://code.responsivevoice.org/responsivevoice.js"            
+        ];
+    }
+
     for (let i = 0; i < scripts.length; i++) {
         var element = document.createElement("script");
         element.type = "text/javascript";
@@ -129,16 +145,15 @@ function loadItems() {
         document.head.append(element);
     }
 
-    const fonts = ["Cantarell-Regular", "Cantarell-Bold", "LetsGoDigital", "Furore"];
-    for (let i = 0; i < fonts.length; i++) {
-        document.fonts.load(fonts[i]).then(onItemsLoaded())
-    }
+    document.fonts.ready.then(function() {
+        onItemsLoaded();
+    });
 }
 
 function onItemsLoaded() {
     itemsLoaded++;
     console.log(itemsLoaded);
-    if (itemsLoaded >= 8) {
+    if (itemsLoaded >= 5) {
         initHelper();
     }
 }
@@ -260,7 +275,7 @@ function initPage() {
         // chromium so explicitly setting them here.
         $("body").css("margin", "0px");
         $("body").css("overflow", "hidden");
-    }
+    }    
 }
 
 function initPaper() {
