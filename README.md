@@ -202,11 +202,9 @@ The following video is a compilation of donations received during the Extra Life
   
 ### Troubleshooting
 
-**You see a "CHECK CONFIG" message instead of your donation total.**
+**You see a "X is missing or invalid" message.**
 
-There are two common reasons for this:
-* Your participant ID is not correct or you made an accidental typo.
-* You are trying to use the Helper in an unsupported way. Please review the instructions.
+This usually happens due to a typo when editing the **ExtraLifeHelper.html** file. If you can find the typo, try downloading a fresh copy and trying again.  
 
 **You see $0 for your donations received.**
 
@@ -214,12 +212,12 @@ There are a few known reasons for this:
 * You are using an old version of the Helper that doesn't work with the current Extra Life API. Download the latest!
 * You haven't received any donations yet. Keep up the fundraising efforts!
 * You got your first donation, but it hasn't been registered fully by the Extra Life API. Just give it a few minutes to show up.
-* The Extra Life API timed out when the Helper was trying to contact it. This can happen if the Extra Life API is under high load. Just be patient and the Helper will get the current total again when the Extra API website responds.
+* The Extra Life API timed out when the Helper was trying to contact it. This can happen if the Extra Life API is under high load. Just be patient and the Helper will get the current total again when the Extra Life API responds.
 * You are trying to use the Helper in an unsupported way. Please review the instructions for proper use.
 
 **The Helper looks blurry.**
 
-This is usually because you have streched the Helper in your presentation but forgot to update the width and height values in the **ExtraLifeHelper.html** file to match.
+This is usually because you have stretched the Helper in your presentation but forgot to update the width and height values in the **ExtraLifeHelper.html** file to match.
 
 <br>
   
