@@ -241,17 +241,17 @@ function validateSettings() {
 function loadItems() {
     if (loadRemoteScripts) {
         var scripts = [
-            "js/paper-core.min.js",
-            "js/jquery.min.js",
-            "js/tweenjs.min.js",
-            "js/responsivevoice.js"
-        ];
-    } else {
-        var scripts = [
             "https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.12.0/paper-core.min.js",
             "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js",
             "https://cdnjs.cloudflare.com/ajax/libs/tweenjs/1.0.2/tweenjs.min.js",
             "http://code.responsivevoice.org/responsivevoice.js"            
+        ];        
+    } else {
+        var scripts = [
+            "js/paper-core.min.js",
+            "js/jquery.min.js",
+            "js/tweenjs.min.js",
+            "js/responsivevoice.js"
         ];
     }
 
@@ -794,7 +794,9 @@ function showNewDonor(donorName, donorAmount, donorMessage, donorAvatar, donorCr
 
     // Call the function that participants can use to run their own code when
     // a new donation arrives.
-    onNewDonation(donorName, donorAmount, donorMessage, donorAvatar, donorCreatedOn);
+    if (typeof onNewDonation === "function") {
+        onNewDonation(donorName, donorAmount, donorMessage, donorAvatar, donorCreatedOn);
+    }
 }
 
 function updateDonorGroup(message) {
