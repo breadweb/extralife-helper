@@ -14,7 +14,7 @@
 const IS_DEBUG = false;
 const WIDTH_ORIGINAL = 264;
 const HEIGHT_ORIGINAL = 110;
-const ANCHOR_POINT = { x: 1, y: 1 };      // Point to start drawing which avoids clipping of stroke
+const ANCHOR_POINT = { x: 1, y: 1 };    // Point to start drawing which avoids clipping of stroke
 const PADDING = 2;                      // Pixels of width and height to reduce to avoid clipping of stroke
 const DARK_BLUE = "#1D4C6C";
 const LIGHT_BLUE = "#28C0E8";
@@ -65,20 +65,19 @@ var startTime;
 var helperTheme;
 var helperBorder;
 var helperWidth;
-var helperHeight;
 var showDonationAlerts;
 var showGoal;
+var showYearMode;
 var donationSounds;
 var donationMessageVoice;
-var yearMode;
 var testDonationSeconds;
-
 var participantInfoUrl;
 var donorInfoUrl;
 var teamInfoUrl;
 var teamRosterUrl;
 var teamDonorInfoUrl;
 var backgroundRect;
+var helperHeight;
 var titleText;
 var daysText;
 var raisedText;
@@ -105,37 +104,34 @@ var extraLifeLogoItem;
 var cmnhLogoItem;
 var logoCounter;
 var selectedVoice;
+var loadRemoteScripts = false;
 var itemsLoaded = 0;
-var isLocal = true;
 
 document.addEventListener('DOMContentLoaded', onReady, false);
 
 function onReady() {
-    // If the Helper is running from a remote webserver, all settings
-    // will be supplied via querystring parameters instead of via the
-    // HTML container.
-    const urlParms = new URLSearchParams(window.location.search);
-    if (urlParms.get("r") == "1") {
-        parseSettings(urlParms);
-    } else {
-        // When running from the file system, a start date and time in  
-        // a human-friendly format will be provided and needs to be
-        // converted to a timestamp. 
-        if (startDate && startTime)
-        {
-            let dateParts = startDate.split("-");
-            let timeParts = startTime.split(":");
-            dateTimeStart = new Date(
-                parseInt(dateParts[2]),
-                parseInt(dateParts[0]) - 1,
-                parseInt(dateParts[1]),
-                parseInt(timeParts[0]),
-                parseInt(timeParts[1]),
-                parseInt(timeParts[2])).getTime();
-        }
+    // When running from the file system, a start date and time in  
+    // a human-friendly format will be provided and they need to be
+    // converted to a timestamp. 
+    if (startDate && startTime)
+    {
+        let dateParts = startDate.split("-");
+        let timeParts = startTime.split(":");
+        dateTimeStart = new Date(
+            parseInt(dateParts[2]),
+            parseInt(dateParts[0]) - 1,
+            parseInt(dateParts[1]),
+            parseInt(timeParts[0]),
+            parseInt(timeParts[1]),
+            parseInt(timeParts[2])).getTime();
     }
 
-    // All settings must be explicitly set and contain valid values.
+    // If running from a remote webserver, settings will be provided
+    // in the querystring. 
+    parseSettings();
+
+    // No matter how settings were provided, they must all be explicitly 
+    // set and contain valid values.
     if (!validateSettings()) {
         return;
     }
@@ -156,35 +152,58 @@ function onReady() {
     loadItems();
 }
 
-function parseSettings(urlParms) {
-    isLocal = false;
-    participantId = urlParms.get("pid");
-    teamId = urlParms.get("tid");
-    dateTimeStart = urlParms.get("st");
-    let index = urlParms.get("t");
-    if (index > -1 && index < THEMES.length) {
-        helperTheme = THEMES[index];
+function parseSettings() {
+    const urlParms = new URLSearchParams(window.location.search);    
+    if (urlParms.get("r") == "1") {
+        loadRemoteScripts = true;
+        // TODO: After adding support for specifying custom sounds when 
+        // running remote, parse the sound parameter instead of hardcoding
+        // these defaults.
+        donationSounds = "cash.mp3,kids.mp3";
     }
-    index = urlParms.get("b");
-    if (index > -1 && index < BORDERS.length) {
-        helperBorder = BORDERS[index];
+    if (urlParms.has("pid")) {
+        participantId = urlParms.get("pid");
     }
-    index = urlParms.get("v");
-    if (index > -1 && index < VOICES.length) {
-        donationMessageVoice = VOICES[index];
+    if (urlParms.has("tid")) {   
+        teamId = urlParms.get("tid");
     }
-    helperWidth = parseInt(urlParms.get("w"));
-    helperHeight = parseInt(urlParms.get("h"));
-    showGoal = urlParms.get("g") == "1";
-    showDonationAlerts = urlParms.get("a") == "1";
-    yearMode = urlParms.get("y") == "1";
-    helperHeight = parseInt(urlParms.get("h"));
-    testDonationSeconds = parseInt(urlParms.get("td"));
-    
-    // TODO: Custom sounds are not supported for the remote 
-    // version as of now. When that changes, update this to 
-    // parse the sound URL.
-    donationSounds = "cash.mp3,kids.mp3";    
+    if (urlParms.has("st")) {
+        dateTimeStart = urlParms.get("st");
+    }
+    let index;
+    if (urlParms.has("t")) {
+        index = urlParms.get("t");
+        if (index > -1 && index < THEMES.length) {
+            helperTheme = THEMES[index];
+        }
+    }
+    if (urlParms.has("b")) {
+        index = urlParms.get("b");
+        if (index > -1 && index < BORDERS.length) {
+            helperBorder = BORDERS[index];
+        }
+    }
+    if (urlParms.has("v")) {
+        index = urlParms.get("v");
+        if (index > -1 && index < VOICES.length) {
+            donationMessageVoice = VOICES[index];
+        }
+    }
+    if (urlParms.has("w")) {
+        helperWidth = parseInt(urlParms.get("w"));
+    }
+    if (urlParms.has("g")) {
+        showGoal = urlParms.get("g") == "1";
+    }
+    if (urlParms.has("a")) {
+        showDonationAlerts = urlParms.get("a") == "1";
+    }
+    if (urlParms.has("y")) {
+        showYearMode = urlParms.get("y") == "1";
+    }
+    if (urlParms.has("td")) {
+        testDonationSeconds = parseInt(urlParms.get("td"));
+    }  
 }
 
 function validateSettings() {
@@ -192,8 +211,11 @@ function validateSettings() {
     if (!participantId && !teamId) {
         message = "A participant or team ID was not found.";
     }
+    if (participantId && teamId) {
+        message = "A participant ID or team ID must be specified, but not both.";
+    }    
     if (!dateTimeStart || isNaN(dateTimeStart)) {
-        message = "Invalid or missing start date and/or time.";
+        message = "The start date or start time is missing or invalid.";
     }
     if (!helperTheme) {
         message = "A theme was not specified.";
@@ -202,23 +224,22 @@ function validateSettings() {
         message = "A border style was not specified.";
     } 
     if (!helperWidth || isNaN(helperWidth)) {
-        message = "Invalid or missing width.";
+        message = "Invalid or missing width value.";
     }
-    if (!helperHeight || isNaN(helperHeight)) {
-        message = "Invalid or missing height.";
-    }    
     if (isNaN(testDonationSeconds)) {
         message = "Invalid value for test donation seconds.";
     }
     if (message) {
-        document.body.innerHTML = `<div class='error'>${message}<br /><br />Please visit <a href="http://bit.ly/helper-forum">http://bit.ly/helper-forum</a> if you need support.</div>`;
+        document.body.innerHTML = `<div class='error'>${message}<br /><br />Please visit
+        <a href="http://bit.ly/helper-forum">http://bit.ly/helper-forum</a> if you need
+        support.</div>`;
         return false;
     }     
     return true;
 }
 
 function loadItems() {
-    if (isLocal) {
+    if (loadRemoteScripts) {
         var scripts = [
             "js/paper-core.min.js",
             "js/jquery.min.js",
@@ -309,7 +330,7 @@ function startTimer(timerType) {
             onActionTimer();
             break;
         case "clock":
-            if (yearMode !== true) {
+            if (showYearMode !== true) {
                 clockTimerId = setInterval(onClockTimer, CLOCK_TIMER_INTERVAL);
                 onClockTimer();
             }
@@ -354,9 +375,8 @@ function initSound() {
 }
 
 function initPage() {
-    // Determine how much we've scaled up or down. Use that scale to change 
-    // the width and height. Note that the custom height values are ignored
-    // to keep the scale uniform.
+    // Determine how much we should scale up or down. Use that scale to change 
+    // the width and height. 
     helperScale = helperWidth / WIDTH_ORIGINAL;
     helperHeight = HEIGHT_ORIGINAL * helperScale;
 
@@ -412,7 +432,7 @@ function initScreen() {
 
     titleText = new paper.PointText({
         point: [centerX, 20],
-        content: yearMode === true ? TEXT_EXTRA_LIFE : TEXT_DAYS_UNTIL,
+        content: showYearMode === true ? TEXT_EXTRA_LIFE : TEXT_DAYS_UNTIL,
         fontFamily: "Furore",
         fontSize: 12,
         justification: 'center'
@@ -420,7 +440,7 @@ function initScreen() {
 
     daysText = new paper.PointText({
         point: [centerX, 60],
-        content: yearMode === true ? new Date().getFullYear() : '0',
+        content: showYearMode === true ? new Date().getFullYear() : '0',
         fontFamily: "LetsGoDigital",
         fontSize: 50,
         justification: 'center'
