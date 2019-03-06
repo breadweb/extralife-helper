@@ -53,6 +53,24 @@ const DONOR_INFO_URL = BASE_URL + "participants/{1}/donations";
 const TEAM_INFO_URL = BASE_URL + "teams/{1}";
 const TEAM_ROSTER_URL = BASE_URL + "teams/{1}/participants";
 const TEAM_DONOR_INFO_URL = BASE_URL + "teams/{1}/donations";
+const THEMES = ["blue1", "blue1", "gray1", "white1"];
+const BORDERS = ["none", "rounded", "square"];
+const VOICES = ["US-female", "UK-male", "UK English Male"];
+
+var participantId;
+var teamId;
+var startDate;
+var startTime;
+var helperTheme;
+var helperBorder;
+var helperWidth;
+var helperHeight;
+var showDonationAlerts;
+var showGoal;
+var donationSounds;
+var donationMessageVoice;
+var yearMode;
+var testDonationSeconds;
 
 var participantInfoUrl;
 var donorInfoUrl;
@@ -92,6 +110,78 @@ var isLocal = true;
 document.addEventListener('DOMContentLoaded', onReady, false);
 
 function onReady() {
+    // Settings can be set in the HTML container or passed as querystring
+    // parameters, but not both at this time.
+    const urlParms = new URLSearchParams(window.location.search);
+    if (urlParms.get("r") == "1") {
+        isLocal = false;
+        participantId = urlParms.get("pid");
+        teamId = urlParms.get("tid");
+        dateTimeStart = urlParms.get("st");
+        let index = urlParms.get("t");
+        if (index > -1 && index < THEMES.length) {
+            helperTheme = THEMES[index];
+        }
+        index = urlParms.get("b");
+        if (index > -1 && index < BORDERS.length) {
+            helperBorder = BORDERS[index];
+        }
+        index = urlParms.get("v");
+        if (index > -1 && index < VOICES.length) {
+            donationMessageVoice = VOICES[index];
+        }
+        helperWidth = parseInt(urlParms.get("w"));
+        helperHeight = parseInt(urlParms.get("h"));
+        showDonationAlerts = urlParms.get("a") == "1";
+        yearMode = urlParms.get("y") == "1";
+        helperHeight = parseInt(urlParms.get("h"));
+        // TODO: Update after supporting custom sounds for remote version.
+        donationSounds = "cash.mp3,kids.mp3";
+    }
+
+    // When running from the file system, a start date and time in a 
+    // human-friendly format will be provided and needs to be converted.
+    if (startDate && startTime)
+    {
+        let dateParts = startDate.split("-");
+        let timeParts = startTime.split(":");
+        dateTimeStart = new Date(
+            parseInt(dateParts[2]),
+            parseInt(dateParts[0]) - 1,
+            parseInt(dateParts[1]),
+            parseInt(timeParts[0]),
+            parseInt(timeParts[1]),
+            parseInt(timeParts[2])).getTime();
+    }
+
+    // Validate settings.
+    let message;
+    if (!participantId && !teamId) {
+        message = "A participant or team ID was not found.";
+    }
+    if (!dateTimeStart || isNaN(dateTimeStart)) {
+        message = "Invalid or missing start date and/or time.";
+    }
+    if (!helperTheme) {
+        message = "A theme was not specified.";
+    }
+    if (!helperBorder) {
+        message = "A border style was not specified.";
+    } 
+    if (!helperWidth || isNaN(helperWidth)) {
+        message = "Invalid or missing width.";
+    }
+    if (!helperHeight || isNaN(helperHeight)) {
+        message = "Invalid or missing height.";
+    }    
+    if (isNaN(testDonationSeconds)) {
+        message = "Invalid value for test donation seconds.";
+    }
+    if (message) {
+        showErrorScreen(message);
+        return;
+    }    
+
     // Customize the URLs.
     participantInfoUrl = PARTICIPANT_INFO_URL.replace("{1}", participantId);
     donorInfoUrl = DONOR_INFO_URL.replace("{1}", participantId);
@@ -99,25 +189,16 @@ function onReady() {
     teamRosterUrl = TEAM_ROSTER_URL.replace("{1}", teamId);
     teamDonorInfoUrl = TEAM_DONOR_INFO_URL.replace("{1}", teamId);
 
-    // Create new start date/time by parsing user-specified values.
-    var dateParts = startDate.split("-");
-    var timeParts = startTime.split(":");
-    dateTimeStart = new Date(
-        parseInt(dateParts[2]),
-        parseInt(dateParts[0]) - 1,
-        parseInt(dateParts[1]),
-        parseInt(timeParts[0]),
-        parseInt(timeParts[1]),
-        parseInt(timeParts[2]));
-    log(dateTimeStart);
-
     // Initialize some variables.
     newDonors = [];
     lastRaised = 0;
     logoCounter = 0;
-    yearMode = yearMode == "true" ? true : false;
 
     loadItems();
+}
+
+function showErrorScreen(message) {
+    document.body.innerHTML = `<div class='error'>${message}</div>`;
 }
 
 function loadItems() {
@@ -152,7 +233,6 @@ function loadItems() {
 
 function onItemsLoaded() {
     itemsLoaded++;
-    console.log(itemsLoaded);
     if (itemsLoaded >= 5) {
         initHelper();
     }
@@ -191,7 +271,7 @@ function startHelper() {
     startTimer("action");
     startTimer("clock");
 
-    if (!isNaN(testDonationSeconds) && testDonationSeconds != 0) {
+    if (testDonationSeconds != 0) {
         window.setTimeout(showTestDonation, testDonationSeconds * 1000);
     }
 }
@@ -213,7 +293,7 @@ function startTimer(timerType) {
             onActionTimer();
             break;
         case "clock":
-            if (!yearMode) {
+            if (yearMode !== true) {
                 clockTimerId = setInterval(onClockTimer, CLOCK_TIMER_INTERVAL);
                 onClockTimer();
             }
@@ -315,7 +395,7 @@ function initScreen() {
 
     titleText = new paper.PointText({
         point: [centerX, 20],
-        content: yearMode ? TEXT_EXTRA_LIFE : TEXT_DAYS_UNTIL,
+        content: yearMode === true ? TEXT_EXTRA_LIFE : TEXT_DAYS_UNTIL,
         fontFamily: "Furore",
         fontSize: 12,
         justification: 'center'
@@ -323,7 +403,7 @@ function initScreen() {
 
     daysText = new paper.PointText({
         point: [centerX, 60],
-        content: yearMode ? new Date().getFullYear() : '0',
+        content: yearMode === true ? new Date().getFullYear() : '0',
         fontFamily: "LetsGoDigital",
         fontSize: 50,
         justification: 'center'
@@ -520,7 +600,7 @@ function initScreen() {
 }
 
 function onClockTimer() {
-    var timeDiff = new Date().getTime() - dateTimeStart.getTime();
+    var timeDiff = new Date().getTime() - dateTimeStart;
     var isCountingUp;
 
     // If the difference is negative, the start time hasn't been hit or passed yet
@@ -787,7 +867,7 @@ function onGeneralInfoSuccess(res) {
 
     moneyText.content = formatMoney(raised, false);
 
-    if (showGoal == "true") {
+    if (showGoal === true) {
         moneyText.content += " / " + formatMoney(goal, false);
     }
 
@@ -796,7 +876,7 @@ function onGeneralInfoSuccess(res) {
     // This is always true at startup, but the processing of donations will 
     // ensure we don't treat all donations as new the first time.
     if (raised > lastRaised) {
-        if (showDonationAlerts == "true") {
+        if (showDonationAlerts === true) {
             requestDonorInfo();
         }
     }
