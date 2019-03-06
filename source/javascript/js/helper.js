@@ -53,9 +53,10 @@ const DONOR_INFO_URL = BASE_URL + "participants/{1}/donations";
 const TEAM_INFO_URL = BASE_URL + "teams/{1}";
 const TEAM_ROSTER_URL = BASE_URL + "teams/{1}/participants";
 const TEAM_DONOR_INFO_URL = BASE_URL + "teams/{1}/donations";
-const THEMES = ["blue1", "blue1", "gray1", "white1"];
+const THEMES = ["blue1", "blue2", "gray1", "white1"];
 const BORDERS = ["none", "rounded", "square"];
 const VOICES = ["US-female", "UK-male", "UK English Male"];
+const ITEMS_TO_LOAD = 5;
 
 var participantId;
 var teamId;
@@ -110,51 +111,83 @@ var isLocal = true;
 document.addEventListener('DOMContentLoaded', onReady, false);
 
 function onReady() {
-    // Settings can be set in the HTML container or passed as querystring
-    // parameters, but not both at this time.
+    // If the Helper is running from a remote webserver, all settings
+    // will be supplied via querystring parameters instead of via the
+    // HTML container.
     const urlParms = new URLSearchParams(window.location.search);
     if (urlParms.get("r") == "1") {
-        isLocal = false;
-        participantId = urlParms.get("pid");
-        teamId = urlParms.get("tid");
-        dateTimeStart = urlParms.get("st");
-        let index = urlParms.get("t");
-        if (index > -1 && index < THEMES.length) {
-            helperTheme = THEMES[index];
+        parseSettings(urlParms);
+    } else {
+        // When running from the file system, a start date and time in  
+        // a human-friendly format will be provided and needs to be
+        // converted to a timestamp. 
+        if (startDate && startTime)
+        {
+            let dateParts = startDate.split("-");
+            let timeParts = startTime.split(":");
+            dateTimeStart = new Date(
+                parseInt(dateParts[2]),
+                parseInt(dateParts[0]) - 1,
+                parseInt(dateParts[1]),
+                parseInt(timeParts[0]),
+                parseInt(timeParts[1]),
+                parseInt(timeParts[2])).getTime();
         }
-        index = urlParms.get("b");
-        if (index > -1 && index < BORDERS.length) {
-            helperBorder = BORDERS[index];
-        }
-        index = urlParms.get("v");
-        if (index > -1 && index < VOICES.length) {
-            donationMessageVoice = VOICES[index];
-        }
-        helperWidth = parseInt(urlParms.get("w"));
-        helperHeight = parseInt(urlParms.get("h"));
-        showDonationAlerts = urlParms.get("a") == "1";
-        yearMode = urlParms.get("y") == "1";
-        helperHeight = parseInt(urlParms.get("h"));
-        // TODO: Update after supporting custom sounds for remote version.
-        donationSounds = "cash.mp3,kids.mp3";
     }
 
-    // When running from the file system, a start date and time in a 
-    // human-friendly format will be provided and needs to be converted.
-    if (startDate && startTime)
-    {
-        let dateParts = startDate.split("-");
-        let timeParts = startTime.split(":");
-        dateTimeStart = new Date(
-            parseInt(dateParts[2]),
-            parseInt(dateParts[0]) - 1,
-            parseInt(dateParts[1]),
-            parseInt(timeParts[0]),
-            parseInt(timeParts[1]),
-            parseInt(timeParts[2])).getTime();
+    // All settings must be explicitly set and contain valid values.
+    if (!validateSettings()) {
+        return;
     }
 
-    // Validate settings.
+    // Customize the URLs with the provided participant or team IDs.
+    participantInfoUrl = PARTICIPANT_INFO_URL.replace("{1}", participantId);
+    donorInfoUrl = DONOR_INFO_URL.replace("{1}", participantId);
+    teamInfoUrl = TEAM_INFO_URL.replace("{1}", teamId);
+    teamRosterUrl = TEAM_ROSTER_URL.replace("{1}", teamId);
+    teamDonorInfoUrl = TEAM_DONOR_INFO_URL.replace("{1}", teamId);
+
+    // Initialize some variables.
+    newDonors = [];
+    lastRaised = 0;
+    logoCounter = 0;
+
+    // Load all script and asset dependencies. 
+    loadItems();
+}
+
+function parseSettings(urlParms) {
+    isLocal = false;
+    participantId = urlParms.get("pid");
+    teamId = urlParms.get("tid");
+    dateTimeStart = urlParms.get("st");
+    let index = urlParms.get("t");
+    if (index > -1 && index < THEMES.length) {
+        helperTheme = THEMES[index];
+    }
+    index = urlParms.get("b");
+    if (index > -1 && index < BORDERS.length) {
+        helperBorder = BORDERS[index];
+    }
+    index = urlParms.get("v");
+    if (index > -1 && index < VOICES.length) {
+        donationMessageVoice = VOICES[index];
+    }
+    helperWidth = parseInt(urlParms.get("w"));
+    helperHeight = parseInt(urlParms.get("h"));
+    showGoal = urlParms.get("g") == "1";
+    showDonationAlerts = urlParms.get("a") == "1";
+    yearMode = urlParms.get("y") == "1";
+    helperHeight = parseInt(urlParms.get("h"));
+    testDonationSeconds = parseInt(urlParms.get("td"));
+    
+    // TODO: Custom sounds are not supported for the remote 
+    // version as of now. When that changes, update this to 
+    // parse the sound URL.
+    donationSounds = "cash.mp3,kids.mp3";    
+}
+
+function validateSettings() {
     let message;
     if (!participantId && !teamId) {
         message = "A participant or team ID was not found.";
@@ -178,27 +211,10 @@ function onReady() {
         message = "Invalid value for test donation seconds.";
     }
     if (message) {
-        showErrorScreen(message);
-        return;
-    }    
-
-    // Customize the URLs.
-    participantInfoUrl = PARTICIPANT_INFO_URL.replace("{1}", participantId);
-    donorInfoUrl = DONOR_INFO_URL.replace("{1}", participantId);
-    teamInfoUrl = TEAM_INFO_URL.replace("{1}", teamId);
-    teamRosterUrl = TEAM_ROSTER_URL.replace("{1}", teamId);
-    teamDonorInfoUrl = TEAM_DONOR_INFO_URL.replace("{1}", teamId);
-
-    // Initialize some variables.
-    newDonors = [];
-    lastRaised = 0;
-    logoCounter = 0;
-
-    loadItems();
-}
-
-function showErrorScreen(message) {
-    document.body.innerHTML = `<div class='error'>${message}</div>`;
+        document.body.innerHTML = `<div class='error'>${message}</div>`;
+        return false;
+    }     
+    return true;
 }
 
 function loadItems() {
@@ -233,7 +249,7 @@ function loadItems() {
 
 function onItemsLoaded() {
     itemsLoaded++;
-    if (itemsLoaded >= 5) {
+    if (itemsLoaded >= ITEMS_TO_LOAD) {
         initHelper();
     }
 }
@@ -338,8 +354,9 @@ function initSound() {
 }
 
 function initPage() {
-    // Determine how much we've scaled up or down. Use that scale to change the width
-    // and height. Note that the custom height values are ignored to keep the scale uniform.
+    // Determine how much we've scaled up or down. Use that scale to change 
+    // the width and height. Note that the custom height values are ignored
+    // to keep the scale uniform.
     helperScale = helperWidth / WIDTH_ORIGINAL;
     helperHeight = HEIGHT_ORIGINAL * helperScale;
 
@@ -364,8 +381,8 @@ function initPaper() {
 }
 
 function initScreen() {
-    // Set up background used for all display groups and apply different style properties
-    // based on user settings.
+    // Set up background used for all display groups and apply different style 
+    // properties based on user settings.
 
     backgroundRect = new paper.Rectangle({
         point: ANCHOR_POINT,
@@ -409,7 +426,7 @@ function initScreen() {
         justification: 'center'
     });
 
-    // The clock face is set up with indvidual text items in order to
+    // The clock face is set up with individual text items in order to
     // keep all numbers fixed with. Otherwise the entire clock face 
     // will shift in minor increments when the value changes, looking weird.
     clockNumbers = [6];
@@ -610,13 +627,12 @@ function onClockTimer() {
         timeDiff = timeDiff * -1;
         titleText.content = TEXT_HOURS_UNTIL;
         isCountingUp = false;
-    }
-    else {
+    } else {
         titleText.content = TEXT_HOURS_PLAYED;
         isCountingUp = true;
     }
 
-    var days = Math.floor(timeDiff / 1000 / 60 / 60 / 24);
+    var days = Math.floor(timeDiff / 86400000);
 
     // If there are three or more days left, the text will be updated to show how many 
     // days are left before the start time. Otherwise, we will show how the time which 
@@ -626,12 +642,11 @@ function onClockTimer() {
         daysText.content = days;
         daysText.visible = true;
         clockGroup.visible = false;
-    }
-    else {
-        var hours = Math.floor(timeDiff / 1000 / 60 / 60);
-        timeDiff -= hours * 1000 * 60 * 60;
-        var minutes = Math.floor(timeDiff / 1000 / 60);
-        timeDiff -= minutes * 1000 * 60;
+    } else {
+        var hours = Math.floor(timeDiff / 3600000);
+        timeDiff -= hours * 3600000;
+        var minutes = Math.floor(timeDiff / 60000);
+        timeDiff -= minutes * 60000;
         var seconds = Math.floor(timeDiff / 1000);
 
         var hourText = zeroPad(String(hours), 2);
@@ -755,7 +770,6 @@ function showNewDonor(donorName, donorAmount, donorMessage, donorAvatar, donorCr
         setTimeout(function () {
             speakText(donorMessage);
         }, 5000);
-
     }
 
     // Call the function that participants can use to run their own code when
@@ -766,8 +780,8 @@ function showNewDonor(donorName, donorAmount, donorMessage, donorAvatar, donorCr
 function updateDonorGroup(message) {
     // Reset scaling first before making changes. There is a better
     // way of doing this but this works for now.
-    setScale(infoGroup, 1 / helperScale, "topCenter");
-    setScale(donorGroup, 1 / helperScale, "topCenter");
+    setScale(infoGroup, 1 / helperScale, "topLeft");
+    setScale(donorGroup, 1 / helperScale, "topLeft");
 
     var isVisible = true;
     var donorAmountPointY = DONOR_AMOUNT_POINT_Y;
@@ -780,7 +794,7 @@ function updateDonorGroup(message) {
 
     // If there is a message, add it. Otherwise, we'll scale the
     // donor amount and name so it is bigger and fills the area more. 
-    if (message != null) {
+    if (message) {
         // Remove some characters that make things look weird.
         message = message.split("\r\n").join(" ");
 
@@ -801,17 +815,14 @@ function updateDonorGroup(message) {
                 }
                 donorMessageText2.content += "...";
                 break;
-            }
-            else if (totalChars > maxCharsPerLine) {
+            } else if (totalChars > maxCharsPerLine) {
                 donorMessageText2.content += " " + word;
-            }
-            else {
+            } else {
                 donorMessageText1.content += " " + word;
             }
             totalChars += word.length;
         }
-    }
-    else {
+    } else {
         isVisible = false;
         donorAmountPointY = DONOR_AMOUNT_POINT_Y_ALT;
         donorAmountFontSize = DONOR_AMOUNT_FONT_SIZE_ALT;
@@ -939,9 +950,9 @@ function speakText(text) {
 }
 
 function setScale(group, amount, anchorPoint) {
-    var xPos = anchorPoint != "topCenter"
-        ? 0 // "topLeft"
-        : group.bounds.topLeft.x + group.bounds.width / 2;
+    var xPos = anchorPoint == "topCenter"
+        ? group.bounds.topLeft.x + group.bounds.width / 2
+        : 0; // "topLeft"
 
     group.scale(amount, [xPos, 0]);
 }
