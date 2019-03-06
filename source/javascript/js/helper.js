@@ -1,5 +1,5 @@
 /*!
- * Extra Life Helper v2.4
+ * Extra Life Helper v3.0
  * https://github.com/breadweb/extralifehelper
  *
  * Copyright (c) 2013 - 2019, Adam "Bread" Slesinger
@@ -211,7 +211,7 @@ function validateSettings() {
         message = "Invalid value for test donation seconds.";
     }
     if (message) {
-        document.body.innerHTML = `<div class='error'>${message}</div>`;
+        document.body.innerHTML = `<div class='error'>${message}<br /><br />Please visit <a href="http://bit.ly/helper-forum">http://bit.ly/helper-forum</a> if you need support.</div>`;
         return false;
     }     
     return true;
