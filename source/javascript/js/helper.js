@@ -978,7 +978,7 @@ function playSounds() {
 }
 
 function speakText(text) {
-    responsiveVoice.speak(text, selectedVoice);
+    responsiveVoice.speak(text, selectedVoice, {volume: volume / 100});
 }
 
 function setScale(group, amount, anchorPoint) {
