@@ -1,4 +1,4 @@
-## Extra Life Helper v2.3
+## Extra Life Helper v3.0
 https://github.com/breadweb/extralife-helper
 
 Copyright (c) 2013 - 2019, Adam "Bread" Slesinger http://www.breadweb.net
@@ -14,15 +14,7 @@ Date: 3/5/2019 17:00:07
 This is an application I created in 2013 for [Extra Life](http://extra-life.org). I wanted something to track the time until Extra Life, track my total time playing on game day, and show my fundraising information. I also wanted to celebrate new donations in real time when streaming during the marathon. The following year I made it available to the community and I was excited to see it adopted by so many participants.
 
 <br>
-  
-### Download
-
-Right-click the following link and select "Save link as..."
-
-[ExtraLifeHelper-v2.3.zip](https://github.com/breadweb/extralife-helper/releases/download/2.3/ExtraLifeHelper-v2.3.zip) (312 KB)
-
-<br>
-  
+   
 ### Features
 
 * Counts down the days until Extra Life if there are three or more days left.
@@ -32,13 +24,13 @@ Right-click the following link and select "Save link as..."
 * Shows new donation alerts as they arrive in real-time.
 * Donation messages are read with text-to-speech during donation alerts.
 * Custom sound effects can be specified for the donation alert.
+* Adjust the volume for all sound effects and text-to-speech.
 * Provides a hook to run custom JavaScript when a new donation arrives.
 * Occasionally shows the Extra Life and Children's Miracle Network Hospital logos.
 * Works in "participant" mode or "team" mode.
 * Supports four color themes and three border styles.
 * Works in XSplit, OBS Studio, and any modern browser.
-* Runs locally without dependency on any remote service besides the Extra Life API.
-* Core functionality and appearance can be modified with little JavaScript exprience.
+* Core functionality and appearance can be modified with little JavaScript experience.
 
 <br>
 
@@ -67,6 +59,24 @@ Occasionally shows the CMNH logo.
 To see how some Extra Life participants have used the Helper in their live stream presentations, check out the screenshot gallery:
 
 [http://github.com/breadweb/extralife-helper/blob/master/Examples.md](http://github.com/breadweb/extralife-helper/blob/master/Examples.md)
+
+<br>
+
+### NEW! Use the Link Generator
+
+If you do not need to modify source code, you can now use the Extra Life link generator to 
+customize the Helper and get a link for easy copy and paste into OBS or XSplit. Downloading or
+editing files is no longer required! 
+
+[http://breadweb.net/extralife-helper.html](http://breadweb.net/extralife-helper.html)
+
+<br>
+
+### Download
+
+Right-click the following link and select "Save link as..."
+
+[ExtraLifeHelper-v2.3.zip](https://github.com/breadweb/extralife-helper/releases/download/2.3/ExtraLifeHelper-v2.3.zip) (312 KB)
 
 <br>
   
@@ -128,28 +138,27 @@ Open the **ExtraLifeHelper.html** file using a text editor such as Notepad and e
 // Extra Life Helper
 // ============================================================================================
 // For use details and use instructions, visit https://github.com/breadweb/extralife-helper
-// For help or feature requests, visit http://bit.ly/helper-forum/
+// For support or feature requests, visit http://bit.ly/helper-forum/
 // 
-var participantId = "300817";              // Set this to blank to run in team mode
-var teamId = "";                           // Set this to blank to run in participant mode
-var startDate = "11-03-2018";              // Set to your local Extra Life start date
-var startTime = "10:00:00";                // Set to your local Extra Life start time
-var helperTheme = "blue1";                 // Color theme: white1, gray1, blue1, or blue2
-var helperBorder = "none";                 // Border type: rounded, square, or none
-var helperWidth = 540;                     // Width of the Helper, in pixels
-var helperHeight = 225;                    // Height of the Helper, in pixels
-var showDonationAlerts = "true";           // Set to "false" to suppress donation alerts
-var showGoal = "true";                     // Set to "false" to only show amount raised on the
-//                                         // main screen and not also your goal
-var donationSounds = "cash.mp3,kids.mp3";  // Set this to your custom set of sounds, separated
-//                                         // by commas. Or set to "" to play no sounds
-var donationMessageVoice = "UK-female";    // Voice style for the reading of donation messages.
-//                                         // Set to US-female, UK-male, UK-female or set
-//                                         // to "" to not read messages with text-to-speech.      
-var yearMode = "false";                    // An alternate display to support fundraising all
-//                                         // year round. The count down/up timer is hidden
-var testDonationSeconds = 0;               // Number of seconds to show a test donation after
-//                                         // the Helper loads. Set to 0 to disable.        
+participantId = "347786";              // Set this to blank to run in team mode.
+teamId = "";                           // Set this to blank to run in participant mode.
+startDate = "11-02-2019";              // Set to your local Extra Life start date.
+startTime = "10:00:00";                // Set to your local Extra Life start time.
+helperTheme = "blue1";                 // Color theme: white1, gray1, blue1, or blue2.
+helperBorder = "rounded";              // Border type: rounded, square, or none.
+helperWidth = 540;                     // Width of the Helper, in pixels.
+showDonationAlerts = true;             // Set to false to suppress donation alerts.
+showGoal = true;                       // Set to false to only show amount raised on the
+//                                     // main screen and not also your goal.
+showYearMode = false;                  // An alternate display to support fundraising all
+//                                     // year. The count down/up timer is hidden.        
+donationSounds = "cash.mp3,kids.mp3";  // Set this to your custom set of sounds, separated
+//                                     // by commas. Or set to "" to play no sounds.
+donationMessageVoice = "US-female";    // Set to US-female, UK-male, UK-female or set
+//                                     // to "" to not read messages with text-to-speech.            
+testDonationSeconds = 0;               // Number of seconds to show a test donation after
+//                                     // the Helper loads. Set to 0 to disable.
+volume = 100;                          // The volume for all sound effects and text-to-speech.
 // ============================================================================================
 
 // If you would like additional things to happen when a new donation is 
@@ -204,7 +213,7 @@ The following video is a compilation of donations received during the Extra Life
 
 **You see a "X is missing or invalid" message.**
 
-This usually happens due to a typo when editing the **ExtraLifeHelper.html** file. If you can find the typo, try downloading a fresh copy and trying again.  
+This usually happens due to a typo when editing the **ExtraLifeHelper.html** file. If you can't find the typo, try downloading a fresh copy and trying again.  
 
 **You see $0 for your donations received.**
 
