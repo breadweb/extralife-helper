@@ -71,6 +71,7 @@ var showYearMode;
 var donationSounds;
 var donationMessageVoice;
 var testDonationSeconds;
+var volume;
 var participantInfoUrl;
 var donorInfoUrl;
 var teamInfoUrl;
@@ -203,20 +204,20 @@ function parseSettings() {
     }
     if (urlParms.has("td")) {
         testDonationSeconds = parseInt(urlParms.get("td"));
-    }  
+    } 
+    if (urlParms.has("vo")) {
+        volume = parseInt(urlParms.get("vo"));
+    }      
 }
 
 function validateSettings() {
     let message;
-    if (!participantId && !teamId) {
-        message = "A participant or team ID was not found.";
-    }
-    if (participantId && teamId) {
-        message = "A participant ID or team ID must be specified, but not both.";
+    if (isNaN(testDonationSeconds)) {
+        message = "Invalid value for test donation seconds.";
     }    
-    if (!dateTimeStart || isNaN(dateTimeStart)) {
-        message = "The start date or start time is missing or invalid.";
-    }
+    if (isNaN(volume)) {
+        message = "Invalid value for volume.";
+    }     
     if (!helperTheme) {
         message = "A theme was not specified.";
     }
@@ -226,9 +227,15 @@ function validateSettings() {
     if (!helperWidth || isNaN(helperWidth)) {
         message = "Invalid or missing width value.";
     }
-    if (isNaN(testDonationSeconds)) {
-        message = "Invalid value for test donation seconds.";
+    if (!participantId && !teamId) {
+        message = "A participant or team ID was not found.";
     }
+    if (participantId && teamId) {
+        message = "A participant ID or team ID must be specified, but not both.";
+    }    
+    if (!dateTimeStart || isNaN(dateTimeStart)) {
+        message = "The start date or start time is missing or invalid.";
+    }        
     if (message) {
         document.body.innerHTML = `<div class='error'>${message}<br /><br />Please visit
         <a href="http://bit.ly/helper-forum">http://bit.ly/helper-forum</a> if you need
@@ -360,6 +367,7 @@ function initSound() {
     soundObjects = donationSounds.split(",");
     for (i = 0; i < soundObjects.length; i++) {
         soundObjects[i] = new Audio("audio/" + soundObjects[i].trim());
+        soundObjects[i].volume = volume / 100;
     }
 
     // Initialize text-to-speech.
@@ -963,7 +971,9 @@ function playSounds() {
     for (i = 0; i < soundObjects.length; i++) {
         soundObject = soundObjects[i];
         soundObject.load();
-        soundObject.play();
+        soundObject.play()
+           .then(result => {})
+           .catch(error => {});
     }
 }
 
