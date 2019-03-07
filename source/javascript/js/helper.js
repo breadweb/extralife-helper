@@ -36,10 +36,10 @@ const DONOR_NAME_FONT_SIZE_ALT = 14;
 const TEXT_DAYS_UNTIL = "DAYS UNTIL EXTRA LIFE:";
 const TEXT_HOURS_UNTIL = "HOURS UNTIL EXTRA LIFE:";
 const TEXT_EXTRA_LIFE = "PLAYING GAMES TO HEAL KIDS!";
-const TEXT_AMOUNT_RAISED = "MY AMOUNT RAISED:"
+const TEXT_MY_AMOUNT_RAISED = "MY AMOUNT RAISED:"
+const TEXT_OUR_AMOUNT_RAISED = "OUR AMOUNT RAISED:"
 const TEXT_HOURS_PLAYED = "TOTAL TIME PLAYED:";
 const TEXT_ANONYMOUS = "Anonymous";
-const TEXT_A_GFIT = "A Gift";
 const KEY_SUM_DONATIONS = "sumDonations";
 const KEY_DISPLAY_NAME = "displayName";
 const KEY_AMOUNT = "amount";
@@ -493,7 +493,7 @@ function initScreen() {
 
     raisedText = new paper.PointText({
         point: [centerX, 78],
-        content: TEXT_AMOUNT_RAISED,
+        content: participantId ? TEXT_MY_AMOUNT_RAISED : TEXT_OUR_AMOUNT_RAISED,
         fontFamily: "Furore",
         fontSize: 12,
         justification: 'center'
