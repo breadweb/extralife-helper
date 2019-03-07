@@ -131,8 +131,7 @@ function onReady() {
     // in the querystring. 
     parseSettings();
 
-    // No matter how settings were provided, they must all be explicitly 
-    // set and contain valid values.
+    // No matter how settings were provided, they need to be valid.
     if (!validateSettings()) {
         return;
     }
