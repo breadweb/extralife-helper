@@ -76,7 +76,7 @@ editing files is no longer required!
 
 Right-click the following link and select "Save link as..."
 
-[ExtraLifeHelper-v2.3.zip](https://github.com/breadweb/extralife-helper/releases/download/2.3/ExtraLifeHelper-v2.3.zip) (312 KB)
+[ExtraLifeHelper-v3.0.zip](https://github.com/breadweb/extralife-helper/releases/download/3.0/ExtraLifeHelper-v3.0.zip) (277 KB)
 
 <br>
   
