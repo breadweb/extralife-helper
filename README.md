@@ -23,14 +23,14 @@ This is an application I created in 2013 for [Extra Life](http://extra-life.org)
 * Continually displays the total amount raised as it changes.
 * Shows new donation alerts as they arrive in real-time.
 * Donation messages are read with text-to-speech during donation alerts.
-* Custom sound effects can be specified for the donation alert.
 * Adjust the volume for all sound effects and text-to-speech.
-* Provides a hook to run custom JavaScript when a new donation arrives.
 * Occasionally shows the Extra Life and Children's Miracle Network Hospital logos.
 * Works in "participant" mode or "team" mode.
 * Supports four color themes and three border styles.
 * Works in XSplit, OBS Studio, and any modern browser.
-* Core functionality and appearance can be modified with little JavaScript experience.
+* (Download version only) Custom sound effects can be specified for the donation alert.
+* (Download version only) Provides a hook to run custom JavaScript when a new donation arrives.
+* (Download version only) Core functionality and appearance can be modified with little JavaScript experience.
 
 <br>
 
@@ -64,9 +64,9 @@ To see how some Extra Life participants have used the Helper in their live strea
 
 ### NEW! Use the Link Generator
 
-If you do not need to modify source code, you can now use the Extra Life link generator to 
-customize the Helper and get a link for easy copy and paste into OBS or XSplit. Downloading or
-editing files is no longer required! 
+If you do not need to modify source code or use features only supported in the download version, you can
+now use the Extra Life link generator to customize the Helper and get a link for easy copy and paste into
+OBS or XSplit. Downloading or editing files is no longer required for the majority of Helper users! 
 
 [http://breadweb.net/extralife-helper.html](http://breadweb.net/extralife-helper.html)
 
@@ -74,13 +74,15 @@ editing files is no longer required!
 
 ### Download
 
-Right-click the following link and select "Save link as..."
+To modify the core functionality or appearance, or take advantage of extra features, you can download the
+Helper and run it on your computer. Not as easy as using the link generator, but still very easy. Right-click
+the following link and select "Save link as..."
 
 [ExtraLifeHelper-v3.0.zip](https://github.com/breadweb/extralife-helper/releases/download/3.0/ExtraLifeHelper-v3.0.zip) (277 KB)
 
 <br>
   
-### XSplit Instructions
+### XSplit Instructions - Download Version
 
 Requirements:
 
@@ -99,7 +101,7 @@ Instructions:
 
 <br>
   
-### OBS Studio Instructions
+### OBS Studio Instructions - Download Version
 
 Requirements:
 
@@ -122,7 +124,7 @@ Instructions:
 
 <br>
   
-### Personalizing the Helper
+### Personalizing the Helper - Download Version
 
 First, get your participant ID. It can be found in the URL for your fundraising page. Look for the "participantID" in the URL towards the end. For example:
 
