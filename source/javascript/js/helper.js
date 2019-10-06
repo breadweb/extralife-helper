@@ -48,7 +48,7 @@ const TEAM_ROSTER_URL = BASE_URL + "teams/{1}/participants";
 const TEAM_DONOR_INFO_URL = BASE_URL + "teams/{1}/donations";
 const THEMES = ["blue1", "blue2", "gray1", "white1"];
 const BORDERS = ["none", "rounded", "square"];
-const VOICES = ["", "US-female", "UK-male", "UK-female"];
+const VOICES = ["US-male", "US-female", "UK-male", "UK-female", "FR-male", "FR-female", "ES-male", "ES-female"];
 const ITEMS_TO_LOAD = 5;
 const STRINGS = {
     "en-us": {
