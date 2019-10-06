@@ -120,6 +120,7 @@ var donationTimer;
 var helperScale;
 var clockNumbers;
 var dateTimeStart;
+var lang;
 var soundObjects;
 var newDonors;
 var lastRaised;
