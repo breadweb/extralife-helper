@@ -236,7 +236,9 @@ function parseSettings() {
     if (urlParms.has("l")) {
         lang = urlParms.get("l");
     } else {
-        lang = "en-us";
+        if (!lang) {
+            lang = "en-us";
+        }
     } 
 }
 
