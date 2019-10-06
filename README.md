@@ -22,12 +22,13 @@ This is an application I created in 2013 for [Extra Life](http://extra-life.org)
 * Counts the total hours played if the start time has passed.
 * Continually displays the total amount raised as it changes.
 * Shows new donation alerts as they arrive in real-time.
+* Works in "participant" mode or "team" mode.
 * Donation messages are read with text-to-speech during donation alerts.
 * Adjust the volume for all sound effects and text-to-speech.
 * Occasionally shows the Extra Life and Children's Miracle Network Hospital logos.
-* Works in "participant" mode or "team" mode.
 * Supports four color themes and three border styles.
-* Works in XSplit, OBS Studio, and any modern browser.
+* Works in XSplit, any flavor of OBS, and any modern browser.
+* Available in English, French, and Spanish.
 * (Download version only) Custom sound effects can be specified for the donation alert.
 * (Download version only) Provides a hook to run custom JavaScript when a new donation arrives.
 * (Download version only) Core functionality and appearance can be modified with little JavaScript experience.
@@ -78,7 +79,7 @@ To modify the core functionality or appearance, or take advantage of extra featu
 Helper and run it on your computer. Not as easy as using the link generator, but still very easy. Right-click
 the following link and select "Save link as..."
 
-[ExtraLifeHelper-v3.0.zip](https://github.com/breadweb/extralife-helper/releases/download/3.0/ExtraLifeHelper-v3.0.zip) (277 KB)
+[ExtraLifeHelper-v3.1.zip](https://github.com/breadweb/extralife-helper/releases/download/3.1/ExtraLifeHelper-v3.1.zip) (277 KB)
 
 <br>
   
@@ -156,11 +157,16 @@ showYearMode = false;                  // An alternate display to support fundra
 //                                     // year. The count down/up timer is hidden.        
 donationSounds = "cash.mp3,kids.mp3";  // Set this to your custom set of sounds, separated
 //                                     // by commas. Or set to "" to play no sounds.
-donationMessageVoice = "US-female";    // Set to US-female, UK-male, UK-female or set
-//                                     // to "" to not read messages with text-to-speech.            
+donationMessageVoice = "US-female";    // Set to US-male, US-female, UK-male, UK-female,
+//                                     // FR-male, FR-female, ES-male, ES-female or set
+//                                     // to "" to not read messages with text-to-speech.          
 testDonationSeconds = 0;               // Number of seconds to show a test donation after
 //                                     // the Helper loads. Set to 0 to disable.
 volume = 100;                          // The volume for all sound effects and text-to-speech.
+lang = "en-us";                        // Language to use for all text displayed in the
+//                                     // Helper. Supported options are en-us for 
+//                                     // English (United States), fr-ca for French (Canada),
+//                                     // or es-419 for Spanish (Latin America)
 // ============================================================================================
 
 // If you would like additional things to happen when a new donation is 
@@ -260,7 +266,13 @@ The Helper would not be possible without the following libraries:
 * TweenJS - [https://www.createjs.com/tweenjs](https://www.createjs.com/tweenjs)
 * ResponsiveVoice - [https://responsivevoice.org/](https://responsivevoice.org/)
 
+Translations were provided with help from the following awesome people:
+
+* French: Max Delisle, Craig Segal
+* Spanish: Juliet Veulens
+
 <br>
+
   
 ### Contact
 
@@ -272,5 +284,5 @@ Adam "Bread" Slesinger
 
 * Twitch: [http://www.twitch.tv/bread_man](http://www.twitch.tv/bread_man)
 * Discord: [https://discord.gg/aArewEc](https://discord.gg/aArewEc)
-* Extra Life: [https://extra-life.org/participant/bread](https://extra-life.org/participant/bread)
+* Extra Life: [https://bit.ly/bread4kids](https://bit.ly/bread4kids)
 * Steam: [https://steamcommunity.com/id/breadweb](https://steamcommunity.com/id/breadweb)
