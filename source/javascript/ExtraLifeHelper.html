@@ -27,6 +27,10 @@
         testDonationSeconds = 0;               // Number of seconds to show a test donation after
         //                                     // the Helper loads. Set to 0 to disable.
         volume = 100;                          // The volume for all sound effects and text-to-speech.
+        lang = "en-us";                        // Language to use for all text displayed in the
+        //                                     // Helper. Supported options are en-us for 
+        //                                     // English (United States), fr-ca for French (Canada),
+        //                                     // or es-419 for Spanish (Latin America)
         // ============================================================================================
 
         // If you would like additional things to happen when a new donation is 
@@ -44,10 +48,14 @@
         @font-face {
             font-family: "Furore";
             src: url("fonts/Furore.otf") format("opentype");
+        }          
+        @font-face {
+            font-family: "SourceSansPro-Bold";
+            src: url("fonts/SourceSansPro-Bold.ttf") format("opentype");
         }   
         @font-face {
-            font-family: "Cantarell-Regular";
-            src: url("fonts/Cantarell-Regular.ttf") format("opentype");
+            font-family: "Nunito-Regular";
+            src: url("fonts/Nunito-Regular.ttf") format("opentype");
         } 
         @font-face {
             font-family: "Cantarell-Bold";

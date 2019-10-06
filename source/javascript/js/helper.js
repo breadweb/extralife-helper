@@ -33,13 +33,6 @@ const DONOR_AMOUNT_POINT_Y_ALT = 52;
 const DONOR_AMOUNT_FONT_SIZE_ALT = 40;
 const DONOR_NAME_POINT_Y_ALT = 76;
 const DONOR_NAME_FONT_SIZE_ALT = 14;
-const TEXT_DAYS_UNTIL = "DAYS UNTIL EXTRA LIFE:";
-const TEXT_HOURS_UNTIL = "HOURS UNTIL EXTRA LIFE:";
-const TEXT_EXTRA_LIFE = "PLAYING GAMES TO HEAL KIDS!";
-const TEXT_MY_AMOUNT_RAISED = "MY AMOUNT RAISED:"
-const TEXT_OUR_AMOUNT_RAISED = "OUR AMOUNT RAISED:"
-const TEXT_HOURS_PLAYED = "TOTAL TIME PLAYED:";
-const TEXT_ANONYMOUS = "Anonymous";
 const KEY_SUM_DONATIONS = "sumDonations";
 const KEY_DISPLAY_NAME = "displayName";
 const KEY_AMOUNT = "amount";
@@ -57,7 +50,37 @@ const THEMES = ["blue1", "blue2", "gray1", "white1"];
 const BORDERS = ["none", "rounded", "square"];
 const VOICES = ["", "US-female", "UK-male", "UK-female"];
 const ITEMS_TO_LOAD = 5;
+const STRINGS = {
+    "en-us": {
+        TEXT_DAYS_UNTIL: "DAYS UNTIL EXTRA LIFE:",
+        TEXT_HOURS_UNTIL: "HOURS UNTIL EXTRA LIFE:",
+        TEXT_EXTRA_LIFE: "PLAYING GAMES TO HEAL KIDS!",
+        TEXT_MY_AMOUNT_RAISED: "MY AMOUNT RAISED:",
+        TEXT_OUR_AMOUNT_RAISED: "OUR AMOUNT RAISED:",
+        TEXT_HOURS_PLAYED: "TOTAL TIME PLAYED:",
+        TEXT_ANONYMOUS: "Anonymous"
+    },
+    "fr-ca": {
+        TEXT_DAYS_UNTIL: "JOURS JUSQU'\xC0 EXTRA LIFE:",
+        TEXT_HOURS_UNTIL: "HEURES JUSQU'\xC0 EXTRA LIFE:",
+        TEXT_EXTRA_LIFE: "JOUER \xC0 DES JEUX POUR SOIGNER LES ENFANTS!",
+        TEXT_MY_AMOUNT_RAISED: "MON MONTANT AMASS\xC9:",
+        TEXT_OUR_AMOUNT_RAISED: "NOTRE MONTANT LEV\xC9:",
+        TEXT_HOURS_PLAYED: "TEMPS TOTAL JOU\xC9:",
+        TEXT_ANONYMOUS: "Anonyme"        
+    },
+    "es-419": {
+        TEXT_DAYS_UNTIL: "D\xCDAS HASTA EXTRA LIFE:",
+        TEXT_HOURS_UNTIL: "HORAS HASTA EXTRA LIFE:",
+        TEXT_EXTRA_LIFE: "JUGANDO JUEGOS PARA SANAR NI\xD1OS!",
+        TEXT_MY_AMOUNT_RAISED: "MI CANTIDAD RECAUDADA:",
+        TEXT_OUR_AMOUNT_RAISED: "NUESTRA CANTIDAD RECAUDADA:",
+        TEXT_HOURS_PLAYED: "TIEMPO TOTAL JUGADO:",
+        TEXT_ANONYMOUS: "A\xF3nimo"
+    }
+}
 
+var strings;
 var participantId;
 var teamId;
 var startDate;
@@ -143,6 +166,9 @@ function onReady() {
     teamRosterUrl = TEAM_ROSTER_URL.replace("{1}", teamId);
     teamDonorInfoUrl = TEAM_DONOR_INFO_URL.replace("{1}", teamId);
 
+    // Set the strings based on selected language.
+    strings = STRINGS[lang];
+
     // Initialize some variables.
     newDonors = [];
     lastRaised = 0;
@@ -206,7 +232,10 @@ function parseSettings() {
     } 
     if (urlParms.has("vo")) {
         volume = parseInt(urlParms.get("vo"));
-    }      
+    } 
+    if (urlParms.has("l")) {
+        lang = parseInt(urlParms.get("l"));
+    }     
 }
 
 function validateSettings() {
@@ -235,12 +264,15 @@ function validateSettings() {
     if (!dateTimeStart || isNaN(dateTimeStart)) {
         message = "The start date or start time is missing or invalid.";
     }        
+    if (lang != "en-us" && lang != "fr-ca" && lang != "es-419") {
+        message = "The selected language is missing or not supported.";
+    }      
     if (message) {
         document.body.innerHTML = `<div class='error'>${message}<br /><br />Please visit
         <a href="http://bit.ly/helper-forum">http://bit.ly/helper-forum</a> if you need
         support.</div>`;
         return false;
-    }     
+    }   
     return true;
 }
 
@@ -439,8 +471,8 @@ function initScreen() {
 
     titleText = new paper.PointText({
         point: [centerX, 20],
-        content: showYearMode === true ? TEXT_EXTRA_LIFE : TEXT_DAYS_UNTIL,
-        fontFamily: "Furore",
+        content: showYearMode === true ? strings["TEXT_EXTRA_LIFE"] : strings["TEXT_DAYS_UNTIL"],
+        fontFamily: lang == "en-us" ? "Furore" : "SourceSansPro-Bold",
         fontSize: 12,
         justification: 'center'
     });
@@ -493,8 +525,8 @@ function initScreen() {
 
     raisedText = new paper.PointText({
         point: [centerX, 78],
-        content: participantId ? TEXT_MY_AMOUNT_RAISED : TEXT_OUR_AMOUNT_RAISED,
-        fontFamily: "Furore",
+        content: participantId ? strings["TEXT_MY_AMOUNT_RAISED"] : strings["TEXT_OUR_AMOUNT_RAISED"],
+        fontFamily: lang == "en-us" ? "Furore" : "SourceSansPro-Bold",
         fontSize: 12,
         justification: 'center'
     });
@@ -528,8 +560,8 @@ function initScreen() {
 
     donorNameText = new paper.PointText({
         point: [centerX, DONOR_NAME_POINT_Y],
-        content: TEXT_ANONYMOUS,
-        fontFamily: "Furore",
+        content: strings["TEXT_ANONYMOUS"],
+        fontFamily: lang == "en-us" ? "Furore" : "SourceSansPro-Bold",
         fontSize: DONOR_NAME_FONT_SIZE,
         justification: 'center'
     });
@@ -537,7 +569,7 @@ function initScreen() {
     donorMessageText1 = new paper.PointText({
         point: [centerX, 76],
         content: "[Message]",
-        fontFamily: "Cantarell-Regular",
+        fontFamily: "Nunito-Regular",
         fontSize: 12,
         justification: 'center'
     });
@@ -545,7 +577,7 @@ function initScreen() {
     donorMessageText2 = new paper.PointText({
         point: [centerX, 88],
         content: "[Message]",
-        fontFamily: "Cantarell-Regular",
+        fontFamily: "Nunito-Regular",
         fontSize: 12,
         justification: 'center'
     });
@@ -652,10 +684,10 @@ function onClockTimer() {
     // the difference is the amount of time played.
     if (timeDiff < 0) {
         timeDiff = timeDiff * -1;
-        titleText.content = TEXT_HOURS_UNTIL;
+        titleText.content = strings["TEXT_HOURS_UNTIL"];
         isCountingUp = false;
     } else {
-        titleText.content = TEXT_HOURS_PLAYED;
+        titleText.content = strings["TEXT_HOURS_PLAYED"];
         isCountingUp = true;
     }
 
@@ -665,7 +697,7 @@ function onClockTimer() {
     // days are left before the start time. Otherwise, we will show how the time which 
     // could be counting down or up.
     if (days > 3 && !isCountingUp) {
-        titleText.content = TEXT_DAYS_UNTIL;
+        titleText.content = strings["TEXT_DAYS_UNTIL"];
         daysText.content = days;
         daysText.visible = true;
         clockGroup.visible = false;
@@ -782,7 +814,7 @@ function showNewDonor(donorName, donorAmount, donorMessage, donorAvatar, donorCr
         ? A_GIFT
         : formatMoney(donorAmount, true);
     donorNameText.content = donorName == null
-        ? TEXT_ANONYMOUS
+        ? strings["TEXT_ANONYMOUS"]
         : donorName;
 
     updateDonorGroup(donorMessage);
