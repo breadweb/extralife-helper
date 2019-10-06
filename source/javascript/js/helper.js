@@ -234,8 +234,10 @@ function parseSettings() {
         volume = parseInt(urlParms.get("vo"));
     } 
     if (urlParms.has("l")) {
-        lang = parseInt(urlParms.get("l"));
-    }     
+        lang = urlParms.get("l");
+    } else {
+        lang = "en-us";
+    } 
 }
 
 function validateSettings() {
@@ -404,9 +406,14 @@ function initSound() {
     // Initialize text-to-speech.
     var mapping =
     {
+        "US-male": "US English Male",
         "US-female": "US English Female",
         "UK-male": "UK English Male",
-        "UK-female": "UK English Female"
+        "UK-female": "UK English Female",
+        "FR-male" : "French Canadian Male",
+        "FR-female" : "French Canadian Female",
+        "ES-male" : "Spanish Latin American Male",
+        "ES-female" : "Spanish Latin American Female",
     };
     if (donationMessageVoice in mapping) {
         selectedVoice = mapping[donationMessageVoice];
