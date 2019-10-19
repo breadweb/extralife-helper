@@ -34,6 +34,7 @@ const DONOR_AMOUNT_FONT_SIZE_ALT = 40;
 const DONOR_NAME_POINT_Y_ALT = 76;
 const DONOR_NAME_FONT_SIZE_ALT = 14;
 const KEY_SUM_DONATIONS = "sumDonations";
+const KEY_SUM_PLEDGES = "sumPledges";
 const KEY_DISPLAY_NAME = "displayName";
 const KEY_AMOUNT = "amount";
 const KEY_MESSAGE = "message";
@@ -944,7 +945,7 @@ function makeRequest(url, onSuccess, onError) {
 
 function onGeneralInfoSuccess(res) {
     log(res);
-    var raised = res[KEY_SUM_DONATIONS];
+    var raised = res[KEY_SUM_DONATIONS] + res[KEY_SUM_PLEDGES];
     var goal = res[KEY_FUNDRAISING_GOAL];
 
     moneyText.content = formatMoney(raised, false);
