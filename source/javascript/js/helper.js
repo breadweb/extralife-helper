@@ -945,7 +945,7 @@ function makeRequest(url, onSuccess, onError) {
 
 function onGeneralInfoSuccess(res) {
     log(res);
-    var raised = res[KEY_SUM_DONATIONS] + res[KEY_SUM_PLEDGES];
+    var raised = res[KEY_SUM_DONATIONS] + (res[KEY_SUM_PLEDGES] || 0);
     var goal = res[KEY_FUNDRAISING_GOAL];
 
     moneyText.content = formatMoney(raised, false);
