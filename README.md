@@ -1,11 +1,11 @@
 ## Extra Life Helper v3.2
 https://github.com/breadweb/extralife-helper
 
-Copyright (c) 2013 - 2019, Adam "Bread" Slesinger http://www.breadweb.net
+Copyright (c) 2013 - 2020, Adam "Bread" Slesinger http://www.breadweb.net
 
 All rights reserved.
 
-Date: 10/6/2019 13:25:31
+Date: 10/6/2020 13:25:31
 
 <br>
 
@@ -145,7 +145,7 @@ Open the **ExtraLifeHelper.html** file using a text editor such as Notepad and e
 // 
 participantId = "347786";              // Set this to blank to run in team mode.
 teamId = "";                           // Set this to blank to run in participant mode.
-startDate = "11-02-2019";              // Set to your local Extra Life start date.
+startDate = "11-02-2020";              // Set to your local Extra Life start date.
 startTime = "10:00:00";                // Set to your local Extra Life start time.
 helperTheme = "blue1";                 // Color theme: white1, gray1, blue1, or blue2.
 helperBorder = "rounded";              // Border type: rounded, square, or none.

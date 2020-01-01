@@ -2,12 +2,12 @@
  * Extra Life Helper v3.2
  * https://github.com/breadweb/extralifehelper
  *
- * Copyright (c) 2013 - 2019, Adam "Bread" Slesinger
+ * Copyright (c) 2013 - 2020, Adam "Bread" Slesinger
  * http://www.breadweb.net
  *
  * All rights reserved.
  *
- * Date: 10/6/2019 13:25:31
+ * Date: 10/6/2020 13:25:31
  *
  */
 
