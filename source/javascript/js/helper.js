@@ -1,5 +1,5 @@
 /*!
- * Extra Life Helper v3.2
+ * Extra Life Helper v3.3
  * https://github.com/breadweb/extralifehelper
  *
  * Copyright (c) 2013 - 2020, Adam "Bread" Slesinger
@@ -7,7 +7,7 @@
  *
  * All rights reserved.
  *
- * Date: 10/6/2020 13:25:31
+ * Date: 10/31/2020 23:21:12
  *
  */
 
@@ -288,14 +288,14 @@ function loadItems() {
             "https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.12.0/paper-core.min.js",
             "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js",
             "https://cdnjs.cloudflare.com/ajax/libs/tweenjs/1.0.2/tweenjs.min.js",
-            "http://code.responsivevoice.org/responsivevoice.js"            
+            "https://code.responsivevoice.org/responsivevoice.js?key=yZGVduQT"            
         ];        
     } else {
         var scripts = [
             "js/paper-core.min.js",
             "js/jquery.min.js",
             "js/tweenjs.min.js",
-            "js/responsivevoice.js"
+            "js/responsivevoice.js?key=yZGVduQT"
         ];
     }
 

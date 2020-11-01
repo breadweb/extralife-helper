@@ -1,11 +1,11 @@
-## Extra Life Helper v3.2
+## Extra Life Helper v3.3
 https://github.com/breadweb/extralife-helper
 
 Copyright (c) 2013 - 2020, Adam "Bread" Slesinger http://www.breadweb.net
 
 All rights reserved.
 
-Date: 10/6/2020 13:25:31
+Date: 10/31/2020 23:21:12
 
 <br>
 
@@ -79,7 +79,7 @@ To modify the core functionality or appearance, or take advantage of extra featu
 Helper and run it on your computer. Not as easy as using the link generator, but still very easy. Right-click
 the following link and select "Save link as..."
 
-[ExtraLifeHelper-v3.2.zip](https://github.com/breadweb/extralife-helper/releases/download/3.2/ExtraLifeHelper-v3.2.zip) (277 KB)
+[ExtraLifeHelper-v3.3.zip](https://github.com/breadweb/extralife-helper/releases/download/3.3/ExtraLifeHelper-v3.3.zip) (277 KB)
 
 <br>
   
