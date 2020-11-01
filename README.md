@@ -282,7 +282,8 @@ I'd also love to see the Helper being used on your stream. Let me know your broa
 
 Adam "Bread" Slesinger
 
-* Twitch: [http://www.twitch.tv/bread_man](http://www.twitch.tv/bread_man)
-* Discord: [https://discord.gg/aArewEc](https://discord.gg/aArewEc)
+* Twitch: [http://www.twitch.tv/bread4kids](http://www.twitch.tv/bread4kids)
 * Extra Life: [https://bit.ly/bread4kids](https://bit.ly/bread4kids)
+* Discord: [https://discord.gg/aArewEc](https://discord.gg/aArewEc)
+* YouTube: [https://youtube.com/breadweb](https://youtube.com/breadweb)
 * Steam: [https://steamcommunity.com/id/breadweb](https://steamcommunity.com/id/breadweb)
