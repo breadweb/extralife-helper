@@ -1,3 +1,4 @@
+.DS_Store
 helper.min.js
 *.zip
-source/javascript/ExtraLifeHelper-Bread*
+src/ExtraLifeHelper-Bread*
