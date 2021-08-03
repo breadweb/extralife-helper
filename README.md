@@ -3,7 +3,7 @@ https://github.com/breadweb/extralife-helper
 
 Copyright (c) 2013-2021 Adam "Bread" Slesinger http://www.breadweb.net
 
-Distributed under the MIT license. See [LICENSE](https://github.com/breadweb/extralife-helper/blob/master/LICENSE.txt) for details.
+Distributed under the MIT license. See [LICENSE](https://github.com/breadweb/extralife-helper/blob/main/LICENSE.txt) for details.
 
 Last Update: 8/31/2021 6:37:44
 
@@ -35,19 +35,19 @@ This is an application I created in 2013 for [Extra Life](http://extra-life.org)
 
 <br>
 
-![](https://github.com/breadweb/extralife-helper/blob/master/images/helper1.jpg)
+![](https://github.com/breadweb/extralife-helper/blob/main/images/helper1.jpg)
 Counts down the days.
 
-![](https://github.com/breadweb/extralife-helper/blob/master/images/helper2.jpg)
+![](https://github.com/breadweb/extralife-helper/blob/main/images/helper2.jpg)
 Counts down the hours.
 
-![](https://github.com/breadweb/extralife-helper/blob/master/images/helper3.jpg)
+![](https://github.com/breadweb/extralife-helper/blob/main/images/helper3.jpg)
 Counts the hours you have played.
 
-![](https://github.com/breadweb/extralife-helper/blob/master/images/helper4.jpg)
+![](https://github.com/breadweb/extralife-helper/blob/main/images/helper4.jpg)
 Shows new donations as they come in.
 
-![](https://github.com/breadweb/extralife-helper/blob/master/images/helper5.jpg)
+![](https://github.com/breadweb/extralife-helper/blob/main/images/helper5.jpg)
 Occasionally shows the Extra Life logo.
 
 <br>
@@ -56,7 +56,7 @@ Occasionally shows the Extra Life logo.
 
 To see how some Extra Life participants have used the Helper in their live stream presentations, check out the screenshot gallery:
 
-[http://github.com/breadweb/extralife-helper/blob/master/Examples.md](http://github.com/breadweb/extralife-helper/blob/master/Examples.md)
+[http://github.com/breadweb/extralife-helper/blob/main/Examples.md](http://github.com/breadweb/extralife-helper/blob/main/Examples.md)
 
 <br>
 
@@ -93,9 +93,9 @@ Instructions:
 1. Open up XSplit.
 1. Select a scene.
 1. In the scene sources section, click "Add" and then click "Webpage..."
-![](https://github.com/breadweb/extralife-helper/blob/master/images/xsplit1.jpg)
+![](https://github.com/breadweb/extralife-helper/blob/main/images/xsplit1.jpg)
 1. Click the "Browse" button and select **ExtraLifeHelper.html** from the location you extracted the files.
-![](https://github.com/breadweb/extralife-helper/blob/master/images/xsplit2.jpg)
+![](https://github.com/breadweb/extralife-helper/blob/main/images/xsplit2.jpg)
 
 <br>
 
@@ -112,13 +112,13 @@ Instructions:
 1. Personalize the Helper using the instructions below.
 1. Open up OBS Studio.
 1. Select a scene in the "Scenes" section.
-1. Right-click in the "Sources" section, select "Add" and then select "BrowserSource".   ![](https://github.com/breadweb/extralife-helper/blob/master/images/obs1.jpg)
+1. Right-click in the "Sources" section, select "Add" and then select "BrowserSource".   ![](https://github.com/breadweb/extralife-helper/blob/main/images/obs1.jpg)
 1. Select "Create New", type in a name such as "Helper" and click OK.
-![](https://github.com/breadweb/extralife-helper/blob/master/images/obs2.jpg)
+![](https://github.com/breadweb/extralife-helper/blob/main/images/obs2.jpg)
 1. In the Properties screen, check the box that says "Local file", click the "Browse" button and select **ExtraLifeHelper.html** from the files you extracted.
-![](https://github.com/breadweb/extralife-helper/blob/master/images/obs3.jpg)
+![](https://github.com/breadweb/extralife-helper/blob/main/images/obs3.jpg)
 1. Set the Width and Height to whatever is specified in the HTML file. Delete everything in the CSS field. Click OK.
-![](https://github.com/breadweb/extralife-helper/blob/master/images/obs4.jpg)
+![](https://github.com/breadweb/extralife-helper/blob/main/images/obs4.jpg)
 
 <br>
 
@@ -195,7 +195,7 @@ For OBS Studio, avoid resizing the Helper by dragging it. Open the properties an
 There are a few more options for customizing the Helper to suit your streaming setup.
 
 * **Color Themes**: There are four color themes available that respect the Extra Life brand guidelines.
-![](https://github.com/breadweb/extralife-helper/blob/master/images/themes.jpg)
+![](https://github.com/breadweb/extralife-helper/blob/main/images/themes.jpg)
 The values that can be set are "blue1", "blue2", "white1", and "gray1".
 * **Borders**: By default, there is a border with rounded corners. You can change it to have square corners or remove it completely. The values are "rounded", "square", or "none".
 * **Sounds**:

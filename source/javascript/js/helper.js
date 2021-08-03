@@ -5,7 +5,7 @@
  * Copyright (c) 2013-2021 Adam "Bread" Slesinger http://www.breadweb.net
  *
  * Distributed under the terms of the MIT license.
- * https://github.com/breadweb/extralife-helper/blob/master/LICENSE.txt
+ * https://github.com/breadweb/extralife-helper/blob/main/LICENSE.txt
  *
  * This notice shall be included in all copies or substantial portions of the Software.
 */
