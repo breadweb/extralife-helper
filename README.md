@@ -11,7 +11,7 @@ Last Update: 8/31/2021 6:37:44
 
 ### Introduction
 
-This is an application I created in 2013 for [Extra Life](http://extra-life.org). I wanted something to track the time until Extra Life, track my total time playing on game day, and show my fundraising information. I also wanted to celebrate new donations in real time when streaming during the marathon. The following year I made it available to the community and I was excited to see it adopted by so many participants.
+This is an application I created in 2013 for [Extra Life](http://extra-life.org). I wanted something to track the time until Extra Life, track my total time playing on game day, and show my fundraising information. I also wanted to celebrate new donations in real time when streaming during the marathon. The following year I made it available to the community and I was excited to see it adopted by so many other particpants.
 
 <br>
 
@@ -36,24 +36,19 @@ This is an application I created in 2013 for [Extra Life](http://extra-life.org)
 <br>
 
 ![](https://github.com/breadweb/extralife-helper/blob/main/images/helper1.jpg)
-
-Counts down the days.
+<br>Counts down the days.
 
 ![](https://github.com/breadweb/extralife-helper/blob/main/images/helper2.jpg)
-
-Counts down the hours.
+<br>Counts down the hours.
 
 ![](https://github.com/breadweb/extralife-helper/blob/main/images/helper3.jpg)
-
-Counts the hours you have played.
+<br>Counts the hours you have played.
 
 ![](https://github.com/breadweb/extralife-helper/blob/main/images/helper4.jpg)
-
-Shows new donation alerts with sounds and text-to-speech for donation messages.
+<br>Shows new donation alerts with sounds and text-to-speech for donation messages.
 
 ![](https://github.com/breadweb/extralife-helper/blob/main/images/helper5.jpg)
-
-Occasionally shows the Extra Life logo.
+<br>Occasionally shows the Extra Life logo.
 
 <br>
 
@@ -278,9 +273,9 @@ Translations were provided with help from the following awesome people:
 
 ### Contact
 
-If you see any issues that are not covered in the troubleshooting section, please visit the [Helper forum thread](http://bit.ly/helper-forum) and I'll do my best to fix it quickly.
+If you see any issues that are not covered in the troubleshooting section, please visit my [Discord server](https://discord.gg/aArewEc) and I'll do my best to fix it quickly.
 
-I'd also love to see the Helper being used on your stream. Let me know your broadcasting URL so I can watch and cheer you on during the marathon. Good luck with your fundraising for Extra Life!
+I'd also love to see the Helper being used on your stream. Let me know your streaming URL so I can watch and cheer you on during the marathon. Good luck with your fundraising for Extra Life!
 
 Adam "Bread" Slesinger
 
