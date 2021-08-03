@@ -138,7 +138,7 @@ Open the **ExtraLifeHelper.html** file using a text editor such as Notepad and e
 // Extra Life Helper
 // ============================================================================================
 // For use details and use instructions, visit https://github.com/breadweb/extralife-helper
-// For support or feature requests, visit http://bit.ly/helper-forum/
+// For support or feature requests, visit https://discord.gg/aArewEc
 //
 participantId = "449007";              // Set this to blank to run in team mode.
 teamId = "";                           // Set this to blank to run in participant mode.

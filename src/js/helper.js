@@ -273,7 +273,7 @@ function validateSettings() {
     }
     if (message) {
         document.body.innerHTML = `<div class='error'>${message}<br /><br />Please visit
-        <a href="http://bit.ly/helper-forum">http://bit.ly/helper-forum</a> if you need
+        <a href="https://discord.gg/aArewEc">https://discord.gg/aArewEc</a> if you need
         support.</div>`;
         return false;
     }
