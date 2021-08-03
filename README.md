@@ -25,7 +25,7 @@ This is an application I created in 2013 for [Extra Life](http://extra-life.org)
 * Works in "participant" mode or "team" mode.
 * Donation messages are read with text-to-speech during donation alerts.
 * Adjust the volume for all sound effects and text-to-speech.
-* Occasionally shows the Extra Life and Children's Miracle Network Hospital logos.
+* Occasionally shows the Extra Life logo.
 * Supports four color themes and three border styles.
 * Works in XSplit, any flavor of OBS, and any modern browser.
 * Available in English, French, and Spanish.
@@ -36,18 +36,23 @@ This is an application I created in 2013 for [Extra Life](http://extra-life.org)
 <br>
 
 ![](https://github.com/breadweb/extralife-helper/blob/main/images/helper1.jpg)
+
 Counts down the days.
 
 ![](https://github.com/breadweb/extralife-helper/blob/main/images/helper2.jpg)
+
 Counts down the hours.
 
 ![](https://github.com/breadweb/extralife-helper/blob/main/images/helper3.jpg)
+
 Counts the hours you have played.
 
 ![](https://github.com/breadweb/extralife-helper/blob/main/images/helper4.jpg)
-Shows new donations as they come in.
+
+Shows new donation alerts with sounds and text-to-speech for donation messages.
 
 ![](https://github.com/breadweb/extralife-helper/blob/main/images/helper5.jpg)
+
 Occasionally shows the Extra Life logo.
 
 <br>
