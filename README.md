@@ -66,7 +66,7 @@ If you do not need to modify source code or use features only supported in the d
 now use the Extra Life link generator to customize the Helper and get a link for easy copy and paste into
 OBS or XSplit. Downloading or editing files is no longer required for the majority of Helper users!
 
-[http://breadweb.net/extralife-helper.html](http://breadweb.net/extralife-helper.html)
+[http://breadweb.net/extralife-helper/](http://breadweb.net/extralife-helper/)
 
 <br>
 
