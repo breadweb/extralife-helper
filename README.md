@@ -1,7 +1,7 @@
 ## Extra Life Helper v3.4
 https://github.com/breadweb/extralife-helper
 
-Copyright (c) 2013-2021 Adam "Bread" Slesinger http://www.breadweb.net
+Copyright (c) 2013-2022 Adam "Bread" Slesinger http://www.breadweb.net
 
 Distributed under the MIT license. See [LICENSE](https://github.com/breadweb/extralife-helper/blob/main/LICENSE.txt) for details.
 
@@ -11,7 +11,7 @@ Last Update: 8/31/2021 6:37:44
 
 ### Introduction
 
-This is an application I created in 2013 for [Extra Life](http://extra-life.org). I wanted something to track the time until Extra Life, track my total time playing on game day, and show my fundraising information. I also wanted to celebrate new donations in real time when streaming during the marathon. The following year I made it available to the community and I was excited to see it adopted by so many other particpants.
+This is an application I created in 2013 for [Extra Life](http://extra-life.org). I wanted something to track the time until Extra Life, track my total time playing on game day, and show my fundraising information. I also wanted to celebrate new donations in real time when streaming during the marathon. The following year I made it available to the community and I was excited to see it adopted by so many other participants.
 
 <br>
 
