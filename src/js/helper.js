@@ -11,6 +11,7 @@
 */
 
 const IS_DEBUG = false;
+const IS_1877_ENABLED = true;
 const WIDTH_ORIGINAL = 264;
 const HEIGHT_ORIGINAL = 110;
 const ANCHOR_POINT = { x: 1, y: 1 };    // Point to start drawing which avoids clipping of stroke
@@ -122,6 +123,7 @@ var clockNumbers;
 var dateTimeStart;
 var lang;
 var soundObjects;
+var sound1877Object;
 var newDonors;
 var lastRaised;
 var shownDonors;
@@ -405,6 +407,11 @@ function initSound() {
         soundObjects[i] = new Audio("audio/" + soundObjects[i].trim());
         soundObjects[i].volume = volume / 100;
     }
+    // Special case for Extra-Life-A-Thon.
+    if (IS_1877_ENABLED) {
+        sound1877Object = new Audio("audio/1877.mp3");
+        sound1877Object.volume = volume / 100;
+    }
 
     // Initialize text-to-speech.
     var mapping =
@@ -504,7 +511,7 @@ function initScreen() {
     for (i = 0; i < 6; i++) {
         // A colon separator is needed after every two clock digits.
         doesNeedSep = i > 0 && i % 2 == 0;
-
+    
         if (doesNeedSep) {
             // Add a colon separator.
             var colonSep = new paper.PointText({
@@ -517,7 +524,7 @@ function initScreen() {
             clockGroup.addChild(colonSep);
             xPos += 10;
         }
-
+    
         clockNumbers[i] = new paper.PointText({
             point: [xPos, 0],
             content: '0',
@@ -526,10 +533,10 @@ function initScreen() {
             justification: 'center'
         });
         clockGroup.addChild(clockNumbers[i]);
-
+    
         xPos += 28;
     }
-
+    
     clockGroup.position = [centerX, 45];
     clockGroup.visible = false;
 
@@ -718,7 +725,7 @@ function onClockTimer() {
 
         // Special case for campaigns that might go longer than 99 hours.
         hourText = hourText.substring(hourText.length - 2);
-
+        
         clockNumbers[0].content = hourText.substring(0, 1);
         clockNumbers[1].content = hourText.substring(1);
         clockNumbers[2].content = minuteText.substring(0, 1);
@@ -823,7 +830,11 @@ function showNewDonor(donorName, donorAmount, donorMessage, donorAvatar, donorCr
     donorGroup.visible = true;
     logoGroup.visible = false;
 
-    playSounds();
+    const is1877 = 
+        IS_1877_ENABLED && 
+        (donorAmount == 18.77 || donorAmount == 187.70 || donorAmount == 1877.00 || donorAmount == 18770.00)
+
+    playSounds(is1877);
 
     if (selectedVoice) {
         setTimeout(function () {
@@ -998,13 +1009,20 @@ function onDonorInfoSuccess(res) {
     getAndShowNewDonor();
 }
 
-function playSounds() {
-    for (i = 0; i < soundObjects.length; i++) {
-        soundObject = soundObjects[i];
-        soundObject.load();
-        soundObject.play()
+function playSounds(is1877) {
+    if (IS_1877_ENABLED && is1877) {
+        sound1877Object.load();
+        sound1877Object.play()
            .then(result => {})
-           .catch(error => {});
+           .catch(error => {});        
+    } else {
+        for (i = 0; i < soundObjects.length; i++) {
+            soundObject = soundObjects[i];
+            soundObject.load();
+            soundObject.play()
+            .then(result => {})
+            .catch(error => {});
+        }
     }
 }
 
