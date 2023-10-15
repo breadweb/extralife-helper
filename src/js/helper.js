@@ -11,7 +11,7 @@
 */
 
 const IS_DEBUG = false;
-const IS_1877_ENABLED = true;
+const IS_1877_ENABLED = false;
 const WIDTH_ORIGINAL = 264;
 const HEIGHT_ORIGINAL = 110;
 const ANCHOR_POINT = { x: 1, y: 1 };    // Point to start drawing which avoids clipping of stroke
@@ -25,12 +25,14 @@ const CLOCK_TIMER_INTERVAL = 1000;      // Frequency that the countdown should b
 const ACTION_TIMER_INTERVAL = 60000;    // Frequency that a new action should be taken, in ms
 const DONOR_TIMER_INTERVAL = 60000;     // Length of time a new donation is shown, in ms
 const LOGO_PLAY_MARK = 60;              // Number of times the action item ticks before showing logos
-const DONOR_RECIPIENT_NAME_POINT_Y = 32;
-const DONOR_RECIPIENT_NAME_FONT_SIZE = 10; 
-const DONOR_AMOUNT_POINT_Y = 40;
+const DONOR_RECIPIENT_NAME_POINT_Y = 15;
+const DONOR_RECIPIENT_NAME_FONT_SIZE = 8; 
+const DONOR_AMOUNT_POINT_Y = 46;
 const DONOR_AMOUNT_FONT_SIZE = 36;
-const DONOR_NAME_POINT_Y = 56;
+const DONOR_NAME_POINT_Y = 64;
 const DONOR_NAME_FONT_SIZE = 12;
+const DONOR_RECIPIENT_NAME_POINT_Y_ALT = 17;
+const DONOR_RECIPIENT_NAME_FONT_SIZE_ALT = 8; 
 const DONOR_AMOUNT_POINT_Y_ALT = 52;
 const DONOR_AMOUNT_FONT_SIZE_ALT = 40;
 const DONOR_NAME_POINT_Y_ALT = 76;
@@ -62,7 +64,8 @@ const STRINGS = {
         TEXT_MY_AMOUNT_RAISED: "MY AMOUNT RAISED:",
         TEXT_OUR_AMOUNT_RAISED: "OUR AMOUNT RAISED:",
         TEXT_HOURS_PLAYED: "TOTAL TIME PLAYED:",
-        TEXT_ANONYMOUS: "Anonymous"
+        TEXT_ANONYMOUS: "Anonymous",
+        TEXT_RECEIVED: "RECEIVED",
     },
     "fr-ca": {
         TEXT_DAYS_UNTIL: "NOMBRE DE JOURS JUSQU'\xC0 EXTRA LIFE:",
@@ -71,7 +74,8 @@ const STRINGS = {
         TEXT_MY_AMOUNT_RAISED: "LE MONTANT QUE J'AI AMASS\xC9:",
         TEXT_OUR_AMOUNT_RAISED: "LE MONTANT TOTAL AMASS\xC9:",
         TEXT_HOURS_PLAYED: "NOMBRE D'HEURES JOU\xC9ES:",
-        TEXT_ANONYMOUS: "Anonyme"
+        TEXT_ANONYMOUS: "Anonyme",
+        TEXT_RECEIVED: "A RE\xC7U",
     },
     "es-419": {
         TEXT_DAYS_UNTIL: "D\xCDAS HASTA EXTRA LIFE:",
@@ -80,7 +84,8 @@ const STRINGS = {
         TEXT_MY_AMOUNT_RAISED: "MI CANTIDAD RECAUDADA:",
         TEXT_OUR_AMOUNT_RAISED: "NUESTRA CANTIDAD RECAUDADA:",
         TEXT_HOURS_PLAYED: "TIEMPO TOTAL JUGADO:",
-        TEXT_ANONYMOUS: "A\xF3nimo"
+        TEXT_ANONYMOUS: "A\xF3nimo",
+        TEXT_RECEIVED: "RECIBI\xD3",
     }
 }
 
@@ -330,10 +335,10 @@ function initHelper() {
     initScreen();
 
     if (IS_DEBUG) {
-        // participantInfoUrl = "http://localhost:8888/participant.json";
-        // donorInfoUrl = "http://localhost:8888/donations.json";
-        // teamInfoUrl = "http://localhost:8888/team.json";
-        // teamDonorInfoUrl = "http://localhost:8888/teamDonations.json";
+        // participantInfoUrl = "http://localhost:8000/participant.txt";
+        // donorInfoUrl = "http://localhost:8000/donations.txt";
+        // teamInfoUrl = "http://localhost:8000/team.txt";
+        // teamDonorInfoUrl = "http://localhost:8000/teamDonations.txt";
 
         // CLOCK_TIMER_INTERVAL = 1000;
         // ACTION_TIMER_INTERVAL = 10000;
@@ -342,9 +347,15 @@ function initHelper() {
         // Use this to set states and change views for faster testing
         // of new features and fixes.
         paper.project.activeLayer.onMouseDown = function (event) {
-            // Show the logos immediately.
-            logoCounter = LOGO_PLAY_MARK - 1;
-            onActionTimer();
+            // Show a test donor alert.
+            showNewDonor(
+                "Bread",
+                10.00,
+                "This is a test message! This is a test message! This is a test message! This is a test message! This is a test message!",
+                "https://assets.donordrive.com/extralife/images/$avatars$/constituent_574EE92A-C29F-F29A-60B307827DB9F948.jpg",
+                "2023-01-11T01:07:48.720+0000",
+                "bread4kids",
+            );
         }
     }
 
@@ -596,7 +607,7 @@ function initScreen() {
     });
 
     donorMessageText1 = new paper.PointText({
-        point: [centerX, 76],
+        point: [centerX, 80],
         content: "[Message]",
         fontFamily: "Nunito-Regular",
         fontSize: 12,
@@ -604,7 +615,7 @@ function initScreen() {
     });
 
     donorMessageText2 = new paper.PointText({
-        point: [centerX, 88],
+        point: [centerX, 94],
         content: "[Message]",
         fontFamily: "Nunito-Regular",
         fontSize: 12,
@@ -649,7 +660,7 @@ function initScreen() {
             clockGroup.fillColor = GREEN;
             raisedText.fillColor = WHITE;
             moneyText.fillColor = WHITE;
-            donorRecipientNameText = WHITE;
+            donorRecipientNameText.fillColor = WHITE;
             donorAmountText.fillColor = GREEN;
             donorNameText.fillColor = WHITE;
             donorMessageText1.fillColor = WHITE;
@@ -663,7 +674,7 @@ function initScreen() {
             daysText.fillColor = WHITE;
             clockGroup.fillColor = WHITE;
             raisedText.fillColor = DARK_BLUE;
-            donorRecipientNameText = WHITE;
+            donorRecipientNameText.fillColor = WHITE;
             moneyText.fillColor = DARK_BLUE;
             donorAmountText.fillColor = WHITE;
             donorNameText.fillColor = DARK_BLUE;
@@ -679,7 +690,7 @@ function initScreen() {
             clockGroup.fillColor = WHITE;
             raisedText.fillColor = DARK_BLUE;
             moneyText.fillColor = DARK_BLUE;
-            donorRecipientNameText = DARK_BLUE;
+            donorRecipientNameText.fillColor = DARK_BLUE;
             donorAmountText.fillColor = WHITE;
             donorNameText.fillColor = DARK_BLUE;
             donorMessageText1.fillColor = DARK_BLUE;
@@ -693,7 +704,7 @@ function initScreen() {
             daysText.fillColor = LIGHT_BLUE;
             clockGroup.fillColor = LIGHT_BLUE;
             raisedText.fillColor = DARK_BLUE;
-            donorRecipientNameText = LIGHT_BLUE;
+            donorRecipientNameText.fillColor = LIGHT_BLUE;
             moneyText.fillColor = DARK_BLUE;
             donorAmountText.fillColor = LIGHT_BLUE;
             donorNameText.fillColor = DARK_BLUE;
@@ -835,7 +846,10 @@ function showNewDonor(donorName, donorAmount, donorMessage, donorAvatar, donorCr
     stopTimer("clock");
     startTimer("donor");
 
-    donorRecipientNameText.content = donorRecipientName;
+    if (teamId) {
+        donorRecipientNameText.content = donorRecipientName + " " + strings["TEXT_RECEIVED"];
+    }
+    
     donorAmountText.content = donorAmount == null
         ? A_GIFT
         : formatMoney(donorAmount, true);
@@ -875,6 +889,8 @@ function updateDonorGroup(message) {
     setScale(donorGroup, 1 / helperScale, "topLeft");
 
     var isVisible = true;
+    var donorRecipientNamePointY = DONOR_RECIPIENT_NAME_POINT_Y;
+    var donorRecipientNameFontSize = DONOR_RECIPIENT_NAME_FONT_SIZE;
     var donorAmountPointY = DONOR_AMOUNT_POINT_Y;
     var donorAmountFontSize = DONOR_AMOUNT_FONT_SIZE;
     var donorNamePointY = DONOR_NAME_POINT_Y;
@@ -915,6 +931,8 @@ function updateDonorGroup(message) {
         }
     } else {
         isVisible = false;
+        donorRecipientNamePointY = DONOR_RECIPIENT_NAME_POINT_Y_ALT;
+        donorRecipientNameFontSize = DONOR_RECIPIENT_NAME_FONT_SIZE_ALT;        
         donorAmountPointY = DONOR_AMOUNT_POINT_Y_ALT;
         donorAmountFontSize = DONOR_AMOUNT_FONT_SIZE_ALT;
         donorNamePointY = DONOR_NAME_POINT_Y_ALT;
@@ -924,6 +942,8 @@ function updateDonorGroup(message) {
     donorMessageText1.visible = isVisible;
     donorMessageText2.visible = isVisible;
 
+    donorRecipientNameText.point = [donorRecipientNameText.point.x, donorRecipientNamePointY];
+    donorRecipientNameText.fontSize = donorRecipientNameFontSize;    
     donorAmountText.point = [donorAmountText.point.x, donorAmountPointY];
     donorAmountText.fontSize = donorAmountFontSize;
     donorNameText.point = [donorNameText.point.x, donorNamePointY];
@@ -1008,7 +1028,7 @@ function onDonorInfoSuccess(res) {
         for (j = 0; j < shownDonors.length; j++) {
             // A unique ID is provided by Extra Life for donations (timestamp) but for
             // some reason, jquery ajax response objects sometimes show the wrong timestamp
-            // value and this can cause donation alerts to now show. Until we can figure
+            // value and this can cause donation alerts to not show. Until we can figure
             // out why, resort to the old method of uniquely identifying a donation by a
             // combination of who and when.
             if (res[i][KEY_DISPLAY_NAME] == shownDonors[j][KEY_DISPLAY_NAME] &&
