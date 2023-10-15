@@ -330,10 +330,10 @@ function initHelper() {
     initScreen();
 
     if (IS_DEBUG) {
-        // participantInfoUrl = "http://localhost:8888/participant.txt";
-        // donorInfoUrl = "http://localhost:8888/donations.txt";
-        // teamInfoUrl = "http://localhost:8888/team.txt";
-        // teamDonorInfoUrl = "http://localhost:8888/teamDonations.txt";
+        // participantInfoUrl = "http://localhost:8888/participant.json";
+        // donorInfoUrl = "http://localhost:8888/donations.json";
+        // teamInfoUrl = "http://localhost:8888/team.json";
+        // teamDonorInfoUrl = "http://localhost:8888/teamDonations.json";
 
         // CLOCK_TIMER_INTERVAL = 1000;
         // ACTION_TIMER_INTERVAL = 10000;
