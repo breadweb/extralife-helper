@@ -379,8 +379,9 @@ function showTestDonation() {
     testMessage = "This is such a good cause. Good luck!";
     testAvatar = "//assets.donordrive.com/clients/extralife/img/avatar-constituent-default.gif";
     testCreatedOn = "2018-10-05T01:09:59.97+0000";
+    testRecipientName = "bread4kids";
 
-    showNewDonor(testName, testAmount, testMessage, testAvatar, testCreatedOn);
+    showNewDonor(testName, testAmount, testMessage, testAvatar, testCreatedOn, testRecipientName);
 }
 
 function startTimer(timerType) {
