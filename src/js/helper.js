@@ -25,6 +25,8 @@ const CLOCK_TIMER_INTERVAL = 1000;      // Frequency that the countdown should b
 const ACTION_TIMER_INTERVAL = 60000;    // Frequency that a new action should be taken, in ms
 const DONOR_TIMER_INTERVAL = 60000;     // Length of time a new donation is shown, in ms
 const LOGO_PLAY_MARK = 60;              // Number of times the action item ticks before showing logos
+const DONOR_RECIPIENT_NAME_POINT_Y = 32;
+const DONOR_RECIPIENT_NAME_FONT_SIZE = 10; 
 const DONOR_AMOUNT_POINT_Y = 40;
 const DONOR_AMOUNT_FONT_SIZE = 36;
 const DONOR_NAME_POINT_Y = 56;
@@ -36,6 +38,7 @@ const DONOR_NAME_FONT_SIZE_ALT = 14;
 const KEY_SUM_DONATIONS = "sumDonations";
 const KEY_SUM_PLEDGES = "sumPledges";
 const KEY_DISPLAY_NAME = "displayName";
+const KEY_RECIPIENT_DISPLAY_NAME = "recipientName";
 const KEY_AMOUNT = "amount";
 const KEY_MESSAGE = "message";
 const KEY_AVATAR_IMAGE_URL = "avatarImageUrl";
@@ -110,6 +113,7 @@ var moneyText;
 var infoGroup;
 var donorAmountText;
 var donorNameText;
+var donorRecipientNameText;
 var donorMessageText;
 var donorGroup
 var clockGroup;
@@ -567,6 +571,14 @@ function initScreen() {
     // Setup the donor group which contains information about a newly
     // received donation.
 
+    donorRecipientNameText = new paper.PointText({
+        point: [centerX, DONOR_RECIPIENT_NAME_POINT_Y],
+        content: "",
+        fontFamily: lang == "en-us" ? "Furore" : "SourceSansPro-Bold",
+        fontSize: DONOR_RECIPIENT_NAME_FONT_SIZE,
+        justification: 'center'
+    });
+
     donorAmountText = new paper.PointText({
         point: [centerX, DONOR_AMOUNT_POINT_Y],
         content: '$0',
@@ -600,6 +612,7 @@ function initScreen() {
     });
 
     donorGroup = new paper.Group();
+    donorGroup.addChild(donorRecipientNameText);
     donorGroup.addChild(donorAmountText);
     donorGroup.addChild(donorNameText);
     donorGroup.addChild(donorMessageText1);
@@ -636,6 +649,7 @@ function initScreen() {
             clockGroup.fillColor = GREEN;
             raisedText.fillColor = WHITE;
             moneyText.fillColor = WHITE;
+            donorRecipientNameText = WHITE;
             donorAmountText.fillColor = GREEN;
             donorNameText.fillColor = WHITE;
             donorMessageText1.fillColor = WHITE;
@@ -649,6 +663,7 @@ function initScreen() {
             daysText.fillColor = WHITE;
             clockGroup.fillColor = WHITE;
             raisedText.fillColor = DARK_BLUE;
+            donorRecipientNameText = WHITE;
             moneyText.fillColor = DARK_BLUE;
             donorAmountText.fillColor = WHITE;
             donorNameText.fillColor = DARK_BLUE;
@@ -664,6 +679,7 @@ function initScreen() {
             clockGroup.fillColor = WHITE;
             raisedText.fillColor = DARK_BLUE;
             moneyText.fillColor = DARK_BLUE;
+            donorRecipientNameText = DARK_BLUE;
             donorAmountText.fillColor = WHITE;
             donorNameText.fillColor = DARK_BLUE;
             donorMessageText1.fillColor = DARK_BLUE;
@@ -677,6 +693,7 @@ function initScreen() {
             daysText.fillColor = LIGHT_BLUE;
             clockGroup.fillColor = LIGHT_BLUE;
             raisedText.fillColor = DARK_BLUE;
+            donorRecipientNameText = LIGHT_BLUE;
             moneyText.fillColor = DARK_BLUE;
             donorAmountText.fillColor = LIGHT_BLUE;
             donorNameText.fillColor = DARK_BLUE;
@@ -808,15 +825,17 @@ function getAndShowNewDonor() {
     var donorMessage = donorEntry[KEY_MESSAGE];
     var donorAvatar = donorEntry[KEY_AVATAR_IMAGE_URL];
     var donorCreatedOn = donorEntry[KEY_CREATED_DATE];
+    var donorRecipientName = donorEntry[KEY_RECIPIENT_DISPLAY_NAME];
 
-    showNewDonor(donorName, donorAmount, donorMessage, donorAvatar, donorCreatedOn);
+    showNewDonor(donorName, donorAmount, donorMessage, donorAvatar, donorCreatedOn, donorRecipientName);
 }
 
-function showNewDonor(donorName, donorAmount, donorMessage, donorAvatar, donorCreatedOn) {
+function showNewDonor(donorName, donorAmount, donorMessage, donorAvatar, donorCreatedOn, donorRecipientName) {
     stopTimer("action");
     stopTimer("clock");
     startTimer("donor");
 
+    donorRecipientNameText.content = donorRecipientName;
     donorAmountText.content = donorAmount == null
         ? A_GIFT
         : formatMoney(donorAmount, true);
@@ -845,7 +864,7 @@ function showNewDonor(donorName, donorAmount, donorMessage, donorAvatar, donorCr
     // Call the function that participants can use to run their own code when
     // a new donation arrives.
     if (typeof onNewDonation === "function") {
-        onNewDonation(donorName, donorAmount, donorMessage, donorAvatar, donorCreatedOn);
+        onNewDonation(donorName, donorAmount, donorMessage, donorAvatar, donorCreatedOn, donorRecipientName);
     }
 }
 

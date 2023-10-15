@@ -168,7 +168,7 @@ lang = "en-us";                        // Language to use for all text displayed
 
 // If you would like additional things to happen when a new donation is
 // received, put them in this function.
-function onNewDonation(donorName, donationAmount, message, avatarImageURL, createdOn)
+function onNewDonation(donorName, donationAmount, message, avatarImageURL, createdOn, recipientName)
 {
     // Your custom logic here.
 }
