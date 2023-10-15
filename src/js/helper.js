@@ -377,7 +377,7 @@ function showTestDonation() {
     testName = "John Smith";
     testAmount = 100.00;
     testMessage = "This is such a good cause. Good luck!";
-    testAvatar = "//assets.donordrive.com/clients/extralife/img/avatar-constituent-default.gif";
+    testAvatar = "https://assets.donordrive.com/clients/extralife/img/avatar-constituent-default.gif";
     testCreatedOn = "2018-10-05T01:09:59.97+0000";
     testRecipientName = "bread4kids";
 
