@@ -11,7 +11,7 @@
 */
 
 const IS_DEBUG = false;
-const IS_1877_ENABLED = false;
+const IS_1877_ENABLED = true;
 const WIDTH_ORIGINAL = 264;
 const HEIGHT_ORIGINAL = 110;
 const ANCHOR_POINT = { x: 1, y: 1 };    // Point to start drawing which avoids clipping of stroke
@@ -26,13 +26,13 @@ const ACTION_TIMER_INTERVAL = 60000;    // Frequency that a new action should be
 const DONOR_TIMER_INTERVAL = 60000;     // Length of time a new donation is shown, in ms
 const LOGO_PLAY_MARK = 60;              // Number of times the action item ticks before showing logos
 const DONOR_RECIPIENT_NAME_POINT_Y = 15;
-const DONOR_RECIPIENT_NAME_FONT_SIZE = 8; 
+const DONOR_RECIPIENT_NAME_FONT_SIZE = 8;
 const DONOR_AMOUNT_POINT_Y = 46;
 const DONOR_AMOUNT_FONT_SIZE = 36;
 const DONOR_NAME_POINT_Y = 64;
 const DONOR_NAME_FONT_SIZE = 12;
 const DONOR_RECIPIENT_NAME_POINT_Y_ALT = 17;
-const DONOR_RECIPIENT_NAME_FONT_SIZE_ALT = 8; 
+const DONOR_RECIPIENT_NAME_FONT_SIZE_ALT = 8;
 const DONOR_AMOUNT_POINT_Y_ALT = 52;
 const DONOR_AMOUNT_FONT_SIZE_ALT = 40;
 const DONOR_NAME_POINT_Y_ALT = 76;
@@ -527,7 +527,7 @@ function initScreen() {
     for (i = 0; i < 6; i++) {
         // A colon separator is needed after every two clock digits.
         doesNeedSep = i > 0 && i % 2 == 0;
-    
+
         if (doesNeedSep) {
             // Add a colon separator.
             var colonSep = new paper.PointText({
@@ -540,7 +540,7 @@ function initScreen() {
             clockGroup.addChild(colonSep);
             xPos += 10;
         }
-    
+
         clockNumbers[i] = new paper.PointText({
             point: [xPos, 0],
             content: '0',
@@ -549,10 +549,10 @@ function initScreen() {
             justification: 'center'
         });
         clockGroup.addChild(clockNumbers[i]);
-    
+
         xPos += 28;
     }
-    
+
     clockGroup.position = [centerX, 45];
     clockGroup.visible = false;
 
@@ -754,7 +754,7 @@ function onClockTimer() {
 
         // Special case for campaigns that might go longer than 99 hours.
         hourText = hourText.substring(hourText.length - 2);
-        
+
         clockNumbers[0].content = hourText.substring(0, 1);
         clockNumbers[1].content = hourText.substring(1);
         clockNumbers[2].content = minuteText.substring(0, 1);
@@ -850,7 +850,7 @@ function showNewDonor(donorName, donorAmount, donorMessage, donorAvatar, donorCr
     if (teamId) {
         donorRecipientNameText.content = donorRecipientName + " " + strings["TEXT_RECEIVED"];
     }
-    
+
     donorAmountText.content = donorAmount == null
         ? A_GIFT
         : formatMoney(donorAmount, true);
@@ -864,8 +864,8 @@ function showNewDonor(donorName, donorAmount, donorMessage, donorAvatar, donorCr
     donorGroup.visible = true;
     logoGroup.visible = false;
 
-    const is1877 = 
-        IS_1877_ENABLED && 
+    const is1877 =
+        IS_1877_ENABLED &&
         (donorAmount == 18.77 || donorAmount == 187.70 || donorAmount == 1877.00 || donorAmount == 18770.00)
 
     playSounds(is1877);
@@ -933,7 +933,7 @@ function updateDonorGroup(message) {
     } else {
         isVisible = false;
         donorRecipientNamePointY = DONOR_RECIPIENT_NAME_POINT_Y_ALT;
-        donorRecipientNameFontSize = DONOR_RECIPIENT_NAME_FONT_SIZE_ALT;        
+        donorRecipientNameFontSize = DONOR_RECIPIENT_NAME_FONT_SIZE_ALT;
         donorAmountPointY = DONOR_AMOUNT_POINT_Y_ALT;
         donorAmountFontSize = DONOR_AMOUNT_FONT_SIZE_ALT;
         donorNamePointY = DONOR_NAME_POINT_Y_ALT;
@@ -944,7 +944,7 @@ function updateDonorGroup(message) {
     donorMessageText2.visible = isVisible;
 
     donorRecipientNameText.point = [donorRecipientNameText.point.x, donorRecipientNamePointY];
-    donorRecipientNameText.fontSize = donorRecipientNameFontSize;    
+    donorRecipientNameText.fontSize = donorRecipientNameFontSize;
     donorAmountText.point = [donorAmountText.point.x, donorAmountPointY];
     donorAmountText.fontSize = donorAmountFontSize;
     donorNameText.point = [donorNameText.point.x, donorNamePointY];
@@ -1054,7 +1054,7 @@ function playSounds(is1877) {
         sound1877Object.load();
         sound1877Object.play()
            .then(result => {})
-           .catch(error => {});        
+           .catch(error => {});
     } else {
         for (i = 0; i < soundObjects.length; i++) {
             soundObject = soundObjects[i];
