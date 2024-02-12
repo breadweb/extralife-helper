@@ -1,0 +1,202 @@
+{
+    "env": {
+        "commonjs": true,
+        "browser": true,
+        "es2021": true,
+        "node": true,
+        "mocha": true
+    },
+    "parser": "@babel/eslint-parser",
+    "parserOptions": {
+        "ecmaVersion": 12,
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react"
+    ],
+    "ignorePatterns": [
+        "dist",
+        "node_modules",
+        "build",
+        "package.json"
+    ],
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "react-app"
+    ],
+    "overrides": [
+        {
+            "files": [
+                "**/*.jsx"
+            ],
+            "parser": "@babel/eslint-parser",
+            "extends": [
+                "eslint:recommended",
+                "plugin:react/recommended"
+            ],
+            "plugins": [
+                "react"
+            ],
+            "rules": {
+                "react/prop-types": "off"
+            }
+        }
+    ],
+    "rules": {
+        "array-bracket-newline": [
+            "error",
+            {
+                "multiline": true
+            }
+        ],
+        "brace-style": [
+            "error",
+            "1tbs"
+        ],
+        "camelcase": [
+            "error",
+            {
+                "properties": "never"
+            }
+        ],
+        "capitalized-comments": [
+            "error",
+            "always",
+            {
+                "ignoreConsecutiveComments": true
+            }
+        ],
+        "comma-dangle": [
+            "error",
+            "always-multiline"
+        ],
+        "comma-spacing": [
+            "error"
+        ],
+        "comma-style": [
+            "error"
+        ],
+        "curly": [
+            "error"
+        ],
+        "dot-notation": [
+            "error",
+            {
+                "allowPattern": "^[a-z]+(_[a-z]+)+$"
+            }
+        ],
+        "eol-last": [
+            "error",
+            "always"
+        ],
+        "eqeqeq": [
+            "error",
+            "always"
+        ],
+        "function-call-argument-newline": [
+            "error",
+            "consistent"
+        ],
+        "function-paren-newline": [
+            "error",
+            "consistent"
+        ],
+        "indent": [
+            "error",
+            4,
+            {
+                "SwitchCase": 1
+            }
+        ],
+        "keyword-spacing": [
+            "error",
+            {
+                "before": true,
+                "after": true
+            }
+        ],
+        "key-spacing": [
+            "error",
+            {
+                "beforeColon": false,
+                "afterColon": true,
+                "mode": "strict"
+            }
+        ],
+        "max-len": [
+            "error",
+            {
+                "code": 120
+            }
+        ],
+        "no-multi-spaces": [
+            "error"
+        ],
+        "no-multiple-empty-lines": [
+            "error"
+        ],
+        "no-trailing-spaces": [
+            "error"
+        ],
+        "no-var": [
+            "error"
+        ],
+        "object-curly-newline": [
+            "error",
+            {
+                "consistent": true
+            }
+        ],
+        "object-curly-spacing": [
+            "error",
+            "always"
+        ],
+        "prefer-const": [
+            "error"
+        ],
+        "quotes": [
+            "error",
+            "single",
+            {
+                "avoidEscape": true
+            }
+        ],
+        "react/jsx-no-bind": [
+            "error",
+            {
+                "allowArrowFunctions": false
+            }
+        ],
+        "react/prop-types": [
+            "off"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "space-before-blocks": [
+            "error",
+            "always"
+        ],
+        "space-before-function-paren": [
+            "error",
+            "always"
+        ],
+        "space-in-parens": [
+            "error",
+            "never"
+        ],
+        "space-infix-ops": [
+            "error"
+        ]
+    }
+}
