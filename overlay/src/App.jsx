@@ -3,16 +3,12 @@ import useHelperSettings from './hooks/useHelperSettings';
 import useExtraLifeData from './hooks/useExtraLifeData';
 import useSound from 'use-sound';
 import kaChingSfx from './assets/audio/ka-ching.mp3';
-import oneEightSevenSevenSfx from './assets/audio/1877.mp3';
 
 function App() {
     const [errorMessage, setErrorMessage] = useState(undefined);
     const helperSettings = useHelperSettings();
     const extraLife = useExtraLifeData(undefined);
     const [playKaChingSfx] = useSound(kaChingSfx, {
-        volume: helperSettings.volume,
-    });
-    const [playOneEightSevenSevenSfx] = useSound(oneEightSevenSevenSfx, {
         volume: helperSettings.volume,
     });
 
@@ -31,7 +27,7 @@ function App() {
         return () => {
             document.removeEventListener('keypress', onKeyPress);
         };
-    }, [playKaChingSfx, playOneEightSevenSevenSfx]);
+    }, [playKaChingSfx]);
 
     useEffect(() => {
         if (helperSettings?.error !== undefined) {
@@ -52,7 +48,7 @@ function App() {
     if (errorMessage) {
         return (
             <div className='flex'>
-                ERROR: {errorMessage};
+                ERROR: {errorMessage}
             </div>
         )
     }
