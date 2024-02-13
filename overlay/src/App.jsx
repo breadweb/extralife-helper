@@ -8,15 +8,14 @@ function App() {
     const [errorMessage, setErrorMessage] = useState(undefined);
     const helperSettings = useHelperSettings();
     const extraLife = useExtraLifeData(undefined);
-    const [playKaChingSfx] = useSound(kaChingSfx, {
-        volume: helperSettings.volume,
-    });
+    const [playSound, { sound }] = useSound(kaChingSfx);
 
     useEffect(() => {
         const onKeyPress = evt => {
             switch (evt.key) {
                 case 's':
-                    playKaChingSfx();
+                    sound.volume(helperSettings.data?.volume || 1);
+                    sound.play();
                 default:
                     // Do nothing.
             }
@@ -27,7 +26,7 @@ function App() {
         return () => {
             document.removeEventListener('keypress', onKeyPress);
         };
-    }, [playKaChingSfx]);
+    }, [playSound]);
 
     useEffect(() => {
         if (helperSettings?.error !== undefined) {
@@ -48,7 +47,7 @@ function App() {
     if (errorMessage) {
         return (
             <div className='flex'>
-                ERROR: {errorMessage}
+                {errorMessage}
             </div>
         )
     }
@@ -57,6 +56,9 @@ function App() {
         <div className='flex flex-col'>
             <div className='p-2'>
                 Participant ID: {helperSettings?.data?.participantId}
+            </div>
+            <div className='font-mono p-2 text-sm whitespace-pre'>
+                {JSON.stringify(helperSettings?.data, null, 2)}
             </div>
             <div className='font-mono p-2 text-sm whitespace-pre'>
                 {JSON.stringify(extraLife.data, null, 2)}
