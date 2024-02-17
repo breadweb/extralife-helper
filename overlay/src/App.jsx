@@ -3,6 +3,8 @@ import useHelperSettings from './hooks/useHelperSettings';
 import useExtraLifeData from './hooks/useExtraLifeData';
 import useSound from 'use-sound';
 import alertSfx from './assets/audio/alert.mp3';
+import ErrorView from './components/ErrorView';
+import InfoView from './components/InfoView';
 
 function App() {
     const [errorMessage, setErrorMessage] = useState(undefined);
@@ -74,25 +76,13 @@ function App() {
 
     if (errorMessage) {
         return (
-            <div className='flex'>
-                {errorMessage}
-            </div>
-        )
+            <ErrorView message={errorMessage} />
+        );
+    } else {
+        return (
+            <InfoView data={extraLife.data} settings={helperSettings} />
+        );
     }
-
-    return (
-        <div className='flex flex-col'>
-            <div className='p-2'>
-                Participant ID: {helperSettings?.data?.participantId}
-            </div>
-            <div className='font-mono p-2 text-sm whitespace-pre'>
-                {JSON.stringify(helperSettings?.data, null, 2)}
-            </div>
-            <div className='font-mono p-2 text-sm whitespace-pre'>
-                {JSON.stringify(extraLife.data, null, 2)}
-            </div>
-        </div>
-    )
 }
 
 export default App
