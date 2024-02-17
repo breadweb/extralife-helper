@@ -1,14 +1,27 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import useHelperSettings from './hooks/useHelperSettings';
 import useExtraLifeData from './hooks/useExtraLifeData';
 import useSound from 'use-sound';
-import kaChingSfx from './assets/audio/ka-ching.mp3';
+import alertSfx from './assets/audio/alert.mp3';
 
 function App() {
     const [errorMessage, setErrorMessage] = useState(undefined);
+    const [totalDonations, setTotalDontaions] = useState(undefined);
+    const [playSound, { sound }] = useSound(alertSfx);
     const helperSettings = useHelperSettings();
     const extraLife = useExtraLifeData(undefined);
-    const [playSound, { sound }] = useSound(kaChingSfx);
+    const getRefreshedDataTimer = useRef();
+
+    useEffect(() => {
+        clearInterval(getRefreshedDataTimer?.current);
+        getRefreshedDataTimer.current = setInterval(() => {
+            console.log('Refreshing data...');
+            extraLife.refreshData();
+        }, 10000);
+        return () => {
+            clearInterval(getRefreshedDataTimer?.current);
+        };
+    }, [extraLife.refreshData, getRefreshedDataTimer]);
 
     useEffect(() => {
         const onKeyPress = evt => {
@@ -43,6 +56,21 @@ function App() {
             helperSettings.data.participantId || helperSettings.data.teamId,
         );
     }, [helperSettings.data, helperSettings.error]);
+
+    useEffect(() => {
+        if (!extraLife.data) {
+            return;
+        }
+
+        if (totalDonations !== undefined && extraLife.data.numDonations > totalDonations) {
+            console.log('Make a request for donations!');
+        }
+
+        if (totalDonations !== extraLife.data.numDonations) {
+            setTotalDontaions(extraLife.data.numDonations);
+        }
+
+    }, [extraLife.data]);
 
     if (errorMessage) {
         return (
