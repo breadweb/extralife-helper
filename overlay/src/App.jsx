@@ -19,7 +19,7 @@ function App() {
         getRefreshedDataTimer.current = setInterval(() => {
             console.log('Refreshing data...');
             extraLife.refreshData();
-        }, 10000);
+        }, import.meta.env.VITE_POLLING_INTERVAL);
         return () => {
             clearInterval(getRefreshedDataTimer?.current);
         };
