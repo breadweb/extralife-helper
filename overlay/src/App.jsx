@@ -74,6 +74,23 @@ function App() {
 
     }, [extraLife.data]);
 
+    useEffect(() => {
+        const onWindowResize = () => {
+            if (window.innerHeight > window.innerWidth) {
+                setErrorMessage(
+                    'Portrait aspect ratios are not supported. Please ensure the width is greater ' +
+                    'than or equal to the height.',
+                );
+            } else {
+                setErrorMessage(undefined);
+            }
+        }
+        addEventListener('resize', onWindowResize);
+        return () => {
+            removeEventListener('resize', onWindowResize);
+        };
+    }, []);
+
     if (errorMessage) {
         return (
             <ErrorView message={errorMessage} />
