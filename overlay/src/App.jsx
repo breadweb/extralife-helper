@@ -1,14 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
-import useHelperSettings from './hooks/useHelperSettings';
-import useExtraLifeData from './hooks/useExtraLifeData';
-import useSound from 'use-sound';
+import { useTranslation } from 'react-i18next';
 import alertSfx from './assets/audio/alert.mp3';
 import ErrorView from './components/ErrorView';
 import InfoView from './components/InfoView';
+import useExtraLifeData from './hooks/useExtraLifeData';
+import useHelperSettings from './hooks/useHelperSettings';
+import useSound from 'use-sound';
 
 function App() {
     const [errorMessage, setErrorMessage] = useState(undefined);
     const [totalDonations, setTotalDontaions] = useState(undefined);
+    const { t, i18n } = useTranslation();
     const [playSound, { sound }] = useSound(alertSfx);
     const helperSettings = useHelperSettings();
     const extraLife = useExtraLifeData(undefined);
@@ -53,6 +55,8 @@ function App() {
             return;
         }
 
+        i18n.changeLanguage(helperSettings.data.lang);
+
         extraLife.setRequestOptions(
             helperSettings.data.participantId ? 'participants' : 'teams',
             helperSettings.data.participantId || helperSettings.data.teamId,
@@ -77,10 +81,7 @@ function App() {
     useEffect(() => {
         const onWindowResize = () => {
             if (window.innerHeight > window.innerWidth) {
-                setErrorMessage(
-                    'Portrait aspect ratios are not supported. Please ensure the width is greater ' +
-                    'than or equal to the height.',
-                );
+                setErrorMessage(t('PORTRAIT_NOT_ALLOWED'));
             } else {
                 setErrorMessage(undefined);
             }
@@ -91,15 +92,17 @@ function App() {
         };
     }, []);
 
-    if (errorMessage) {
-        return (
-            <ErrorView message={errorMessage} />
-        );
-    } else {
-        return (
-            <InfoView data={extraLife.data} settings={helperSettings} />
-        );
-    }
+    const content = errorMessage
+        ? <ErrorView message={errorMessage} />
+        : <InfoView data={extraLife.data} settings={helperSettings} />;
+
+    return (
+        <div className='w-full h-screen flex flex-col items-center justify-center'>
+            {content}
+        </div>
+    )
+
+
 }
 
 export default App

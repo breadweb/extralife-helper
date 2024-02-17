@@ -1,6 +1,7 @@
 import { DateTime } from 'luxon';
 import { isParamValueTrue } from '../modules/utils';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import Joi from 'joi';
 
 const themeOptions = ['blue1', 'blue2', 'gray1', 'white1'];
@@ -98,6 +99,7 @@ const schema = Joi.object({
 function useHelperSettings () {
     const [data, setData] = useState(undefined);
     const [error, setError] = useState(undefined);
+    const { t } = useTranslation();
 
     useEffect(() => {
         let settings;
@@ -121,11 +123,11 @@ function useHelperSettings () {
         if (validationResult.error) {
             const key = validationResult.error.details[0].context.key;
             const message = validationResult.error.details[0].message;
-            errorMessage = `The ${key} setting is invalid. Details: ${message}`;
+            errorMessage = t('KEY_IS_INVALID', { key, message, interpolation: { 'escapeValue': false } });
         }
 
         if (settings.participantId && settings.teamId) {
-            errorMessage = 'A participant ID or team ID can be provided, but not both.';
+            errorMessage = t('ONLY_ONE_ID');
         }
 
         if (errorMessage) {
