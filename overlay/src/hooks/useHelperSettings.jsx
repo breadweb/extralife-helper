@@ -24,7 +24,6 @@ const getSettingsFromParams = () => {
         teamId: urlParams.get('tid'),
         theme: getListItemFromParam(urlParams, 't', themeOptions),
         border: getListItemFromParam(urlParams, 'b', borderOptions),
-        width: urlParams.get('w'),
         showAlerts: urlParams.get('g') === "1",
         showGoal: urlParams.get('a') === "1",
         showYearMode: urlParams.get('y') === "1",
@@ -54,7 +53,6 @@ const getSettingsFromGlobal = () => {
         startTime: window.startTime,
         theme: window.theme,
         border: window.border,
-        width: window.width,
         showAlerts: window.showAlerts,
         showGoal: window.showGoal,
         showYearMode: window.showYearMode,
@@ -73,7 +71,6 @@ const getSettingsFromEnvVars = () => {
         startTime: envVars.VITE_START_TIME,
         theme: envVars.VITE_THEME,
         border: envVars.VITE_BORDER,
-        width: envVars.VITE_WIDTH,
         showAlerts: envVars.VITE_SHOW_ALERTS,
         showGoal: envVars.VITE_SHOW_GOAL,
         showYearMode: envVars.VITE_SHOW_YEAR_MODE,
@@ -90,7 +87,6 @@ const schema = Joi.object({
     startTime: Joi.string().pattern(timePattern).required(),
     theme: Joi.string().valid(...themeOptions).required(),
     border: Joi.string().valid(...borderOptions).required(),
-    width: Joi.number().integer().min(320).max(3840).required(),
     showAlerts: Joi.boolean().required(),
     showGoal: Joi.boolean().required(),
     showYearMode: Joi.boolean().required(),
@@ -138,7 +134,6 @@ function useHelperSettings () {
             return;
         }
 
-        settings.width = parseInt(settings.width);
         settings.showAlerts = isParamValueTrue(settings.showAlerts);
         settings.showGoal = isParamValueTrue(settings.showGoal);
         settings.showYearMode = isParamValueTrue(settings.showYearMode);

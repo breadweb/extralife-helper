@@ -88,12 +88,6 @@ const getSettingsContent = () => {
             'Border type choices: rounded, square, or none.',
         ],
         [
-            'helperWidth',
-            process.env.VITE_WIDTH,
-            false,
-            'Width of the Helper, in pixels.',
-        ],
-        [
             'showDonationAlerts',
             process.env.VITE_SHOW_ALERTS,
             false,
