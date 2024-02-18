@@ -32,7 +32,6 @@ function App() {
         const onKeyPress = evt => {
             switch (evt.key) {
                 case 's':
-                    sound.volume(helperSettings.data?.volume || 1);
                     sound.play();
                 default:
                     // Do nothing.
@@ -60,13 +59,17 @@ function App() {
             i18n.changeLanguage(helperSettings.data.lang);
         }
 
+        if (sound) {
+            sound.volume(helperSettings.data?.volume || 1);
+        }
+
         document.documentElement.classList.add(helperSettings.data.theme);
 
         extraLife.setRequestOptions(
             helperSettings.data.participantId ? 'participants' : 'teams',
             helperSettings.data.participantId || helperSettings.data.teamId,
         );
-    }, [helperSettings.data, helperSettings.error]);
+    }, [helperSettings.data, helperSettings.error, sound]);
 
     useEffect(() => {
         if (!extraLife.data) {
