@@ -10,6 +10,16 @@
     }
 }
 
+@font-face {
+    font-family: 'LetsGoDigital';
+    src: url('assets/fonts/LetsGoDigital.ttf') format('opentype');
+}
+
+@font-face {
+    font-family: 'Furore';
+    src: url('assets/fonts/Furore.otf') format('opentype');
+}
+
 @keyframes fadeIn {
     0% {
         opacity: 0;

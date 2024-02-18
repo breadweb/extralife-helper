@@ -54,17 +54,17 @@ function InfoView ({ data, settings }) {
         }
 
         content = (
-            <div className='flex flex-col items-center space-y-2'>
-                <div>
+            <div className='flex flex-col items-center'>
+                <div className='font-furore'>
                     {timerLine}
                 </div>
-                <div className='text-6xl font-roboto'>
+                <div className='text-8xl font-digital'>
                     {time}
                 </div>
-                <div>
+                <div className='font-furore'>
                     {raisedLine}
                 </div>
-                <div className='text-4xl'>
+                <div className='text-4xl font-roboto mt-2'>
                     {amountLine}
                 </div>
             </div>
