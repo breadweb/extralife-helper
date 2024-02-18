@@ -108,10 +108,10 @@ const getSettingsContent = () => {
             'Set to false to only show amount raised on the main screen and not also your goal.',
         ],
         [
-            'areAmountsRounded',
-            process.env.VITE_ARE_AMOUNTS_ROUNDED,
+            'areCentsVisible',
+            process.env.VITE_ARE_CENTS_VISIBLE,
             false,
-            'Set to true to remove cents in the raised and/or goal amounts shown. Note that cents ' +
+            'Set to true to show cents in the raised and/or goal amounts shown. Note that cents ' +
             'are always shown in donation amounts.',
         ],
         [

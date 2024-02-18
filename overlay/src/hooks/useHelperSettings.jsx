@@ -28,7 +28,7 @@ const getSettingsFromParams = () => {
         areAlertsEnabled: urlParams.get('g') === "1",
         isRaisedLinePlural: urlParams.get('p') === "1",
         isGoalVisible: urlParams.get('a') === "1",
-        areAmountsRounded: urlParams.get('r') === "1",
+        areCentsVisible: urlParams.get('c') === "1",
         isYearModeEnabled: urlParams.get('y') === "1",
         voice: getListItemFromParam(urlParams, 'v', voiceOptions),
         volume: urlParams.get('vo'),
@@ -59,7 +59,7 @@ const getSettingsFromGlobal = () => {
         areAlertsEnabled: window.showAlerts,
         isRaisedLinePlural: window.isRaisedLinePlural,
         isGoalVisible: window.showGoal,
-        areAmountsRounded: window.areAmountsRounded,
+        areCentsVisible: window.areCentsVisible,
         isYearModeEnabled: window.showYearMode,
         voice: window.voice,
         volume: window.volume,
@@ -79,7 +79,7 @@ const getSettingsFromEnvVars = () => {
         areAlertsEnabled: envVars.VITE_ARE_ALERTS_ENABLED,
         isRaisedLinePlural: envVars.VITE_IS_RAISED_LINE_PLURAL,
         isGoalVisible: envVars.VITE_IS_GOAL_VISIBLE,
-        areAmountsRounded: envVars.VITE_ARE_AMOUNTS_ROUNDED,
+        areCentsVisible: envVars.VITE_ARE_CENTS_VISIBLE,
         isYearModeEnabled: envVars.VITE_IS_YEAR_MODE_ENABLED,
         voice: envVars.VITE_VOICE,
         volume: envVars.VITE_VOLUME,
@@ -97,7 +97,7 @@ const schema = Joi.object({
     areAlertsEnabled: Joi.boolean().required(),
     isRaisedLinePlural: Joi.boolean().required(),
     isGoalVisible: Joi.boolean().required(),
-    areAmountsRounded: Joi.boolean().required(),
+    areCentsVisible: Joi.boolean().required(),
     isYearModeEnabled: Joi.boolean().required(),
     voice: Joi.string().valid(...voiceOptions).required(),
     volume: Joi.number().min(0).max(100).required(),
@@ -147,7 +147,7 @@ function useHelperSettings () {
         settings.areAlertsEnabled = isParamValueTrue(settings.areAlertsEnabled);
         settings.isRaisedLinePlural = isParamValueTrue(settings.isRaisedLinePlural);
         settings.isGoalVisible = isParamValueTrue(settings.isGoalVisible);
-        settings.areAmountsRounded = isParamValueTrue(settings.areAmountsRounded);
+        settings.areCentsVisible = isParamValueTrue(settings.areCentsVisible);
         settings.isYearModeEnabled = isParamValueTrue(settings.isYearModeEnabled);
         settings.volume = parseInt(settings.volume) / 100;
 

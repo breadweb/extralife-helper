@@ -7,11 +7,6 @@ import useTimer from '../hooks/useTimer';
 const ONE_DAY_IN_MS = 86400000;
 const FOUR_DAYS_IN_MS = ONE_DAY_IN_MS * 4;
 
-const currencyFormat = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-});
-
 function InfoView ({ data, settings }) {
     const { t } = useTranslation();
     const timer = useTimer(settings?.startDateTime);
@@ -46,8 +41,15 @@ function InfoView ({ data, settings }) {
             ? t('OUR_AMOUNT_RAISED')
             : t('MY_AMOUNT_RAISED');
 
+        const currencyFormat = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            maximumFractionDigits: settings.areCentsVisible ? 2 : 0,
+            minimumFractionDigits: 0,
+        });
+
         let amountLine = currencyFormat.format(data.sumDonations + data.sumPledges);
-        if (settings.isGoalVisible === true) {
+        if (settings.isGoalVisible) {
             amountLine += ' / ' + currencyFormat.format(data.fundraisingGoal);
         }
 
