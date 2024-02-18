@@ -55,7 +55,9 @@ function App() {
             return;
         }
 
-        i18n.changeLanguage(helperSettings.data.lang);
+        if (i18n.language !== helperSettings.data.lang) {
+            i18n.changeLanguage(helperSettings.data.lang);
+        }
 
         extraLife.setRequestOptions(
             helperSettings.data.participantId ? 'participants' : 'teams',
