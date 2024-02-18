@@ -76,13 +76,13 @@ const getSettingsContent = () => {
             'your computer will be used.',
         ],
         [
-            'helperTheme',
+            'theme',
             process.env.VITE_THEME,
             true,
             'Theme choices: white1, gray1, blue1, or blue2.',
         ],
         [
-            'helperBorder',
+            'border',
             process.env.VITE_BORDER,
             true,
             'Border type choices: rounded, square, or none.',
@@ -121,7 +121,7 @@ const getSettingsContent = () => {
             'An alternate display to support fundraising all year. The count down/up timer is hidden.',
         ],
         [
-            'donationMessageVoice',
+            'voice',
             process.env.VITE_VOICE,
             true,
             'Set to US-male, US-female, UK-male, UK-female, FR-male, FR-female, ES-male, ES-female ' +
