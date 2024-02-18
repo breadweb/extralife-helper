@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import logger from './modules/logger';
 import alertSfx from './assets/audio/alert.mp3';
@@ -18,17 +18,15 @@ function App() {
     const extraLife = useExtraLifeData(undefined);
 
     useEffect(() => {
-        clearInterval(getRefreshedDataTimer?.current);
-
-        getRefreshedDataTimer.current = setInterval(() => {
+        const refreshInterval = setInterval(() => {
             logger.debug(`Refreshing Extra Life data...`);
             extraLife.refreshData();
         }, import.meta.env.VITE_POLLING_INTERVAL);
 
         return () => {
-            clearInterval(getRefreshedDataTimer?.current);
+            clearInterval(refreshInterval);
         };
-    }, [extraLife.refreshData, getRefreshedDataTimer]);
+    }, [extraLife.refreshData]);
 
     useEffect(() => {
         const onKeyPress = evt => {
