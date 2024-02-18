@@ -7,6 +7,11 @@ import useTimer from '../hooks/useTimer';
 const ONE_DAY_IN_MS = 86400000;
 const FOUR_DAYS_IN_MS = ONE_DAY_IN_MS * 4;
 
+const currencyFormat = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+});
+
 function InfoView ({ data, settings }) {
     const { t } = useTranslation();
     const timer = useTimer(settings?.startDateTime);
@@ -16,36 +21,51 @@ function InfoView ({ data, settings }) {
     if (!data || !settings || !timer) {
         content = <LoadingSpinner />;
     } else {
-        let title;
+        let timerLine;
         let time;
 
         if (settings.isYearModeEnabled) {
-            title = t('MAIN_TITLE');
+            timerLine = t('MAIN_TITLE');
             time = DateTime.now().toFormat('yyyy');
         } else {
             if (timer.ms < 0) {
                 if (timer.ms < -FOUR_DAYS_IN_MS) {
-                    title = t('DAYS_UNTIL');
+                    timerLine = t('DAYS_UNTIL');
                     time = Math.ceil(timer.ms / ONE_DAY_IN_MS) * -1;
                 } else {
-                    title = t('HOURS_UNTIL');
+                    timerLine = t('HOURS_UNTIL');
                     time = timer.clock;
                 }
             } else {
-                title = t('HOURS_PLAYED');
+                timerLine = t('HOURS_PLAYED');
                 time = timer.clock;
             }
         }
 
+        const raisedLine = settings.teamId || settings.isRaisedLinePlural
+            ? t('OUR_AMOUNT_RAISED')
+            : t('MY_AMOUNT_RAISED');
+
+        let amountLine = currencyFormat.format(data.sumDonations + data.sumPledges);
+        if (settings.isGoalVisible === true) {
+            amountLine += ' / ' + currencyFormat.format(data.fundraisingGoal);
+        }
+
         content = (
-            <>
+            <div className='flex flex-col items-center space-y-2'>
                 <div>
-                    {title}
+                    {timerLine}
                 </div>
-                <div className='text-6xl font-roboto mt-2'>
+                <div className='text-6xl font-roboto'>
                     {time}
                 </div>
-            </>
+                <div>
+                    {raisedLine}
+                </div>
+                <div className='text-4xl'>
+                    {amountLine}
+                </div>
+            </div>
         )
     }
 

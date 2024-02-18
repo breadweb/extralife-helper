@@ -94,10 +94,25 @@ const getSettingsContent = () => {
             'Set to false to suppress donation alerts.',
         ],
         [
+            'isRaisedLinePlural',
+            process.env.VITE_IS_RAISED_LINE_PLURAL,
+            false,
+            'Some participants like to refer to their entire community and/or network of supporters. ' +
+            'If set to true, "Our" will be used instead of "My" in the line that describes the amount ' +
+            'raised while in particpant mode. Note that "Our" is always used in team mode.',
+        ],
+        [
             'isGoalVisible',
             process.env.VITE_IS_GOAL_VISIBLE,
             false,
             'Set to false to only show amount raised on the main screen and not also your goal.',
+        ],
+        [
+            'areAmountsRounded',
+            process.env.VITE_ARE_AMOUNTS_ROUNDED,
+            false,
+            'Set to true to remove cents in the raised and/or goal amounts shown. Note that cents ' +
+            'are always shown in donation amounts.',
         ],
         [
             'isYearModeEnabled',
