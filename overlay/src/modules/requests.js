@@ -1,5 +1,4 @@
 export function parseRequestError (err) {
-    console.log(err);
     const result = {
         status: 0,
         message: '',
