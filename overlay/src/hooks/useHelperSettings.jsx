@@ -25,9 +25,9 @@ const getSettingsFromParams = () => {
         teamId: urlParams.get('tid'),
         theme: getListItemFromParam(urlParams, 't', themeOptions),
         border: getListItemFromParam(urlParams, 'b', borderOptions),
-        showAlerts: urlParams.get('g') === "1",
-        showGoal: urlParams.get('a') === "1",
-        showYearMode: urlParams.get('y') === "1",
+        areAlertsEnabled: urlParams.get('g') === "1",
+        isGoalVisible: urlParams.get('a') === "1",
+        isYearModeEnabled: urlParams.get('y') === "1",
         voice: getListItemFromParam(urlParams, 'v', voiceOptions),
         volume: urlParams.get('vo'),
         lang: urlParams.get('l') || langOptions[0],
@@ -54,9 +54,9 @@ const getSettingsFromGlobal = () => {
         startTime: window.startTime,
         theme: window.theme,
         border: window.border,
-        showAlerts: window.showAlerts,
-        showGoal: window.showGoal,
-        showYearMode: window.showYearMode,
+        areAlertsEnabled: window.showAlerts,
+        isGoalVisible: window.showGoal,
+        isYearModeEnabled: window.showYearMode,
         voice: window.voice,
         volume: window.volume,
         lang: window.lang,
@@ -72,9 +72,9 @@ const getSettingsFromEnvVars = () => {
         startTime: envVars.VITE_START_TIME,
         theme: envVars.VITE_THEME,
         border: envVars.VITE_BORDER,
-        showAlerts: envVars.VITE_SHOW_ALERTS,
-        showGoal: envVars.VITE_SHOW_GOAL,
-        showYearMode: envVars.VITE_SHOW_YEAR_MODE,
+        areAlertsEnabled: envVars.VITE_ARE_ALERTS_ENABLED,
+        isGoalVisible: envVars.VITE_IS_GOAL_VISIBLE,
+        isYearModeEnabled: envVars.VITE_IS_YEAR_MODE_ENABLED,
         voice: envVars.VITE_VOICE,
         volume: envVars.VITE_VOLUME,
         lang: envVars.VITE_LANG,
@@ -88,9 +88,9 @@ const schema = Joi.object({
     startTime: Joi.string().pattern(timePattern).required(),
     theme: Joi.string().valid(...themeOptions).required(),
     border: Joi.string().valid(...borderOptions).required(),
-    showAlerts: Joi.boolean().required(),
-    showGoal: Joi.boolean().required(),
-    showYearMode: Joi.boolean().required(),
+    areAlertsEnabled: Joi.boolean().required(),
+    isGoalVisible: Joi.boolean().required(),
+    isYearModeEnabled: Joi.boolean().required(),
     voice: Joi.string().valid(...voiceOptions).required(),
     volume: Joi.number().min(0).max(100).required(),
     lang: Joi.string().valid(...langOptions).required(),
@@ -136,9 +136,9 @@ function useHelperSettings () {
             return;
         }
 
-        settings.showAlerts = isParamValueTrue(settings.showAlerts);
-        settings.showGoal = isParamValueTrue(settings.showGoal);
-        settings.showYearMode = isParamValueTrue(settings.showYearMode);
+        settings.areAlertsEnabled = isParamValueTrue(settings.areAlertsEnabled);
+        settings.isGoalVisible = isParamValueTrue(settings.isGoalVisible);
+        settings.isYearModeEnabled = isParamValueTrue(settings.isYearModeEnabled);
         settings.volume = parseInt(settings.volume) / 100;
 
         const dateParts = settings.startDate.split('/');
