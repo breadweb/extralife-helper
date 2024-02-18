@@ -5,3 +5,4 @@ helper.min.js
 *.zip
 src/ExtraLifeHelper-Bread*
 todo.txt
+.env.local
