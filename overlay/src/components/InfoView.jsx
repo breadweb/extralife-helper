@@ -55,16 +55,16 @@ function InfoView ({ data, settings }) {
 
         content = (
             <div className='flex flex-col items-center'>
-                <div className='font-furore'>
+                <div className='text-xl font-furore text-helper3'>
                     {timerLine}
                 </div>
-                <div className='text-8xl font-digital'>
+                <div className='text-8xl font-digital text-helper4 -my-2'>
                     {time}
                 </div>
-                <div className='font-furore'>
+                <div className='text-xl font-furore text-helper3'>
                     {raisedLine}
                 </div>
-                <div className='text-4xl font-cantarell mt-2'>
+                <div className='text-4xl font-cantarell text-helper3'>
                     {amountLine}
                 </div>
             </div>
@@ -72,7 +72,7 @@ function InfoView ({ data, settings }) {
     }
 
     return (
-        <div className='bg-zinc-200 w-full h-full flex flex-col items-center justify-center'>
+        <div className='flex flex-col items-center justify-center'>
             {content}
         </div>
     );

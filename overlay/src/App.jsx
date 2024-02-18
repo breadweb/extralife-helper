@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import alertSfx from './assets/audio/alert.mp3';
+import classNames from 'classnames';
 import ErrorView from './components/ErrorView';
 import InfoView from './components/InfoView';
 import useExtraLifeData from './hooks/useExtraLifeData';
@@ -59,6 +60,8 @@ function App() {
             i18n.changeLanguage(helperSettings.data.lang);
         }
 
+        document.documentElement.classList.add(helperSettings.data.theme);
+
         extraLife.setRequestOptions(
             helperSettings.data.participantId ? 'participants' : 'teams',
             helperSettings.data.participantId || helperSettings.data.teamId,
@@ -77,7 +80,6 @@ function App() {
         if (totalDonations !== extraLife.data.numDonations) {
             setTotalDontaions(extraLife.data.numDonations);
         }
-
     }, [extraLife.data]);
 
     useEffect(() => {
@@ -94,12 +96,26 @@ function App() {
         };
     }, []);
 
-    const content = errorMessage
-        ? <ErrorView message={errorMessage} />
-        : <InfoView data={extraLife.data} settings={helperSettings.data} />;
+    let content;
+    if (errorMessage) {
+        content = <ErrorView message={errorMessage} />;
+    } else if (helperSettings.data) {
+        content = <InfoView data={extraLife.data} settings={helperSettings.data} />
+    } else {
+        return null;
+    }
 
     return (
-        <div className='w-full h-screen flex flex-col items-center justify-center'>
+        <div
+            className={
+                classNames(
+                    `w-full h-screen flex flex-col items-center justify-center`,
+                    `bg-helper2`,
+                    helperSettings.data?.border === 'square' ? 'border-2 border-helper1' : '',
+                    helperSettings.data?.border === 'rounded' ? 'border-2 border-helper1 rounded' : '',
+                )
+            }
+        >
             {content}
         </div>
     )

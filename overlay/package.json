@@ -13,12 +13,14 @@
     },
     "dependencies": {
         "axios": "^1.6.7",
+        "classnames": "^2.5.1",
         "i18next": "^23.8.3",
         "joi": "^17.12.1",
         "luxon": "^3.4.4",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-i18next": "^14.0.5",
+        "tw-colors": "^3.3.1",
         "use-sound": "^4.0.1"
     },
     "devDependencies": {
