@@ -8,7 +8,7 @@ function ErrorView ({ message }) {
         <div
             className={
                 `bg-rose-200 w-full h-full flex flex-col items-center justify-center
-                border-rose-500 border-4 p-4`
+                border-rose-500 border-4 p-8 font-cantarell`
             }
         >
             <div className='flex items-center space-x-1 text-2xl font-bold mb-2'>

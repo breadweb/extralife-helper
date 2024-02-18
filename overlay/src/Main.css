@@ -11,6 +11,11 @@
 }
 
 @font-face {
+    font-family: 'Cantarell';
+    src: url('assets/fonts/Cantarell.ttf') format('opentype');
+}
+
+@font-face {
     font-family: 'LetsGoDigital';
     src: url('assets/fonts/LetsGoDigital.ttf') format('opentype');
 }

@@ -64,7 +64,7 @@ function InfoView ({ data, settings }) {
                 <div className='font-furore'>
                     {raisedLine}
                 </div>
-                <div className='text-4xl font-roboto mt-2'>
+                <div className='text-4xl font-cantarell mt-2'>
                     {amountLine}
                 </div>
             </div>

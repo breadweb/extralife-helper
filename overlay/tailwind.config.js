@@ -5,8 +5,7 @@ module.exports = {
     theme: {
         extend: {
             fontFamily: {
-                'poppins': ['Poppins'],
-                'roboto': ['Roboto Mono'],
+                'cantarell': ['Cantarell'],
                 'digital': ['LetsGoDigital'],
                 'furore': ['Furore']
             },
