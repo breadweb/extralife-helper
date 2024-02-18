@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon';
 import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
 import LoadingSpinner from './LoadingSpinner';
 import React from 'react';
 import useTimer from '../hooks/useTimer';
@@ -55,13 +56,27 @@ function InfoView ({ data, settings }) {
 
         content = (
             <div className='flex flex-col items-center'>
-                <div className='text-xl font-furore text-helper3'>
+                <div
+                    className={
+                        classNames(
+                            'text-xl font-furore text-helper3',
+                            settings.lang === 'en-us' ? 'font-furore' : 'font-sans'
+                        )
+                    }
+                >
                     {timerLine}
                 </div>
                 <div className='text-8xl font-digital text-helper4 -my-2'>
                     {time}
                 </div>
-                <div className='text-xl font-furore text-helper3'>
+                <div
+                    className={
+                        classNames(
+                            'text-xl text-helper3',
+                            settings.lang === 'en-us' ? 'font-furore' : 'font-sans'
+                        )
+                    }
+                 >
                     {raisedLine}
                 </div>
                 <div className='text-4xl font-cantarell text-helper3'>
