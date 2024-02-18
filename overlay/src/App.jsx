@@ -94,7 +94,7 @@ function App() {
 
     const content = errorMessage
         ? <ErrorView message={errorMessage} />
-        : <InfoView data={extraLife.data} settings={helperSettings} />;
+        : <InfoView data={extraLife.data} settings={helperSettings.data} />;
 
     return (
         <div className='w-full h-screen flex flex-col items-center justify-center'>
