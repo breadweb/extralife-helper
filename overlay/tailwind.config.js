@@ -6,9 +6,9 @@ module.exports = {
         extend: {
             fontFamily: {
                 'cantarell': ['Cantarell'],
-                'digital': ['LetsGoDigital'],
+                'digital': ['DigitalBread'],
                 'furore': ['Furore']
             },
         },
-    },
+    }
 };
