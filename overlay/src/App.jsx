@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import logger from './modules/logger';
 import alertSfx from './assets/audio/alert.mp3';
 import classNames from 'classnames';
 import ErrorView from './components/ErrorView';
@@ -15,14 +16,15 @@ function App() {
     const [playSound, { sound }] = useSound(alertSfx);
     const helperSettings = useHelperSettings();
     const extraLife = useExtraLifeData(undefined);
-    const getRefreshedDataTimer = useRef();
 
     useEffect(() => {
         clearInterval(getRefreshedDataTimer?.current);
+
         getRefreshedDataTimer.current = setInterval(() => {
-            console.log('Refreshing data...');
+            logger.debug(`Refreshing Extra Life data...`);
             extraLife.refreshData();
         }, import.meta.env.VITE_POLLING_INTERVAL);
+
         return () => {
             clearInterval(getRefreshedDataTimer?.current);
         };
@@ -37,9 +39,11 @@ function App() {
                     // Do nothing.
             }
         };
+
         if (['DEV', 'LOCAL'].includes(import.meta.env.VITE_RUNTIME_MODE)) {
             document.addEventListener('keypress', onKeyPress);
         }
+
         return () => {
             document.removeEventListener('keypress', onKeyPress);
         };
@@ -56,20 +60,25 @@ function App() {
         }
 
         if (i18n.language !== helperSettings.data.lang) {
+            logger.debug(`Setting language to ${helperSettings.data.lang}...`);
             i18n.changeLanguage(helperSettings.data.lang);
         }
 
-        if (sound) {
-            sound.volume(helperSettings.data?.volume || 1);
+        if (sound && sound.volume !== helperSettings.data.volume) {
+            logger.debug(`Setting volume to ${helperSettings.data.volume}...`);
+            sound.volume(helperSettings.data.volume);
         }
 
-        document.documentElement.classList.add(helperSettings.data.theme);
+        if (!document.documentElement.classList.contains(helperSettings.data.theme)) {
+            logger.debug('Applying theme...');
+            document.documentElement.classList.add(helperSettings.data.theme);
+        }
 
         extraLife.setRequestOptions(
             helperSettings.data.participantId ? 'participants' : 'teams',
             helperSettings.data.participantId || helperSettings.data.teamId,
         );
-    }, [helperSettings.data, helperSettings.error, sound]);
+    }, [extraLife.setRequestOptions, helperSettings.data, helperSettings.error, i18n, sound]);
 
     useEffect(() => {
         if (!extraLife.data) {
@@ -77,7 +86,7 @@ function App() {
         }
 
         if (totalDonations !== undefined && extraLife.data.numDonations > totalDonations) {
-            console.log('Make a request for donations!');
+            logger.debug('Make a request for donations!');
         }
 
         if (totalDonations !== extraLife.data.numDonations) {
@@ -93,13 +102,16 @@ function App() {
                 setErrorMessage(undefined);
             }
         }
+
         addEventListener('resize', onWindowResize);
+
         return () => {
             removeEventListener('resize', onWindowResize);
         };
     }, []);
 
     let content;
+
     if (errorMessage) {
         content = <ErrorView message={errorMessage} />;
     } else if (helperSettings.data) {

@@ -1,10 +1,11 @@
 import './Main.css'
 import './modules/i18n';
 import App from './App.jsx'
+import logger from './modules/logger';
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 
-console.log(
+logger.info(
     ' _                        _              _                 _   \n' +
     '| |__  _ __ ___  __ _  __| |_      _____| |__   _ __   ___| |_ \n' +
     '| \'_ \\| \'__/ _ \\/ _` |/ _` \\ \\ /\\ / / _ \\ \'_ \\ | \'_ \\ / _ \\ __|\n' +

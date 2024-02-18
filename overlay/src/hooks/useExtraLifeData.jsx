@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { parseRequestError } from '../modules/requests';
 import axios from 'axios';
+import logger from '../modules/logger';
 
 function useExtraLifeData (initialOptions) {
     const [data, setData] = useState(undefined);
@@ -19,14 +20,16 @@ function useExtraLifeData (initialOptions) {
                     setData(res.data);
                 })
                 .catch(err => {
-                    console.error(parseRequestError(err));
+                    logger.error(parseRequestError(err));
                 });
         }
     }, [options, touchId]);
 
     const setRequestOptions = useCallback((type, id) => {
-        setOptions({ type, id });
-    }, []);
+        if (type !== options?.type || id !== options?.id) {
+            setOptions({ type, id });
+        }
+    }, [options]);
 
     const refreshData = useCallback(() => {
         setTouchId(prevTouchId => prevTouchId + 1);

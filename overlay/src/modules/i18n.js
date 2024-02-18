@@ -7,7 +7,7 @@ import frTranslation from '../assets/locales/fr-ca';
 i18next
     .use(initReactI18next)
     .init({
-        debug: true,
+        debug: import.meta.env.VITE_IS_DEBUG_LOGGING_ENABLED === 'true',
         fallbackLng: 'en-us',
         resources: {
             'en': {

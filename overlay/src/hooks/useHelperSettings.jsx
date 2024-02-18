@@ -3,6 +3,7 @@ import { isParamValueTrue } from '../modules/utils';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Joi from 'joi';
+import logger from '../modules/logger';
 
 const themeOptions = ['blue1', 'blue2', 'gray1', 'white1'];
 const borderOptions = ['rounded', 'square', 'none'];
@@ -139,7 +140,7 @@ function useHelperSettings () {
         }
 
         if (errorMessage) {
-            console.log(`Settings are invalid. Details: ${errorMessage}`);
+            logger.error(`Settings are invalid. Details: ${errorMessage}`);
             setError(errorMessage);
             return;
         }
