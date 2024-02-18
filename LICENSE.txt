@@ -1,11 +1,6 @@
 The MIT License
 
-Copyright (c) 2013-2021 Adam "Bread" Slesinger http://www.breadweb.net
-
-TweenJS Copyright (c) 2014 gskinner.com, inc.
-Paper.js Copyright (c) 2011 - 2020, Jürg Lehni & Jonathan Puckey http://juerglehni.com/ & https://puckey.studio/
-jQuery Copyright (c) OpenJS Foundation and other contributors, https://openjsf.org/
-ResponsiveVoice Copyright (c) 2021 ResponsiveVoice.JS Text to Speech https://responsivevoice.org/
+Copyright (c) 2013-2024 Adam "Bread" Slesinger httpd://www.breadweb.net
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
