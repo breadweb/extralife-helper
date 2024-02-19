@@ -59,27 +59,39 @@ function InfoView ({ data, settings }) {
                 <div
                     className={
                         classNames(
-                            'text-xl font-furore text-helper3',
+                            'text-xl font-furore text-helper3 animate-pop-in',
                             settings.lang === 'en-us' ? 'font-furore' : 'font-sans'
                         )
                     }
                 >
                     {timerLine}
                 </div>
-                <div className='text-8xl font-digital text-helper4 -my-2'>
+                <div
+                    className={
+                        classNames(
+                            `text-8xl font-digital text-helper4 -my-2 animate-fade-in animate-delay-[.4s]`,
+                        )
+                    }
+                >
                     {time}
                 </div>
                 <div
                     className={
                         classNames(
-                            'text-xl text-helper3',
+                            'text-xl text-helper3 animate-pop-in animate-delay-[1.2s]',
                             settings.lang === 'en-us' ? 'font-furore' : 'font-sans'
                         )
                     }
                  >
                     {raisedLine}
                 </div>
-                <div className='text-4xl font-cantarell text-helper3'>
+                <div
+                    className={
+                        classNames(
+                            `text-4xl font-cantarell text-helper3 animate-fade-in animate-delay-[1.8s]`,
+                        )
+                    }
+                >
                     {amountLine}
                 </div>
             </div>
