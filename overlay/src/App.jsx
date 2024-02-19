@@ -18,7 +18,7 @@ function App () {
     const { i18n } = useTranslation();
     const [playSound, { sound }] = useSound(alertSfx);
     const helperSettings = useHelperSettings();
-    const { data, refreshData, setRequestOptions } = useExtraLifeData(undefined);
+    const { extraLifeData, refreshData, setRequestEndpoint } = useExtraLifeData(undefined);
 
     useEffect(() => {
         const refreshInterval = setInterval(() => {
@@ -86,25 +86,25 @@ function App () {
             document.documentElement.classList.add(helperSettings.data.theme);
         }
 
-        setRequestOptions(
-            helperSettings.data.participantId ? 'participants' : 'teams',
-            helperSettings.data.participantId || helperSettings.data.teamId,
-        );
-    }, [setRequestOptions, helperSettings.data, helperSettings.error, i18n, sound]);
+        const type = helperSettings.data.participantId ? 'participants' : 'teams';
+        const id = helperSettings.data.participantId || helperSettings.data.teamId;
+        setRequestEndpoint(`${type}/${id}`);
+
+    }, [setRequestEndpoint, helperSettings.data, helperSettings.error, i18n, sound]);
 
     useEffect(() => {
-        if (!data) {
+        if (!extraLifeData) {
             return;
         }
 
-        if (totalDonations !== undefined && data.numDonations > totalDonations) {
+        if (totalDonations !== undefined && extraLifeData.numDonations > totalDonations) {
             logger.debug('Make a request for donations!');
         }
 
-        if (totalDonations !== data.numDonations) {
-            setTotalDontaions(data.numDonations);
+        if (totalDonations !== extraLifeData.numDonations) {
+            setTotalDontaions(extraLifeData.numDonations);
         }
-    }, [data, totalDonations]);
+    }, [extraLifeData, totalDonations]);
 
     useEffect(() => {
         const getScale = () => {
@@ -131,7 +131,7 @@ function App () {
     if (errorMessage) {
         content = <ErrorView message={errorMessage} />;
     } else if (helperSettings.data) {
-        content = <InfoView data={data} settings={helperSettings.data} />;
+        content = <InfoView data={extraLifeData} settings={helperSettings.data} />;
     } else {
         return null;
     }
@@ -161,8 +161,6 @@ function App () {
             </div>
         </div>
     );
-
-
 }
 
 export default App;
