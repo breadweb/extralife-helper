@@ -30,6 +30,8 @@
         "autoprefixer": "^10.4.17",
         "env-cmd": "^10.1.0",
         "eslint": "^8.56.0",
+        "eslint-config-react-app": "^7.0.1",
+        "eslint-plugin-no-floating-promise": "^1.0.2",
         "eslint-plugin-react": "^7.33.2",
         "eslint-plugin-react-hooks": "^4.6.0",
         "eslint-plugin-react-refresh": "^0.4.5",
