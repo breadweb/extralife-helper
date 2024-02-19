@@ -13,6 +13,7 @@ import useSound from 'use-sound';
 function App () {
     const [errorMessage, setErrorMessage] = useState(undefined);
     const [totalDonations, setTotalDontaions] = useState(undefined);
+    const [contentScale, setContentScale] = useState(1);
     const { t, i18n } = useTranslation();
     const [playSound, { sound }] = useSound(alertSfx);
     const helperSettings = useHelperSettings();
@@ -95,20 +96,24 @@ function App () {
     }, [data, totalDonations]);
 
     useEffect(() => {
-        const onWindowResize = () => {
-            if (window.innerHeight > window.innerWidth) {
-                setErrorMessage(t('PORTRAIT_NOT_ALLOWED'));
-            } else {
-                setErrorMessage(undefined);
-            }
+        const getScale = () => {
+            return window.innerWidth / import.meta.env.VITE_CONTENT_WIDTH;
         };
+
+        const onWindowResize = () => {
+            setContentScale(getScale());
+        };
+
+        logger.debug('Setting scale and listening for window resize...');
+
+        setContentScale(getScale());
 
         window.addEventListener('resize', onWindowResize);
 
         return () => {
             window.removeEventListener('resize', onWindowResize);
         };
-    }, [t]);
+    }, []);
 
     let content;
 
@@ -125,13 +130,24 @@ function App () {
             className={
                 classNames(
                     'w-full h-screen flex flex-col items-center justify-center',
-                    'bg-helper2',
+                    'bg-helper2 overflow-hidden',
                     helperSettings.data?.border === 'square' ? 'border-2 border-helper1' : '',
                     helperSettings.data?.border === 'rounded' ? 'border-2 border-helper1 rounded' : '',
                 )
             }
         >
-            {content}
+            <div
+                className='flex justify-center'
+                style={
+                    {
+                        transform: `scale(${contentScale})`,
+                        width: `${import.meta.env.VITE_CONTENT_WIDTH}px`,
+                        height: `${import.meta.env.VITE_CONTENT_HEIGHT}px`,
+                    }
+                }
+            >
+                {content}
+            </div>
         </div>
     );
 

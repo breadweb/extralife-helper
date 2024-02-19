@@ -7,15 +7,14 @@ function ErrorView ({ message }) {
     return (
         <div
             className={
-                `bg-rose-200 flex flex-col items-center justify-center
-                border-rose-500 border-2 rounded p-6 m-8 font-cantarell`
+                'bg-rose-200 flex flex-col items-center justify-center font-cantarell p-8'
             }
         >
-            <div className='flex items-center space-x-1 text-2xl font-bold mb-2'>
+            <div className='flex items-center space-x-1 text-4xl font-bold mb-2'>
                 <div className='fa-solid fa-circle-exclamation text-rose-500'/>
-                <div>{t('ERROR')}</div>
+                <div className='-mt-1'>{t('ERROR')}</div>
             </div>
-            <div className='text-center'>
+            <div className='text-center text-xl'>
                 {message}
             </div>
         </div>
