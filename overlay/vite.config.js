@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite';
-import { viteSingleFile } from "vite-plugin-singlefile"
+import { viteSingleFile } from 'vite-plugin-singlefile';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig(({ command }) => {
@@ -37,16 +37,16 @@ const helperSettings = () => {
     console.log('Adding Helper settings section...');
     return {
         name: 'add-helper-settings',
-        enforce: "post",
+        enforce: 'post',
         generateBundle: (_, bundle) => {
             const htmlChunk = bundle['index.html'];
             htmlChunk.source = htmlChunk.source.replace(
                 '</title>',
                 `</title>\n${getSettingsContent()}`,
             );
-        }
+        },
     };
-}
+};
 
 const getSettingsContent = () => {
     const items = [
@@ -139,8 +139,8 @@ const getSettingsContent = () => {
             true,
             'Language to use for all text displayed in the Helper. Supported options are en-us for ' +
             'English (United States), fr-ca for French (Canada), or es-419 for Spanish (Latin America)',
-        ]
-    ]
+        ],
+    ];
 
     const colWidth1 = 48;
     const colWidth2 = 66;
@@ -178,7 +178,7 @@ const getSettingsContent = () => {
                 portion = `${word} `;
                 shouldWrite = false;
             }
-        };
+        }
         content += output;
     });
 

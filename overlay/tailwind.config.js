@@ -1,10 +1,8 @@
 const { createThemes } = require('tw-colors');
-const plugin = require('tailwindcss/plugin')
+const plugin = require('tailwindcss/plugin');
 
 module.exports = {
-    content: [
-        './src/**/*.{html,js,jsx}',
-    ],
+    content: ['./src/**/*.{html,js,jsx}'],
     theme: {
         extend: {
             animation: {
@@ -14,7 +12,7 @@ module.exports = {
             fontFamily: {
                 cantarell: ['Cantarell'],
                 digital: ['DigitalBread'],
-                furore: ['Furore']
+                furore: ['Furore'],
             },
             keyframes: {
                 'fade-in': {
@@ -22,7 +20,7 @@ module.exports = {
                         opacity: 0,
                     },
                     '100%': {
-                        opacity: 1
+                        opacity: 1,
                     },
                 },
                 'pop-in': {
@@ -37,7 +35,7 @@ module.exports = {
                         opacity: 1,
                         transform: 'scale(1)',
                     },
-                }
+                },
             },
         },
     },

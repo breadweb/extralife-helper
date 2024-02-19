@@ -12,7 +12,7 @@ function useTimer (dt) {
         const interval = setInterval(() => {
             const now = DateTime.now();
 
-            let totalMs = now.diff(dt).milliseconds;
+            const totalMs = now.diff(dt).milliseconds;
 
             let ms = Math.abs(totalMs);
 

@@ -1,9 +1,9 @@
-import './Main.css'
+import './Main.css';
 import './modules/i18n';
-import App from './App.jsx'
+import App from './App.jsx';
 import logger from './modules/logger';
-import React from 'react'
-import ReactDOM from 'react-dom/client'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
 
 logger.info(
     ' _                        _              _                 _   \n' +

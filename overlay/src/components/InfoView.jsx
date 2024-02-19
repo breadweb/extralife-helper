@@ -60,7 +60,7 @@ function InfoView ({ data, settings }) {
                     className={
                         classNames(
                             'text-xl font-furore text-helper3 animate-pop-in',
-                            settings.lang === 'en-us' ? 'font-furore' : 'font-sans'
+                            settings.lang === 'en-us' ? 'font-furore' : 'font-sans',
                         )
                     }
                 >
@@ -69,7 +69,7 @@ function InfoView ({ data, settings }) {
                 <div
                     className={
                         classNames(
-                            `text-8xl font-digital text-helper4 -my-2 animate-fade-in animate-delay-[.4s]`,
+                            'text-8xl font-digital text-helper4 -my-2 animate-fade-in animate-delay-[.4s]',
                         )
                     }
                 >
@@ -79,23 +79,23 @@ function InfoView ({ data, settings }) {
                     className={
                         classNames(
                             'text-xl text-helper3 animate-pop-in animate-delay-[1.2s]',
-                            settings.lang === 'en-us' ? 'font-furore' : 'font-sans'
+                            settings.lang === 'en-us' ? 'font-furore' : 'font-sans',
                         )
                     }
-                 >
+                >
                     {raisedLine}
                 </div>
                 <div
                     className={
                         classNames(
-                            `text-4xl font-cantarell text-helper3 animate-fade-in animate-delay-[1.8s]`,
+                            'text-4xl font-cantarell text-helper3 animate-fade-in animate-delay-[1.8s]',
                         )
                     }
                 >
                     {amountLine}
                 </div>
             </div>
-        )
+        );
     }
 
     return (

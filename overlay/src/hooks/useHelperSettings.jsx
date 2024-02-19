@@ -16,7 +16,7 @@ const timePattern = new RegExp('\\d{1,2}:\\d{1,2}:\\d{2}');
 const getListItemFromParam = (urlParams, paramName, options) => {
     const index = urlParams.get(paramName);
     return index !== undefined && index >= 0 && index < options.length ? options[index] : '';
-}
+};
 
 const getSettingsFromParams = () => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -26,20 +26,20 @@ const getSettingsFromParams = () => {
         teamId: urlParams.get('tid'),
         theme: getListItemFromParam(urlParams, 't', themeOptions),
         border: getListItemFromParam(urlParams, 'b', borderOptions),
-        areAlertsEnabled: urlParams.get('g') === "1",
-        isRaisedLinePlural: urlParams.get('p') === "1",
-        isGoalVisible: urlParams.get('a') === "1",
-        areCentsVisible: urlParams.get('c') === "1",
-        isYearModeEnabled: urlParams.get('y') === "1",
+        areAlertsEnabled: urlParams.get('g') === '1',
+        isRaisedLinePlural: urlParams.get('p') === '1',
+        isGoalVisible: urlParams.get('a') === '1',
+        areCentsVisible: urlParams.get('c') === '1',
+        isYearModeEnabled: urlParams.get('y') === '1',
         voice: getListItemFromParam(urlParams, 'v', voiceOptions),
         volume: urlParams.get('vo'),
         lang: urlParams.get('l') || langOptions[0],
-    }
+    };
 
     // The start date and time is a unix timestamp when provided through querystring parameters.
     // Convert to date and time strings that can be validated the same as when the value is provided
     // from the global window object or environment variables.
-    let timestamp = urlParams.get('st');
+    const timestamp = urlParams.get('st');
     if (isFinite(timestamp)) {
         const dt = DateTime.fromMillis(parseInt(timestamp));
         settings.startDate = dt.toLocaleString(DateTime.DATE_SHORT);
@@ -47,7 +47,7 @@ const getSettingsFromParams = () => {
     }
 
     return settings;
-}
+};
 
 const getSettingsFromGlobal = () => {
     return {
@@ -66,7 +66,7 @@ const getSettingsFromGlobal = () => {
         volume: window.volume,
         lang: window.lang,
     };
-}
+};
 
 const getSettingsFromEnvVars = () => {
     const envVars = import.meta.env;
@@ -85,8 +85,8 @@ const getSettingsFromEnvVars = () => {
         voice: envVars.VITE_VOICE,
         volume: envVars.VITE_VOLUME,
         lang: envVars.VITE_LANG,
-    }
-}
+    };
+};
 
 const schema = Joi.object({
     participantId: Joi.string().allow('').required(),
@@ -164,7 +164,7 @@ function useHelperSettings () {
         });
 
         setData(settings);
-    }, []);
+    }, [t]);
 
     return {
         data: data,
