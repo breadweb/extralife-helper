@@ -77,7 +77,7 @@ function InfoView ({ data, settings }) {
                 <div
                     className={
                         classNames(
-                            'text-[20px] -mb-1 text-helper3 animate-pop-in animate-delay-[1.2s]',
+                            'text-[20px] text-helper3 animate-pop-in animate-delay-[1.2s]',
                             settings.lang === 'en-us' ? 'font-furore' : 'font-sans',
                         )
                     }
@@ -86,8 +86,10 @@ function InfoView ({ data, settings }) {
                 </div>
                 <div
                     className={
-                        `text-[32px]
-                        font-cantarell text-helper3 animate-fade-in animate-delay-[1.8s]`
+                        classNames(
+                            'leading-none font-cantarell text-helper3 animate-fade-in animate-delay-[1.8s]',
+                            settings.isGoalVisible ? 'text-[32px] mt-1' : 'text-[48px]',
+                        )
                     }
                 >
                     {amountLine}
