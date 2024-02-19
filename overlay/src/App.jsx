@@ -16,18 +16,18 @@ function App () {
     const { t, i18n } = useTranslation();
     const [playSound, { sound }] = useSound(alertSfx);
     const helperSettings = useHelperSettings();
-    const extraLife = useExtraLifeData(undefined);
+    const { data, refreshData, setRequestOptions } = useExtraLifeData(undefined);
 
     useEffect(() => {
         const refreshInterval = setInterval(() => {
             logger.debug('Refreshing Extra Life data...');
-            extraLife.refreshData();
+            refreshData();
         }, import.meta.env.VITE_POLLING_INTERVAL);
 
         return () => {
             clearInterval(refreshInterval);
         };
-    }, [extraLife, extraLife.refreshData]);
+    }, [refreshData]);
 
     useEffect(() => {
         const onKeyPress = evt => {
@@ -74,25 +74,25 @@ function App () {
             document.documentElement.classList.add(helperSettings.data.theme);
         }
 
-        extraLife.setRequestOptions(
+        setRequestOptions(
             helperSettings.data.participantId ? 'participants' : 'teams',
             helperSettings.data.participantId || helperSettings.data.teamId,
         );
-    }, [extraLife, extraLife.setRequestOptions, helperSettings.data, helperSettings.error, i18n, sound]);
+    }, [setRequestOptions, helperSettings.data, helperSettings.error, i18n, sound]);
 
     useEffect(() => {
-        if (!extraLife.data) {
+        if (!data) {
             return;
         }
 
-        if (totalDonations !== undefined && extraLife.data.numDonations > totalDonations) {
+        if (totalDonations !== undefined && data.numDonations > totalDonations) {
             logger.debug('Make a request for donations!');
         }
 
-        if (totalDonations !== extraLife.data.numDonations) {
-            setTotalDontaions(extraLife.data.numDonations);
+        if (totalDonations !== data.numDonations) {
+            setTotalDontaions(data.numDonations);
         }
-    }, [extraLife.data, totalDonations]);
+    }, [data, totalDonations]);
 
     useEffect(() => {
         const onWindowResize = () => {
@@ -115,7 +115,7 @@ function App () {
     if (errorMessage) {
         content = <ErrorView message={errorMessage} />;
     } else if (helperSettings.data) {
-        content = <InfoView data={extraLife.data} settings={helperSettings.data} />;
+        content = <InfoView data={data} settings={helperSettings.data} />;
     } else {
         return null;
     }
