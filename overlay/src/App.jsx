@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import alertSfx from './assets/audio/alert.mp3';
 import classNames from 'classnames';
+import colorConvert from 'color-convert';
 import ErrorView from './components/ErrorView';
 import InfoView from './components/InfoView';
 import logger from './modules/logger';
@@ -14,7 +15,7 @@ function App () {
     const [errorMessage, setErrorMessage] = useState(undefined);
     const [totalDonations, setTotalDontaions] = useState(undefined);
     const [contentScale, setContentScale] = useState(1);
-    const { t, i18n } = useTranslation();
+    const { i18n } = useTranslation();
     const [playSound, { sound }] = useSound(alertSfx);
     const helperSettings = useHelperSettings();
     const { data, refreshData, setRequestOptions } = useExtraLifeData(undefined);
@@ -71,6 +72,16 @@ function App () {
         }
 
         if (!document.documentElement.classList.contains(helperSettings.data.theme)) {
+            if (helperSettings.data.theme === 'custom') {
+                logger.debug('Overriding theme colors with custom values...');
+                for (let i = 1; i < 6; i++) {
+                    const color = colorConvert.hex.hsl(helperSettings.data[`color${i}`]);
+                    document.documentElement.style.setProperty(
+                        `--twc-helper${i}`,
+                        `${color[0]} ${color[1]}% ${color[2]}%`,
+                    );
+                }
+            }
             logger.debug('Applying theme...');
             document.documentElement.classList.add(helperSettings.data.theme);
         }
@@ -129,10 +140,10 @@ function App () {
         <div
             className={
                 classNames(
-                    'w-full h-screen flex flex-col items-center justify-center',
-                    'bg-helper2 overflow-hidden',
+                    'w-full h-screen flex flex-col items-center justify-center overflow-hidden',
                     helperSettings.data?.border === 'square' ? 'border-2 border-helper1' : '',
                     helperSettings.data?.border === 'rounded' ? 'border-2 border-helper1 rounded' : '',
+                    helperSettings.data?.isBackgroundTransparent ? 'bg-none' : 'bg-helper5',
                 )
             }
         >

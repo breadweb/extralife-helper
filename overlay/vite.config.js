@@ -82,10 +82,51 @@ const getSettingsContent = () => {
             'Theme choices: white1, gray1, blue1, or blue2.',
         ],
         [
+            'color1',
+            process.env.VITE_COLOR1,
+            true,
+            'If theme is set to "custom", this is the first hex color to use such as FF0000. ' +
+            'Leave blank if using a preset theme.',
+        ],
+        [
+            'color2',
+            process.env.VITE_COLOR2,
+            true,
+            'If theme is set to "custom", this is the second hex color to use such as FF0000. ' +
+            'Leave blank if using a preset theme.',
+        ],
+        [
+            'color3',
+            process.env.VITE_COLOR3,
+            true,
+            'If theme is set to "custom", this is the third hex color to use such as FF0000. ' +
+            'Leave blank if using a preset theme.',
+        ],
+        [
+            'color4',
+            process.env.VITE_COLOR4,
+            true,
+            'If theme is set to "custom", this is the fourth hex color to use such as FF0000. ' +
+            'Leave blank if using a preset theme.',
+        ],
+        [
+            'color5',
+            process.env.VITE_COLOR5,
+            true,
+            'If theme is set to "custom", this is the fifth hex color to use such as FF0000. ' +
+            'Leave blank if using a preset theme.',
+        ],
+        [
             'border',
             process.env.VITE_BORDER,
             true,
             'Border type choices: rounded, square, or none.',
+        ],
+        [
+            'isBackgroundTransparent',
+            process.env.VITE_IS_BACKGROUND_TRANSPARENT,
+            false,
+            'Set to true to set the background as transparent instead of a solid color.',
         ],
         [
             'areAlertsEnabled',
