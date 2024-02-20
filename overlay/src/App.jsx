@@ -61,7 +61,7 @@ function App () {
             i18n.changeLanguage(helperSettings.data.lang);
         }
 
-        if (sound && sound.volume !== helperSettings.data.volume) {
+        if (sound && sound.volume() !== helperSettings.data.volume) {
             logger.debug(`Setting volume to ${helperSettings.data.volume}...`);
             sound.volume(helperSettings.data.volume);
         }
