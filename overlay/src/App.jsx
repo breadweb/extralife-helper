@@ -110,8 +110,6 @@ function App () {
             setContentScale(getScale());
         };
 
-        logger.debug('Setting scale and listening for window resize...');
-
         setContentScale(getScale());
 
         window.addEventListener('resize', onWindowResize);
