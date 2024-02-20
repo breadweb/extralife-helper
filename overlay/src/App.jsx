@@ -7,7 +7,7 @@ import ErrorView from './components/ErrorView';
 import InfoView from './components/InfoView';
 import logger from './modules/logger';
 import React from 'react';
-import useExtraLifeData from './hooks/useExtraLifeData';
+import usePolledExtraLifeData from './hooks/usePolledExtraLifeData';
 import useHelperSettings from './hooks/useHelperSettings';
 import useSound from 'use-sound';
 
@@ -18,24 +18,19 @@ function App () {
     const { i18n } = useTranslation();
     const [playSound, { sound }] = useSound(alertSfx);
     const helperSettings = useHelperSettings();
-    const { extraLifeData, refreshData, setRequestEndpoint } = useExtraLifeData(undefined);
-
-    useEffect(() => {
-        const refreshInterval = setInterval(() => {
-            logger.debug('Refreshing Extra Life data...');
-            refreshData();
-        }, import.meta.env.VITE_POLLING_INTERVAL);
-
-        return () => {
-            clearInterval(refreshInterval);
-        };
-    }, [refreshData]);
+    const { extraLifeData, setRequestEndpoint, startPolling, stopPolling } = usePolledExtraLifeData(undefined);
 
     useEffect(() => {
         const onKeyPress = evt => {
             switch (evt.key) {
-                case 's':
+                case 'a':
                     sound.play();
+                    break;
+                case 's':
+                    startPolling();
+                    break;
+                case 't':
+                    stopPolling();
                     break;
                 default:
                     // Do nothing.
@@ -49,7 +44,7 @@ function App () {
         return () => {
             document.removeEventListener('keypress', onKeyPress);
         };
-    }, [playSound, sound]);
+    }, [playSound, sound, startPolling, stopPolling]);
 
     useEffect(() => {
         if (helperSettings?.error !== undefined) {
