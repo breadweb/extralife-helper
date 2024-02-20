@@ -9,11 +9,10 @@ function useExtraLifeData (initialEndpoint) {
     const [touchId, setTouchId] = useState(1);
 
     useEffect(() => {
-        if (!endpoint) {
-            logger.warning('Endpoint not set. Request not made.');
-            return;
-        } else {
+        if (endpoint) {
             logger.debug(`Making request to ${endpoint} endpoint...`);
+        } else {
+            return;
         }
 
         const axiosOptions = {
