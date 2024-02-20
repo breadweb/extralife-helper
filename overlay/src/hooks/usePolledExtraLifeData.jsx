@@ -4,14 +4,13 @@ import useExtraLifeData from './useExtraLifeData';
 
 function usePolledExtraLifeData (initialEndpoint) {
     const [isEnabled, setIsEnabled] = useState(false);
-    const { extraLifeData, hasRequestEndpoint, refreshData, setRequestEndpoint } = useExtraLifeData(initialEndpoint);
+    const { extraLifeData, refreshData, setRequestEndpoint } = useExtraLifeData(initialEndpoint);
     const refreshInterval = useRef();
 
     useEffect(() => {
         if (isEnabled) {
             logger.debug('Starting polling...');
             refreshInterval.current = setInterval(() => {
-                logger.debug('Refreshing data...');
                 refreshData();
             }, import.meta.env.VITE_POLLING_INTERVAL);
         } else {
@@ -30,12 +29,8 @@ function usePolledExtraLifeData (initialEndpoint) {
     }, [setIsEnabled, setRequestEndpoint]);
 
     const startPolling = useCallback(() => {
-        if (!hasRequestEndpoint()) {
-            logger.info('Not starting polling because request endpoint has not been set.');
-            return;
-        }
         setIsEnabled(true);
-    }, [hasRequestEndpoint, setIsEnabled]);
+    }, [setIsEnabled]);
 
     const stopPolling = useCallback(() => {
         setIsEnabled(false);
