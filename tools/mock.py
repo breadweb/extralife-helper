@@ -29,96 +29,147 @@ def process_args():
         'reset',
          help='removes all donations and sets totals to zero')
 
+    parser_totals = subparsers.add_parser(
+        'totals',
+         help='sets raised and goal amounts')
+    parser_totals.add_argument(
+        'total', type=float,
+         help='the amount to set for the total raised')
+    parser_totals.add_argument(
+        'goal', type=float,
+         help='the amount to set for the goal')
+    parser_totals.add_argument(
+        'type', nargs='?', choices=['participant', 'team'], default='participant',
+         help='the type of info to update')
+
     parser_donate = subparsers.add_parser(
         'donate',
          help='adds one more more test donations')
-    parser_donate.add_argument(
-        'type', nargs='?', choices=['participant', 'team'], default='participant',
-         help='the type of donation to make')
     parser_donate.add_argument(
         'total', nargs='?', type=int, default=1,
         help='the total number of donations to add')
     parser_donate.add_argument(
         'amount', nargs='?', type=float, default=0.00,
         help='the amount of the donation(s) or leave blank for random amounts')
+    parser_donate.add_argument(
+        'type', nargs='?', choices=['participant', 'team'], default='participant',
+         help='the type of donation to make')
+    parser_donate.add_argument(
+        '--no-message', dest='no_message', action='store_true',
+        help='Do not include a message in the donation(s)')
+    parser_donate.add_argument(
+        '--lang', dest='lang', choices=['en', 'es', 'fr'],
+        help='The language to use for donation names and messages')
 
     args = parser.parse_args()
     return args
 
 
-def reset(paths):
+def get_endpoint_content(path):
     """
-    Resets all mock API testing files.
+    Returns the content of a mock endpoint file.
     """
-    contents = ''
+    with open(path, 'r') as read_file:
+        return json.load(read_file)
 
-    with open(paths['participants_info'], 'r') as read_file:
-        contents = json.load(read_file)
-    contents['sumDonations'] = 0.00
-    contents['sumPledges'] = 0.00
-    contents['numDonations'] = 0
 
-    with open(paths['participants_info'], 'w') as write_file:
+def set_endpoint_content(path, contents):
+    """
+    Sets the content of a mock endpoint file.
+    """
+    with open(path, 'w') as write_file:
         json.dump(contents, write_file, sort_keys=True, ensure_ascii=False, indent=4)
 
-    with open(paths['teams_info'], 'r') as read_file:
-        contents = json.load(read_file)
-    contents['sumDonations'] = 0.00
-    contents['sumPledges'] = 0.00
-    contents['numDonations'] = 0
 
-    with open(paths['teams_info'], 'w') as write_file:
-        json.dump(contents, write_file, sort_keys=True, ensure_ascii=False, indent=4)
-
-    with open(paths['participants_donations'], 'w') as write_file:
-        json.dump([], write_file, sort_keys=True, ensure_ascii=False, indent=4)
-
-    with open(paths['teams_donations'], 'w') as write_file:
-        json.dump([], write_file, sort_keys=True, ensure_ascii=False, indent=4)
-
-
-def get_random_display_name():
+def get_random_display_name(args):
     """
     Returns a random name.
     """
-    return [
-        'Malvina Ronald', 'Kayly María Lourdes', 'Demelza Maggie', 'Michaël Angèle', 'Clint Ashlie',
-        'Rickie Lizzy', 'Joceline Hellen', 'Nelson Theresa', 'Pascal Brylee', 'Kylan Hermógenes',
-        'Tatum Desi', 'Sabella Mollie', 'Sherley Dashiell', 'Nate Kristi', 'Sheila Martha'
-    ][random.randrange(0, 14)]
+    names_en = ['Kohen Cathryn', 'Ben Gaz', 'Cayla Ruth', 'Sheelagh Ronald', 'Gerrard Karrie']
+    names_es = ['Noa Sancho', 'Libertad Bolívar', 'Ángel Florián', 'Yadira Evaristo', 'Ámbar Eloy']
+    names_fr = ['Charles Candide', 'Angeline François-Marie', 'Armel Valéry', 'Lou Moïse', 'Rosine Viviane']
+
+    if args.lang == 'en':
+        return names_en[random.randrange(0, len(names_en) - 1)]
+    elif args.lang == 'es':
+        return names_es[random.randrange(0, len(names_es) - 1)]
+    elif args.lang == 'fr':
+        return names_fr[random.randrange(0, len(names_fr) - 1)]
 
 
-def get_random_donation_message():
+def get_random_donation_message(args):
     """
     Returns a donation message.
     """
-    return [
-        '',
+    messages_en = [
         'You\'ve almost reached your goal!',
-        '¡Casi has alcanzado tu objetivo!',
-        'Vous avez presque atteint votre objectif!',
         '18 hours of games and still going? Amazing. Keep up the great work! Love, Mom and Dad.',
-        '¿18 horas de juegos y sigues adelante? Asombroso. ¡Mantener el buen trabajo! Con cariño, mamá y papá.',
-        '18 heures de jeux et ça continue? Incroyable. Continuez ce bon travail! Amour, maman et papa.',
         'Great job!',
+    ]
+    messages_es = [
+        '¡Casi has alcanzado tu objetivo!',
+        '¿18 horas de juegos y sigues adelante? Asombroso. ¡Mantener el buen trabajo! Con cariño, mamá y papá.',
         '¡Gran trabajo!',
+    ]
+    messages_fr = [
+        'Vous avez presque atteint votre objectif!',
+        '18 heures de jeux et ça continue? Incroyable. Continuez ce bon travail! Amour, maman et papa.',
         'Bon travail!',
-    ][random.randrange(0, 9)]
+    ]
+
+    if args.no_message:
+        return ''
+    elif args.lang == 'en':
+        return messages_en[random.randrange(0, len(messages_en) - 1)]
+    elif args.lang == 'es':
+        return messages_es[random.randrange(0, len(messages_es) - 1)]
+    elif args.lang == 'fr':
+        return messages_fr[random.randrange(0, len(messages_fr) - 1)]
+
+
+def reset(paths):
+    """
+    Resets all mock API endpoint files.
+    """
+    for path in [paths['participants_info'], paths['teams_info']]:
+        contents = get_endpoint_content(path)
+        contents['sumDonations'] = 0.00
+        contents['sumPledges'] = 0.00
+        contents['numDonations'] = 0
+        set_endpoint_content(path, contents)
+
+    set_endpoint_content(paths['participants_donations'], [])
+    set_endpoint_content(paths['teams_donations'], [])
+
+
+def set_totals(args, paths):
+    """
+    Sets total amounts in an info mock endpoint.
+    """
+    path = paths['{0}s_info'.format(args.type)]
+
+    contents = get_endpoint_content(path)
+    contents['sumDonations'] = args.total
+    contents['fundraisingGoal'] = args.goal
+    set_endpoint_content(path, contents)
 
 
 def add_donations(args, paths):
     """
-    Adds one or more test donations.
+    Adds one or more test donations to the donations and info mock endpoints.
     """
+    link_base_url = 'https://www.extra-life.org/index.cfm?fuseaction=donorDrive.participant'
+    image_base_url = 'https://donordrivecontent.com/extralife/images/$avatars$'
+
     donation_base = {
         'links': {
-            'recipient': 'https://www.extra-life.org/index.cfm?fuseaction=donorDrive.participant&participantID=531439',
-            'donate': 'https://www.extra-life.org/index.cfm?fuseaction=donorDrive.participant&participantID=531439#donate'
+            'recipient': link_base_url + '&participantID=531439',
+            'donate': link_base_url + '&participantID=531439#donate'
         },
         'isPledge': False,
         'isFromFacebook': False,
         'thankYouSent': False,
-        'recipientImageURL': 'https://donordrivecontent.com/extralife/images/$avatars$/constituent_574EE92A-C29F-F29A-60B307827DB9F948.jpg',
+        'recipientImageURL': image_base_url + '/constituent_574EE92A-C29F-F29A-60B307827DB9F948.jpg',
         'participantID': 531439,
         'displayNameVisibility': 'ALL',
         'isOffline': False,
@@ -128,7 +179,7 @@ def add_donations(args, paths):
         'createdDateUTC': '2024-01-26T23:02:15.817+0000',
         'amountVisibility': 'ALL',
         'recipientName': 'Adam Slesinger',
-        'avatarImageURL': 'https://donordrivecontent.com/extralife/images/$avatars$/constituent_EB86576B-C293-34EB-4D85AC4CF292DE8B.jpg',
+        'avatarImageURL': image_base_url + '/constituent_EB86576B-C293-34EB-4D85AC4CF292DE8B.jpg',
         'teamID': 66495,
         'messageVisibility': 'ALL'
     }
@@ -136,27 +187,32 @@ def add_donations(args, paths):
     info_path = paths['{0}s_info'.format(args.type)]
     donations_path = paths['{0}s_donations'.format(args.type)]
 
+    contents = get_endpoint_content(donations_path)
+    total_amount = 0
+
     for n in range(args.total):
-        donation = donation_base.copy()
         amount = args.amount if args.amount else float(decimal.Decimal(random.randrange(1,100000))/100)
+        total_amount += amount
+        name = get_random_display_name(args)
+        message = get_random_donation_message(args)
+
+        donation = donation_base.copy()
         donation['amount'] = amount
         donation['donorID'] = str(uuid.uuid4()).upper().replace('-', '')[0:15]
         donation['donationID'] = str(uuid.uuid4()).upper().replace('-', '')[0:15]
-        donation['displayName'] = get_random_display_name()
-        donation['message'] = get_random_donation_message()
+        donation['displayName'] = name
+        donation['message'] = message
 
-        contents = ''
-        with open(donations_path, 'r') as read_file:
-            contents = json.load(read_file)
+        print(f'Adding donation: {name} | {amount} | {message}')
+
         contents.insert(0, donation)
-        with open(donations_path, 'w') as write_file:
-            json.dump(contents, write_file, sort_keys=True, ensure_ascii=False, indent=4)
-        with open(info_path, 'r') as read_file:
-            contents = json.load(read_file)
-        contents['sumDonations'] = contents['sumDonations'] + amount
-        contents['numDonations'] = contents['numDonations'] + 1
-        with open(info_path, 'w') as write_file:
-            json.dump(contents, write_file, sort_keys=True, ensure_ascii=False, indent=4)
+
+    set_endpoint_content(donations_path, contents)
+
+    contents = get_endpoint_content(info_path)
+    contents['sumDonations'] = contents['sumDonations'] + total_amount
+    contents['numDonations'] = contents['numDonations'] + args.total
+    set_endpoint_content(info_path, contents)
 
 
 def main():
@@ -164,6 +220,8 @@ def main():
     Entry point for the script. Runs appropriate deploy actions based on parameters.
     """
     args = process_args()
+    if 'lang' in args and not args.lang:
+        args.lang = ['en', 'es', 'us'][random.randrange(0, 2)]
 
     base_dir = os.path.join(os.path.dirname(__file__), '..', 'mock-api', 'api')
     paths = {
@@ -175,10 +233,13 @@ def main():
 
     if args.action == 'reset':
         reset(paths)
-        print('Reset complete!')
+        print('Reset complete.')
+    elif args.action == 'totals':
+        set_totals(args, paths)
+        print('Totals updated.')
     elif args.action == 'donate':
         add_donations(args, paths)
-        print('{0} dontaion{1} added!'.format(args.total, '' if args.total == 1 else 's'))
+        print('{0} donation{1} added.'.format(args.total, '' if args.total == 1 else 's'))
 
 
 if __name__ == '__main__':
