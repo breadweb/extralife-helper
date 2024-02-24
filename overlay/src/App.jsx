@@ -132,7 +132,7 @@ function App () {
         content = (
             <ErrorView message={errorMessage} />
         );
-    } else if (donationtoToShow) {
+    } else if (donationtoToShow && helperSettings.data) {
         content = (
             <DonationView
                 donation={donationtoToShow}

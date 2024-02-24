@@ -16,17 +16,13 @@ function DonationView ({ donation, onDonationAlertEnded, settings }) {
     }, [onDonationAlertEnded]);
 
     useEffect(() => {
-        if (settings?.volume === undefined || !sound) {
+        if (!sound) {
             return;
         }
 
         sound.volume(settings.volume);
         sound.play();
     }, [donation, settings, sound]);
-
-    if (!donation) {
-        return null;
-    }
 
     return (
         <div className='flex flex-col items-center justify-center'>

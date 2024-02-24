@@ -15,7 +15,7 @@ function InfoView ({ data, settings }) {
 
     let content;
 
-    if (!data || !settings || !timer) {
+    if (!data || !timer) {
         content = <LoadingSpinner />;
     } else {
         let timerLine;
