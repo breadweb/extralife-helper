@@ -1,4 +1,5 @@
 import { DateTime } from 'luxon';
+import { getFormattedMoney } from '../modules/utils';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import LoadingSpinner from './LoadingSpinner';
@@ -42,16 +43,9 @@ function InfoView ({ data, settings }) {
             ? t('OUR_AMOUNT_RAISED')
             : t('MY_AMOUNT_RAISED');
 
-        const currencyFormat = new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD',
-            maximumFractionDigits: settings.areCentsVisible ? 2 : 0,
-            minimumFractionDigits: 0,
-        });
-
-        let amountLine = currencyFormat.format(data.sumDonations + data.sumPledges);
+        let amountLine = getFormattedMoney(data.sumDonations + data.sumPledges, settings.areCentsVisible);
         if (settings.isGoalVisible) {
-            amountLine += ' / ' + currencyFormat.format(data.fundraisingGoal);
+            amountLine += ' / ' + getFormattedMoney(data.fundraisingGoal, settings.areCentsVisible);
         }
 
         content = (
