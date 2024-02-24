@@ -18,12 +18,11 @@ export function isParamValueTrue (value) {
  * Ensures money is properly formatted based on varying amount formats and user settings.
  */
 export function getFormattedMoney (amount, areCentsVisible) {
-    const amountAsDollars = amount / 100;
     const currencyFormat = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
         maximumFractionDigits: areCentsVisible ? 2 : 0,
-        minimumFractionDigits: areCentsVisible && Math.floor(amountAsDollars) !== amountAsDollars ? 2 : 0,
+        minimumFractionDigits: areCentsVisible && Math.floor(amount) !== amount ? 2 : 0,
     });
     return currencyFormat.format(amount);
 }
