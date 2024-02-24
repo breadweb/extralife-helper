@@ -3,13 +3,13 @@ import { parseRequestError } from '../modules/requests';
 import axios from 'axios';
 import logger from '../modules/logger';
 
-function useExtraLifeData (initialEndpoint) {
+function useExtraLifeData () {
     const [extraLifeData, setExtraLifeData] = useState(undefined);
-    const [endpoint, setEndpoint] = useState(initialEndpoint);
-    const [touchId, setTouchId] = useState(1);
+    const [endpoint, setEndpoint] = useState(undefined);
+    const [touchId, setTouchId] = useState(0);
 
     useEffect(() => {
-        if (endpoint) {
+        if (touchId > 0 && endpoint) {
             logger.debug(`Making request to ${endpoint} endpoint...`);
         } else {
             return;
@@ -29,23 +29,14 @@ function useExtraLifeData (initialEndpoint) {
             });
     }, [endpoint, touchId]);
 
-    const refreshData = useCallback(() => {
-        setTouchId(prevTouchId => prevTouchId + 1);
-    }, []);
-
-    const hasRequestEndpoint = useCallback(() => {
-        return endpoint !== undefined;
-    }, [endpoint]);
-
-    const setRequestEndpoint = useCallback(value => {
+    const requestData = useCallback(value => {
         setEndpoint(value);
+        setTouchId(prevTouchId => prevTouchId + 1);
     }, []);
 
     return {
         extraLifeData: extraLifeData,
-        refreshData: refreshData,
-        hasRequestEndpoint: hasRequestEndpoint,
-        setRequestEndpoint: setRequestEndpoint,
+        requestData: requestData,
     };
 }
 

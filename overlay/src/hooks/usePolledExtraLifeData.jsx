@@ -2,16 +2,20 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import logger from '../modules/logger';
 import useExtraLifeData from './useExtraLifeData';
 
-function usePolledExtraLifeData (initialEndpoint) {
+function usePolledExtraLifeData () {
     const [isEnabled, setIsEnabled] = useState(false);
-    const { extraLifeData, refreshData, setRequestEndpoint } = useExtraLifeData(initialEndpoint);
+    const [endpoint, setEndpoint] = useState(undefined);
+    const { extraLifeData, requestData } = useExtraLifeData();
     const refreshInterval = useRef();
 
     useEffect(() => {
-        if (isEnabled) {
-            logger.debug('Starting polling...');
+        if (endpoint && isEnabled) {
+            logger.debug('Starting polling... ');
+
+            requestData(endpoint);
+
             refreshInterval.current = setInterval(() => {
-                refreshData();
+                requestData(endpoint);
             }, import.meta.env.VITE_POLLING_INTERVAL);
         } else {
             logger.debug('Stopping polling...');
@@ -21,24 +25,24 @@ function usePolledExtraLifeData (initialEndpoint) {
         return () => {
             clearInterval(refreshInterval.current);
         };
-    }, [isEnabled, refreshData]);
+    }, [endpoint, isEnabled, requestData]);
 
-    const setRequestEndpointAndStartPolling = useCallback(endpoint => {
-        setRequestEndpoint(endpoint);
+    const startPolling = useCallback(endpoint => {
+        setEndpoint(endpoint);
         setIsEnabled(true);
-    }, [setIsEnabled, setRequestEndpoint]);
-
-    const startPolling = useCallback(() => {
-        setIsEnabled(true);
-    }, [setIsEnabled]);
+    }, []);
 
     const stopPolling = useCallback(() => {
         setIsEnabled(false);
-    }, [setIsEnabled]);
+    }, []);
+
+    const isPolling = useCallback(() => {
+        return isEnabled;
+    }, [isEnabled]);
 
     return {
         extraLifeData: extraLifeData,
-        setRequestEndpoint: setRequestEndpointAndStartPolling,
+        isPolling: isPolling,
         startPolling: startPolling,
         stopPolling: stopPolling,
     };

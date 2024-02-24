@@ -7,9 +7,16 @@ import ErrorView from './components/ErrorView';
 import InfoView from './components/InfoView';
 import logger from './modules/logger';
 import React from 'react';
-import usePolledExtraLifeData from './hooks/usePolledExtraLifeData';
+import useDonations from './hooks/useDonations';
 import useHelperSettings from './hooks/useHelperSettings';
+import usePolledExtraLifeData from './hooks/usePolledExtraLifeData';
 import useSound from 'use-sound';
+
+const constructEndpoint = (settings, path) => {
+    const type = settings.participantId ? 'participants' : 'teams';
+    const id = settings.participantId || settings.teamId;
+    return `${type}/${id}${path ? `/${path}` : ''}`;
+};
 
 function App () {
     const [errorMessage, setErrorMessage] = useState(undefined);
@@ -18,7 +25,8 @@ function App () {
     const { i18n } = useTranslation();
     const [playSound, { sound }] = useSound(alertSfx);
     const helperSettings = useHelperSettings();
-    const { extraLifeData, setRequestEndpoint, startPolling, stopPolling } = usePolledExtraLifeData(undefined);
+    const { extraLifeData, isPolling, startPolling, stopPolling } = usePolledExtraLifeData();
+    const { getUnseenDonations, removeSeenDonation, unseenDonations } = useDonations();
 
     useEffect(() => {
         const onKeyPress = evt => {
@@ -81,25 +89,30 @@ function App () {
             document.documentElement.classList.add(helperSettings.data.theme);
         }
 
-        const type = helperSettings.data.participantId ? 'participants' : 'teams';
-        const id = helperSettings.data.participantId || helperSettings.data.teamId;
-        setRequestEndpoint(`${type}/${id}`);
+        if (!isPolling()) {
+            startPolling(constructEndpoint(helperSettings.data));
+        }
 
-    }, [setRequestEndpoint, helperSettings.data, helperSettings.error, i18n, sound]);
+    }, [helperSettings.data, helperSettings.error, i18n, isPolling, sound, startPolling]);
 
     useEffect(() => {
         if (!extraLifeData) {
             return;
         }
 
-        if (totalDonations !== undefined && extraLifeData.numDonations > totalDonations) {
-            logger.debug('Make a request for donations!');
-        }
-
         if (totalDonations !== extraLifeData.numDonations) {
+            console.log('Requesting unseen donations!');
+            getUnseenDonations(constructEndpoint(helperSettings.data, 'donations'));
             setTotalDontaions(extraLifeData.numDonations);
         }
-    }, [extraLifeData, totalDonations]);
+    }, [extraLifeData, getUnseenDonations, helperSettings.data, totalDonations]);
+
+    useEffect(() => {
+        if (unseenDonations.length > 0) {
+            logger.debug('There are unseen donations. Show an alert!');
+            return;
+        }
+    }, [unseenDonations]);
 
     useEffect(() => {
         const getScale = () => {
