@@ -3,22 +3,26 @@ import React, { useEffect } from 'react';
 import useSound from 'use-sound';
 
 function DonationView ({ donation, onDonationAlertEnded, settings }) {
-    const [{ sound }] = useSound(alertSfx);
+    const [, { sound }] = useSound(alertSfx);
 
     useEffect(() => {
         const timeoutId = setTimeout(() => {
             onDonationAlertEnded();
         }, import.meta.env.VITE_DONATION_TTL);
 
-        if (settings?.volume !== undefined) {
-            sound.volume(settings.volume);
-            sound.play();
-        }
-
         return () => {
             clearInterval(timeoutId);
         };
-    }, [onDonationAlertEnded, settings, sound]);
+    }, [onDonationAlertEnded]);
+
+    useEffect(() => {
+        if (settings?.volume === undefined || !sound) {
+            return;
+        }
+
+        sound.volume(settings.volume);
+        sound.play();
+    }, [donation, settings, sound]);
 
     if (!donation) {
         return null;

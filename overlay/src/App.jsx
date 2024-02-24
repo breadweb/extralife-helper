@@ -129,11 +129,24 @@ function App () {
     let content;
 
     if (errorMessage) {
-        content = <ErrorView message={errorMessage} />;
+        content = (
+            <ErrorView message={errorMessage} />
+        );
     } else if (donationtoToShow) {
-        content = <DonationView donation={donationtoToShow} onDonationAlertEnded={removeSeenDonation} />;
+        content = (
+            <DonationView
+                donation={donationtoToShow}
+                onDonationAlertEnded={removeSeenDonation}
+                settings={helperSettings.data}
+            />
+        );
     } else if (helperSettings.data) {
-        content = <InfoView data={extraLifeData} settings={helperSettings.data} />;
+        content = (
+            <InfoView
+                data={extraLifeData}
+                settings={helperSettings.data}
+            />
+        );
     } else {
         return null;
     }
