@@ -39,7 +39,7 @@ function useDonations () {
                 // Because the donations endpoint only returns 100 results per request, it is possible
                 // (although highly unlikely for most use cases of the Helper) that the last donation ID
                 // is not in the returned list.
-                if (!wasLastDonationIdFound) {
+                if (!wasLastDonationIdFound && newUnseenDonations.length >= 100) {
                     logger.warning(
                         'Did not find last donation ID in the returned results. 100 or more donations ' +
                         'are new since the last check.',
@@ -50,10 +50,10 @@ function useDonations () {
 
                 setLastQueuedDonationId(extraLifeData[0].donationID);
                 setUnseenDonations(prevUnseenDonations => {
-                    return {
+                    return [
                         ...prevUnseenDonations,
                         ...newUnseenDonations,
-                    };
+                    ];
                 });
             }
         }

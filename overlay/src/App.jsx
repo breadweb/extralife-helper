@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import alertSfx from './assets/audio/alert.mp3';
 import classNames from 'classnames';
 import colorConvert from 'color-convert';
+import DonationView from './components/DonationView';
 import ErrorView from './components/ErrorView';
 import InfoView from './components/InfoView';
 import logger from './modules/logger';
@@ -10,7 +10,6 @@ import React from 'react';
 import useDonations from './hooks/useDonations';
 import useHelperSettings from './hooks/useHelperSettings';
 import usePolledExtraLifeData from './hooks/usePolledExtraLifeData';
-import useSound from 'use-sound';
 
 const constructEndpoint = (settings, path) => {
     const type = settings.participantId ? 'participants' : 'teams';
@@ -21,9 +20,9 @@ const constructEndpoint = (settings, path) => {
 function App () {
     const [errorMessage, setErrorMessage] = useState(undefined);
     const [totalDonations, setTotalDontaions] = useState(undefined);
+    const [donationtoToShow, setDonationToShow] = useState(undefined);
     const [contentScale, setContentScale] = useState(1);
     const { i18n } = useTranslation();
-    const [playSound, { sound }] = useSound(alertSfx);
     const helperSettings = useHelperSettings();
     const { extraLifeData, isPolling, startPolling, stopPolling } = usePolledExtraLifeData();
     const { getUnseenDonations, removeSeenDonation, unseenDonations } = useDonations();
@@ -31,9 +30,6 @@ function App () {
     useEffect(() => {
         const onKeyPress = evt => {
             switch (evt.key) {
-                case 'a':
-                    sound.play();
-                    break;
                 case 's':
                     startPolling();
                     break;
@@ -52,7 +48,7 @@ function App () {
         return () => {
             document.removeEventListener('keypress', onKeyPress);
         };
-    }, [playSound, sound, startPolling, stopPolling]);
+    }, [startPolling, stopPolling]);
 
     useEffect(() => {
         if (helperSettings?.error !== undefined) {
@@ -69,11 +65,6 @@ function App () {
             i18n.changeLanguage(helperSettings.data.lang);
         }
 
-        if (sound && sound.volume() !== helperSettings.data.volume) {
-            logger.debug(`Setting volume to ${helperSettings.data.volume}...`);
-            sound.volume(helperSettings.data.volume);
-        }
-
         if (!document.documentElement.classList.contains(helperSettings.data.theme)) {
             if (helperSettings.data.theme === 'custom') {
                 logger.debug('Overriding theme colors with custom values...');
@@ -85,6 +76,7 @@ function App () {
                     );
                 }
             }
+
             logger.debug('Applying theme...');
             document.documentElement.classList.add(helperSettings.data.theme);
         }
@@ -93,7 +85,7 @@ function App () {
             startPolling(constructEndpoint(helperSettings.data));
         }
 
-    }, [helperSettings.data, helperSettings.error, i18n, isPolling, sound, startPolling]);
+    }, [helperSettings.data, helperSettings.error, i18n, isPolling, startPolling]);
 
     useEffect(() => {
         if (!extraLifeData) {
@@ -101,7 +93,7 @@ function App () {
         }
 
         if (totalDonations !== extraLifeData.numDonations) {
-            console.log('Requesting unseen donations!');
+            logger.debug('Requesting unseen donations!');
             getUnseenDonations(constructEndpoint(helperSettings.data, 'donations'));
             setTotalDontaions(extraLifeData.numDonations);
         }
@@ -109,10 +101,12 @@ function App () {
 
     useEffect(() => {
         if (unseenDonations.length > 0) {
-            logger.debug('There are unseen donations. Show an alert!');
+            setDonationToShow(unseenDonations[0]);
             return;
+        } else {
+            setDonationToShow(undefined);
         }
-    }, [unseenDonations]);
+    }, [removeSeenDonation, unseenDonations]);
 
     useEffect(() => {
         const getScale = () => {
@@ -136,6 +130,8 @@ function App () {
 
     if (errorMessage) {
         content = <ErrorView message={errorMessage} />;
+    } else if (donationtoToShow) {
+        content = <DonationView donation={donationtoToShow} onDonationAlertEnded={removeSeenDonation} />;
     } else if (helperSettings.data) {
         content = <InfoView data={extraLifeData} settings={helperSettings.data} />;
     } else {
