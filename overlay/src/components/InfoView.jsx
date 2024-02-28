@@ -69,7 +69,7 @@ function InfoView ({ data, settings }) {
                 <div
                     className={
                         classNames(
-                            'text-[20px] -mb-1 font-furore text-helper3 whitespace-nowrap animate-pop-in',
+                            'text-[20px] -mb-1 text-helper3 whitespace-nowrap animate-pop-in',
                             settings.lang === 'en-us' ? 'font-furore' : 'font-sans',
                         )
                     }

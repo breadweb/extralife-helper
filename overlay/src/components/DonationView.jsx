@@ -26,22 +26,37 @@ function DonationView ({ donation, onDonationAlertEnded, settings }) {
         sound.play();
     }, [donation, settings, sound]);
 
+    let message;
+    if (donation.message) {
+        message = (
+            <div className='text-helper3 text-[16px] text-center px-4 mt-4'>
+                {donation.message}
+            </div>
+        );
+    }
+
     return (
         <div className='flex flex-col items-center justify-center'>
-            <div
-                className={
-                    classNames(
-                        'leading-none font-cantarell text-helper4 whitespace-nowrap',
-                        'text-[64px]',
-                    )
-                }
-            >
+            <div className='leading-none font-cantarell text-helper4 whitespace-nowrap text-[74px]'>
                 <Money
                     amount={donation.amount}
                     areCentsVisible={true}
                     format={settings.moneyFormat}
                 />
             </div>
+            <div
+                className={
+                    classNames(
+                        'text-helper3 whitespace-nowrap',
+                        donation.displayName.length === donation.displayName.normalize('NFD').length
+                            ? 'font-furore text-[34px]'
+                            : 'font-sans text-[34px] mt-2',
+                    )
+                }
+            >
+                {donation.displayName}
+            </div>
+            {message}
         </div>
     );
 }
