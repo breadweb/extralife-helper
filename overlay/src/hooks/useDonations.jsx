@@ -61,11 +61,11 @@ function useDonations () {
     }, [extraLifeData, lastQueuedDonationId, setUnseenDonations]);
 
     const removeSeenDonation = useCallback(() => {
-        const modifiedUnseenDonations = [...unseenDonations];
-        const seenDonation = modifiedUnseenDonations.shift();
-        logger.debug(`Seen donation removed from the queue. Name: ${seenDonation.donationID}`);
-        setUnseenDonations(modifiedUnseenDonations);
-    }, [unseenDonations]);
+        setUnseenDonations(prevUnseenDonations => {
+            const [, ...rest] = prevUnseenDonations;
+            return rest;
+        });
+    }, []);
 
     const getUnseenDonations = useCallback(endpoint => {
         requestData(endpoint);

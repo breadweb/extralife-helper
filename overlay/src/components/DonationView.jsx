@@ -13,7 +13,7 @@ function DonationView ({ donation, onDonationAlertEnded, settings }) {
         return () => {
             clearInterval(timeoutId);
         };
-    }, [onDonationAlertEnded]);
+    }, [donation, onDonationAlertEnded]);
 
     useEffect(() => {
         if (!sound) {
