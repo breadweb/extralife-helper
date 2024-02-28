@@ -106,7 +106,7 @@ function App () {
         } else {
             setDonationToShow(undefined);
         }
-    }, [removeSeenDonation, unseenDonations]);
+    }, [unseenDonations]);
 
     useEffect(() => {
         const getScale = () => {
