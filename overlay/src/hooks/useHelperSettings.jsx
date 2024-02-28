@@ -9,6 +9,7 @@ const themeOptions = ['blue1', 'blue2', 'gray1', 'white1', 'custom'];
 const borderOptions = ['rounded', 'square', 'none'];
 const voiceOptions = ['US-male', 'US-female', 'UK-male', 'UK-female', 'FR-male', 'FR-female', 'ES-male', 'ES-female'];
 const langOptions = ['en-us', 'fr-ca', 'es-419'];
+const moneyFormatOptions = ['standard', 'fancy'];
 
 const datePattern = new RegExp(/\d{1,2}\/\d{1,2}\/\d{4}/);
 const timePattern = new RegExp(/\d{1,2}:\d{1,2}:\d{2}/);
@@ -37,6 +38,7 @@ const getSettingsFromParams = () => {
         isRaisedLinePlural: urlParams.get('p') === '1',
         isGoalVisible: urlParams.get('a') === '1',
         areCentsVisible: urlParams.get('n') === '1',
+        moneyFormat: getListItemFromParam(urlParams, 'm', moneyFormatOptions),
         isYearModeEnabled: urlParams.get('y') === '1',
         voice: getListItemFromParam(urlParams, 'v', voiceOptions),
         volume: urlParams.get('vo'),
@@ -74,6 +76,7 @@ const getSettingsFromGlobal = () => {
         isRaisedLinePlural: window.isRaisedLinePlural,
         isGoalVisible: window.isGoalVisible,
         areCentsVisible: window.areCentsVisible,
+        moneyFormat: window.moneyFormat,
         isYearModeEnabled: window.isYearModeEnabled,
         voice: window.voice,
         volume: window.volume,
@@ -100,6 +103,7 @@ const getSettingsFromEnvVars = () => {
         isRaisedLinePlural: envVars.VITE_IS_RAISED_LINE_PLURAL,
         isGoalVisible: envVars.VITE_IS_GOAL_VISIBLE,
         areCentsVisible: envVars.VITE_ARE_CENTS_VISIBLE,
+        moneyFormat: envVars.VITE_MONEY_FORMAT,
         isYearModeEnabled: envVars.VITE_IS_YEAR_MODE_ENABLED,
         voice: envVars.VITE_VOICE,
         volume: envVars.VITE_VOLUME,
@@ -130,6 +134,7 @@ const schema = Joi.object({
     isRaisedLinePlural: Joi.boolean().required(),
     isGoalVisible: Joi.boolean().required(),
     areCentsVisible: Joi.boolean().required(),
+    moneyFormat: Joi.string().valid(...moneyFormatOptions).required(),
     isYearModeEnabled: Joi.boolean().required(),
     voice: Joi.string().valid(...voiceOptions).required(),
     volume: Joi.number().min(0).max(100).required(),

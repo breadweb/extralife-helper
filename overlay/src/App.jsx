@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import colorConvert from 'color-convert';
@@ -163,7 +163,7 @@ function App () {
             }
         >
             <div
-                className='flex justify-center'
+                className='flex justify-center border'
                 style={
                     {
                         transform: `scale(${contentScale})`,

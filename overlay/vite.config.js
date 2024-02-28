@@ -156,6 +156,12 @@ const getSettingsContent = () => {
             'are always shown in donation amounts.',
         ],
         [
+            'moneyFormat',
+            process.env.VITE_MONEY_FORMAT,
+            true,
+            'Money format choices: standard, fancy',
+        ],
+        [
             'isYearModeEnabled',
             process.env.VITE_IS_YEAR_MODE_ENABLED,
             false,

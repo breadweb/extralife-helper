@@ -1,8 +1,8 @@
 import { DateTime } from 'luxon';
-import { getFormattedMoney } from '../modules/utils';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import LoadingSpinner from './LoadingSpinner';
+import Money from './Money';
 import React from 'react';
 import useTimer from '../hooks/useTimer';
 
@@ -43,13 +43,29 @@ function InfoView ({ data, settings }) {
             ? t('OUR_AMOUNT_RAISED')
             : t('MY_AMOUNT_RAISED');
 
-        let amountLine = getFormattedMoney(data.sumDonations + data.sumPledges, settings.areCentsVisible);
+        const raised = (
+            <Money
+                amount={data.sumDonations + data.sumPledges}
+                areCentsVisible={settings.areCentsVisible}
+                format={settings.moneyFormat}
+            />
+        );
+        let goal;
         if (settings.isGoalVisible) {
-            amountLine += ' / ' + getFormattedMoney(data.fundraisingGoal, settings.areCentsVisible);
+            goal = (
+                <>
+                    <div>/</div>
+                    <Money
+                        amount={data.fundraisingGoal}
+                        areCentsVisible={settings.areCentsVisible}
+                        format={settings.moneyFormat}
+                    />
+                </>
+            );
         }
 
         content = (
-            <div className='flex flex-col items-center'>
+            <>
                 <div
                     className={
                         classNames(
@@ -83,13 +99,16 @@ function InfoView ({ data, settings }) {
                         classNames(
                             'leading-none font-cantarell text-helper3 whitespace-nowrap',
                             'animate-fade-in animate-delay-[1.8s]',
-                            settings.isGoalVisible ? 'text-[32px] mt-1' : 'text-[48px]',
+                            settings.isGoalVisible
+                                ? settings.moneyFormat === 'fancy' ? 'text-[38px] mt-1' : 'text-[30px] mt-1'
+                                : settings.moneyFormat === 'fancy' ? 'text-[62px]' : 'text-[54px]',
+                            'flex space-x-2',
                         )
                     }
                 >
-                    {amountLine}
+                    {raised}{goal}
                 </div>
-            </div>
+            </>
         );
     }
 
