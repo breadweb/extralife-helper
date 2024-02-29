@@ -24,31 +24,8 @@ function App () {
     const [contentScale, setContentScale] = useState(1);
     const { i18n } = useTranslation();
     const helperSettings = useHelperSettings();
-    const { extraLifeData, isPolling, startPolling, stopPolling } = usePolledExtraLifeData();
+    const { extraLifeData, isPolling, startPolling } = usePolledExtraLifeData();
     const { getUnseenDonations, removeSeenDonation, unseenDonations } = useDonations();
-
-    useEffect(() => {
-        const onKeyPress = evt => {
-            switch (evt.key) {
-                case 's':
-                    startPolling();
-                    break;
-                case 't':
-                    stopPolling();
-                    break;
-                default:
-                    // Do nothing.
-            }
-        };
-
-        if (['DEV', 'LOCAL'].includes(import.meta.env.VITE_RUNTIME_MODE)) {
-            document.addEventListener('keypress', onKeyPress);
-        }
-
-        return () => {
-            document.removeEventListener('keypress', onKeyPress);
-        };
-    }, [startPolling, stopPolling]);
 
     useEffect(() => {
         if (helperSettings?.error !== undefined) {
