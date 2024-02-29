@@ -70,7 +70,7 @@ function InfoView ({ data, settings }) {
                     className={
                         classNames(
                             'text-[20px] -mb-1 text-helper3 whitespace-nowrap animate-pop-in',
-                            settings.lang === 'en-us' ? 'font-furore' : 'font-sans',
+                            settings.lang === 'en-us' ? 'font-furore' : 'font-sans font-bold',
                         )
                     }
                 >
@@ -88,7 +88,7 @@ function InfoView ({ data, settings }) {
                     className={
                         classNames(
                             'text-[20px] text-helper3 whitespace-nowrap animate-pop-in animate-delay-[1.2s]',
-                            settings.lang === 'en-us' ? 'font-furore' : 'font-sans',
+                            settings.lang === 'en-us' ? 'font-furore' : 'font-sans font-bold',
                         )
                     }
                 >
