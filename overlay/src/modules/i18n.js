@@ -8,7 +8,7 @@ i18next
     .use(initReactI18next)
     .init({
         debug: import.meta.env.VITE_IS_DEBUG_LOGGING_ENABLED === 'true',
-        fallbackLng: 'en-us',
+        fallbackLng: 'en',
         resources: {
             'en': {
                 translation: enTranslation,
