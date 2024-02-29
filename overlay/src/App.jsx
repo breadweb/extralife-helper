@@ -163,7 +163,7 @@ function App () {
             }
         >
             <div
-                className='flex justify-center border'
+                className='flex justify-center'
                 style={
                     {
                         transform: `scale(${contentScale})`,
