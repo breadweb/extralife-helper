@@ -66,9 +66,9 @@ function DonationView ({ donation, onDonationAlertEnded, settings }) {
             });
         };
 
-        const confettiTimeout1 = setTimeout(fireConfetti, 0);
-        const confettiTimeout2 = setTimeout(fireConfetti, 100);
-        const confettiTimeout3 = setTimeout(fireConfetti, 200);
+        const confettiTimeout1 = setTimeout(fireConfetti, 100);
+        const confettiTimeout2 = setTimeout(fireConfetti, 200);
+        const confettiTimeout3 = setTimeout(fireConfetti, 300);
 
         sound.volume(settings.volume);
         sound.play();
