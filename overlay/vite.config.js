@@ -201,7 +201,7 @@ const getSettingsContent = () => {
     let content = '\n';
     content += '    <script type="text/javascript">\n';
     content += '        // For use details and instructions, visit https://github.com/breadweb/extralife-helper\n';
-    content += '        // For support or feature requests, visit https://discord.gg/aArewEc\n';
+    content += '        // For support or feature requests, visit https://bit.ly/to-the-bakery\n';
     content += '        // ====================================================================================\n';
 
     items.forEach(item => {
