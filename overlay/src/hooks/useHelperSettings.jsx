@@ -7,9 +7,31 @@ import logger from '../modules/logger';
 
 const themeOptions = ['blue1', 'blue2', 'gray1', 'white1', 'custom'];
 const borderOptions = ['rounded', 'square', 'none'];
-const voiceOptions = ['US-male', 'US-female', 'UK-male', 'UK-female', 'FR-male', 'FR-female', 'ES-male', 'ES-female'];
 const langOptions = ['en-us', 'fr-ca', 'es-419'];
 const moneyFormatOptions = ['standard', 'fancy'];
+const voiceOptions = [
+    'none',
+    'us-male',
+    'us-female',
+    'uk-male',
+    'uk-female',
+    'fr-male',
+    'fr-female',
+    'es-male',
+    'es-female',
+];
+
+const voiceNames = {
+    '': '',
+    'us-male': 'US English Male',
+    'us-female': 'US English Female',
+    'uk-male': 'UK English Male',
+    'uk-female': 'UK English Female',
+    'fr-male': 'French Canadian Male',
+    'fr-female': 'French Canadian Female',
+    'es-male': 'Spanish Latin American Male',
+    'es-female': 'Spanish Latin American Female',
+};
 
 const datePattern = new RegExp(/\d{1,2}\/\d{1,2}\/\d{4}/);
 const timePattern = new RegExp(/\d{1,2}:\d{1,2}:\d{2}/);
@@ -40,7 +62,7 @@ const getSettingsFromParams = () => {
         areCentsVisible: urlParams.get('n') === '1',
         moneyFormat: getListItemFromParam(urlParams, 'm', moneyFormatOptions),
         isYearModeEnabled: urlParams.get('y') === '1',
-        voice: getListItemFromParam(urlParams, 'v', voiceOptions),
+        voice: urlParams.get('v') === -1 ? '' : getListItemFromParam(urlParams, 'v', voiceOptions),
         volume: urlParams.get('vo'),
         lang: urlParams.get('l') || langOptions[0],
     };
@@ -136,7 +158,7 @@ const schema = Joi.object({
     areCentsVisible: Joi.boolean().required(),
     moneyFormat: Joi.string().valid(...moneyFormatOptions).required(),
     isYearModeEnabled: Joi.boolean().required(),
-    voice: Joi.string().valid(...voiceOptions).required(),
+    voice: Joi.string().valid(...voiceOptions).allow('').required(),
     volume: Joi.number().min(0).max(100).required(),
     lang: Joi.string().valid(...langOptions).required(),
 });
@@ -188,6 +210,7 @@ function useHelperSettings () {
         settings.areCentsVisible = isParamValueTrue(settings.areCentsVisible);
         settings.isYearModeEnabled = isParamValueTrue(settings.isYearModeEnabled);
         settings.volume = parseInt(settings.volume) / 100;
+        settings.voice = voiceNames[settings.voice];
 
         const dateParts = settings.startDate.split('/');
         const timeParts = settings.startTime.split(':');

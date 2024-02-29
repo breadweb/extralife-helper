@@ -24,6 +24,22 @@ function DonationView ({ donation, onDonationAlertEnded, settings }) {
 
         sound.volume(settings.volume);
         sound.play();
+
+        const timeoutId = setTimeout(() => {
+            if (settings.voice !== '' && window.responsiveVoice) {
+                window.responsiveVoice.speak(
+                    donation.message,
+                    settings.voice,
+                    {
+                        volume: settings.volume,
+                    },
+                );
+            }
+        }, import.meta.env.VITE_TTS_DELAY);
+
+        return () => {
+            clearInterval(timeoutId);
+        };
     }, [donation, settings, sound]);
 
     let message;
