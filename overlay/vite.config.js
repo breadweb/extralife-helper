@@ -135,6 +135,12 @@ const getSettingsContent = () => {
             'Set to false to suppress donation alerts.',
         ],
         [
+            'isConfettiEnabled',
+            process.env.VITE_IS_CONFETTI_ENABLED,
+            false,
+            'Set to false to not show a confetti animation during a donation alert.',
+        ],
+        [
             'isRaisedLinePlural',
             process.env.VITE_IS_RAISED_LINE_PLURAL,
             false,

@@ -56,9 +56,10 @@ const getSettingsFromParams = () => {
         color5: urlParams.get('c5'),
         border: getListItemFromParam(urlParams, 'b', borderOptions),
         isBackgroundTransparent: urlParams.get('k') === '1',
-        areAlertsEnabled: urlParams.get('g') === '1',
+        areAlertsEnabled: urlParams.get('a') === '1',
+        isConfettiEnabled: urlParams.get('f') === '1',
         isRaisedLinePlural: urlParams.get('p') === '1',
-        isGoalVisible: urlParams.get('a') === '1',
+        isGoalVisible: urlParams.get('g') === '1',
         areCentsVisible: urlParams.get('n') === '1',
         moneyFormat: getListItemFromParam(urlParams, 'm', moneyFormatOptions),
         isYearModeEnabled: urlParams.get('y') === '1',
@@ -95,6 +96,7 @@ const getSettingsFromGlobal = () => {
         border: window.border,
         isBackgroundTransparent: window.isBackgroundTransparent,
         areAlertsEnabled: window.areAlertsEnabled,
+        isConfettiEnabled: window.isConfettiEnabled,
         isRaisedLinePlural: window.isRaisedLinePlural,
         isGoalVisible: window.isGoalVisible,
         areCentsVisible: window.areCentsVisible,
@@ -122,6 +124,7 @@ const getSettingsFromEnvVars = () => {
         border: envVars.VITE_BORDER,
         isBackgroundTransparent: envVars.VITE_IS_BACKGROUND_TRANSPARENT,
         areAlertsEnabled: envVars.VITE_ARE_ALERTS_ENABLED,
+        isConfettiEnabled: envVars.VITE_IS_CONFETTI_ENABLED,
         isRaisedLinePlural: envVars.VITE_IS_RAISED_LINE_PLURAL,
         isGoalVisible: envVars.VITE_IS_GOAL_VISIBLE,
         areCentsVisible: envVars.VITE_ARE_CENTS_VISIBLE,
@@ -153,6 +156,7 @@ const schema = Joi.object({
     border: Joi.string().valid(...borderOptions).required(),
     isBackgroundTransparent: Joi.boolean().required(),
     areAlertsEnabled: Joi.boolean().required(),
+    isConfettiEnabled: Joi.boolean().required(),
     isRaisedLinePlural: Joi.boolean().required(),
     isGoalVisible: Joi.boolean().required(),
     areCentsVisible: Joi.boolean().required(),
@@ -205,6 +209,7 @@ function useHelperSettings () {
 
         settings.isBackgroundTransparent = isParamValueTrue(settings.isBackgroundTransparent);
         settings.areAlertsEnabled = isParamValueTrue(settings.areAlertsEnabled);
+        settings.isConfettiEnabled = isParamValueTrue(settings.isConfettiEnabled);
         settings.isRaisedLinePlural = isParamValueTrue(settings.isRaisedLinePlural);
         settings.isGoalVisible = isParamValueTrue(settings.isGoalVisible);
         settings.areCentsVisible = isParamValueTrue(settings.areCentsVisible);

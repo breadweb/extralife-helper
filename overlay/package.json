@@ -12,6 +12,7 @@
         "preview": "vite preview"
     },
     "dependencies": {
+        "@tsparticles/confetti": "^3.3.0",
         "axios": "^1.6.7",
         "classnames": "^2.5.1",
         "color-convert": "^2.0.1",
