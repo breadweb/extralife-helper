@@ -37,8 +37,8 @@ function useDonations () {
 
             if (newUnseenDonations.length > 0) {
                 // Because the donations endpoint only returns 100 results per request, it is possible
-                // (although highly unlikely for most use cases of the Helper) that the last donation ID
-                // is not in the returned list.
+                // (although highly unlikely for most participants and teams that use the Helper) that
+                // the last donation ID is not in the returned list.
                 if (!wasLastDonationIdFound && newUnseenDonations.length >= 100) {
                     logger.warning(
                         'Did not find last donation ID in the returned results. 100 or more donations ' +

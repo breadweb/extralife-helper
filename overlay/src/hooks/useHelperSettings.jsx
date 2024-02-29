@@ -10,7 +10,6 @@ const borderOptions = ['rounded', 'square', 'none'];
 const langOptions = ['en-us', 'fr-ca', 'es-419'];
 const moneyFormatOptions = ['standard', 'fancy'];
 const voiceOptions = [
-    'none',
     'us-male',
     'us-female',
     'uk-male',
@@ -176,12 +175,21 @@ function useHelperSettings () {
         let settings;
         switch (import.meta.env.VITE_RUNTIME_MODE) {
             case 'DEV':
+                // When previewing in the Vite server during local development, settings will be loaded
+                // from the environment variables contained in the .env.local file. Be sure to create it
+                // using .env.local.example if it does not exist.
                 settings = getSettingsFromEnvVars();
                 break;
             case 'LOCAL':
+                // When compiled into a single HTML file for running in a participant's browser from the
+                // local file system, settings will be read from the global window object. The settings
+                // are exposed at the top of the HTML file so participants can easily personalize them.
                 settings = getSettingsFromGlobal();
                 break;
             case 'REMOTE':
+                // When running on https://extralife-helper.breadweb.net, the settings are provided by
+                // querystring parameters. Users are expected to generate the full URL with querystring
+                // parameters using the link generator hosted at https://breadweb.net/extralife-helper/
                 settings = getSettingsFromParams();
                 break;
             default:

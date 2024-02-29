@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 """
-Updates the mock API static files to help test development of the Helper.
+Updates the mock API static files to help with testing and development of the Helper.
 """
 
 import argparse

@@ -82,11 +82,11 @@ module.exports = {
                 'helper5': '#FFFFFF', // White
             },
             'custom': {
-                'helper1': '#000000',
-                'helper2': '#000000',
-                'helper3': '#000000',
-                'helper4': '#000000',
-                'helper5': '#FFFFFF',
+                'helper1': '#000000', // Will be overridden at runtime by settings.
+                'helper2': '#000000', // Will be overridden at runtime by settings.
+                'helper3': '#000000', // Will be overridden at runtime by settings.
+                'helper4': '#000000', // Will be overridden at runtime by settings.
+                'helper5': '#FFFFFF', // Will be overridden at runtime by settings.
             },
         }),
     ],

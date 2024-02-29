@@ -20,8 +20,7 @@ function LoadingSpinner ({ delayTime }) {
         <div className='w-full flex justify-center'>
             <div
                 className={
-                    `border-8 border-white border-t-gray-400 w-10 h-10 animate-spin
-                    rounded-full`
+                    'border-8 border-white border-t-gray-400 w-10 h-10 animate-spinrounded-full'
                 }
             />
         </div>

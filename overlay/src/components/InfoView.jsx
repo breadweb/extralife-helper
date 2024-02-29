@@ -50,6 +50,7 @@ function InfoView ({ data, settings }) {
                 format={settings.moneyFormat}
             />
         );
+
         let goal;
         if (settings.isGoalVisible) {
             goal = (
