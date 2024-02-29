@@ -98,12 +98,11 @@ function InfoView ({ data, settings }) {
                 <div
                     className={
                         classNames(
-                            'leading-none font-cantarell text-helper3 whitespace-nowrap',
+                            'flex space-x-2 leading-none font-cantarell text-helper3 whitespace-nowrap',
                             'animate-fade-in animate-delay-[1.8s]',
                             settings.isGoalVisible
                                 ? settings.moneyFormat === 'fancy' ? 'text-[38px] mt-1' : 'text-[30px] mt-1'
                                 : settings.moneyFormat === 'fancy' ? 'text-[62px]' : 'text-[54px]',
-                            'flex space-x-2',
                         )
                     }
                 >

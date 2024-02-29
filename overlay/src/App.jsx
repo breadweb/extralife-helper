@@ -11,7 +11,7 @@ import useDonations from './hooks/useDonations';
 import useHelperSettings from './hooks/useHelperSettings';
 import usePolledExtraLifeData from './hooks/usePolledExtraLifeData';
 
-const constructEndpoint = (settings, path) => {
+const getEndpoint = (settings, path) => {
     const type = settings.participantId ? 'participants' : 'teams';
     const id = settings.participantId || settings.teamId;
     return `${type}/${id}${path ? `/${path}` : ''}`;
@@ -38,7 +38,7 @@ function App () {
         }
 
         if (i18n.language !== helperSettings.data.lang) {
-            logger.debug(`Setting language to ${helperSettings.data.lang}...`);
+            logger.debug(`Changing language to ${helperSettings.data.lang}...`);
             i18n.changeLanguage(helperSettings.data.lang);
         }
 
@@ -59,7 +59,7 @@ function App () {
         }
 
         if (!isPolling()) {
-            startPolling(constructEndpoint(helperSettings.data));
+            startPolling(getEndpoint(helperSettings.data));
         }
 
     }, [helperSettings.data, helperSettings.error, i18n, isPolling, startPolling]);
@@ -71,7 +71,7 @@ function App () {
 
         if (totalDonations !== extraLifeData.numDonations) {
             logger.debug('Requesting unseen donations!');
-            getUnseenDonations(constructEndpoint(helperSettings.data, 'donations'));
+            getUnseenDonations(getEndpoint(helperSettings.data, 'donations'));
             setTotalDontaions(extraLifeData.numDonations);
         }
     }, [extraLifeData, getUnseenDonations, helperSettings.data, totalDonations]);
