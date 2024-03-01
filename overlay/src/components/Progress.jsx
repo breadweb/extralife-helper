@@ -1,11 +1,11 @@
 import classNames from 'classnames';
-import Money from './Money';
+import MoneyDisplay from './MoneyDisplay';
 import ProgressBar from './ProgressBar';
 import React from 'react';
 
 const Progress = ({ amountRaised, areCentsVisible, fundraisingGoal, moneyFormat, progressFormat }) => {
     const raised = (
-        <Money
+        <MoneyDisplay
             amount={amountRaised}
             areCentsVisible={areCentsVisible}
             format={moneyFormat}
@@ -15,7 +15,7 @@ const Progress = ({ amountRaised, areCentsVisible, fundraisingGoal, moneyFormat,
     let goal;
     if (progressFormat !== 'raisedOnly') {
         goal = (
-            <Money
+            <MoneyDisplay
                 amount={fundraisingGoal}
                 areCentsVisible={areCentsVisible}
                 format={moneyFormat}
@@ -77,4 +77,4 @@ const Progress = ({ amountRaised, areCentsVisible, fundraisingGoal, moneyFormat,
     }
 };
 
-export default Progress;
+export default React.memo(Progress);

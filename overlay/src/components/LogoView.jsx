@@ -9,4 +9,4 @@ const LogoView = () => {
     );
 };
 
-export default LogoView;
+export default React.memo(LogoView);

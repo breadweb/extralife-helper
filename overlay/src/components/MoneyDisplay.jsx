@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Money = ({ amount, areCentsVisible, format }) => {
+const MoneyDisplay = ({ amount, areCentsVisible, format }) => {
     const dollars = Math.floor(amount);
     const cents = (amount - dollars) * 100;
 
@@ -37,4 +37,4 @@ const Money = ({ amount, areCentsVisible, format }) => {
     }
 };
 
-export default Money;
+export default React.memo(MoneyDisplay);

@@ -2,12 +2,14 @@ import { confetti } from '@tsparticles/confetti';
 import alertSfx from '../assets/audio/alert.mp3';
 import classNames from 'classnames';
 import confettiImage from '../assets/images/confetti.png';
-import Money from './Money';
 import React, { useEffect } from 'react';
 import useSound from 'use-sound';
+import MoneyDisplay from './MoneyDisplay';
 
 const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
     const [, { sound }] = useSound(alertSfx);
+
+    console.log('Render DonationView');
 
     useEffect(() => {
         const timeoutId = setTimeout(() => {
@@ -106,7 +108,7 @@ const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
     return (
         <div className='flex flex-col items-center justify-center'>
             <div className='leading-none font-cantarell text-helper4 whitespace-nowrap text-[74px]'>
-                <Money
+                <MoneyDisplay
                     amount={donation.amount}
                     areCentsVisible={true}
                     format={settings.moneyFormat}
@@ -129,4 +131,4 @@ const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
     );
 };
 
-export default DonationView;
+export default React.memo(DonationView);

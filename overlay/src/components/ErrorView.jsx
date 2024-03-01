@@ -24,4 +24,4 @@ const ErrorView = ({ message }) => {
     );
 };
 
-export default ErrorView;
+export default React.memo(ErrorView);
