@@ -9,15 +9,13 @@ import MoneyDisplay from './MoneyDisplay';
 const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
     const [, { sound }] = useSound(alertSfx);
 
-    console.log('Render DonationView');
-
     useEffect(() => {
         const timeoutId = setTimeout(() => {
             onDonationAlertEnded();
         }, import.meta.env.VITE_DONATION_TTL);
 
         return () => {
-            clearInterval(timeoutId);
+            clearTimeout(timeoutId);
         };
     }, [donation, onDonationAlertEnded]);
 
@@ -89,10 +87,10 @@ const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
 
         return () => {
             window.responsiveVoice?.cancel();
-            clearInterval(confettiTimeout1);
-            clearInterval(confettiTimeout2);
-            clearInterval(confettiTimeout3);
-            clearInterval(textToSpeechTimeout);
+            clearTimeout(confettiTimeout1);
+            clearTimeout(confettiTimeout2);
+            clearTimeout(confettiTimeout3);
+            clearTimeout(textToSpeechTimeout);
         };
     }, [donation, settings, sound]);
 
