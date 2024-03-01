@@ -66,61 +66,63 @@ const getSettingsContent = () => {
             'startDate',
             process.env.VITE_START_DATE,
             true,
-            'Set to the date your Extra Life event starts. The local timezone of your computer will be used.',
+            'Set to the date the Extra Life event starts using the local timezone.',
         ],
         [
             'startTime',
             process.env.VITE_START_TIME,
             true,
-            'Set to the time your Extra Life event starts using a 24 hour clock. The local timezone of ' +
-            'your computer will be used.',
+            'Set to the time the Extra Life event starts using a 24 hour clock and the local timezone.',
         ],
         [
             'theme',
             process.env.VITE_THEME,
             true,
-            'Theme choices: white1, gray1, blue1, or blue2.',
+            'Determines what color theme is used for the Helper. The four presets that can be used ' +
+            'are "white1", "gray1", "blue1", or "blue2". If wanting to create a unique theme, set to ' +
+            '"custom" and specify the five color values below.',
         ],
         [
             'color1',
             process.env.VITE_COLOR1,
             true,
             'If theme is set to "custom", this is the first hex color to use such as FF0000. ' +
-            'Leave blank if using a preset theme.',
+            'Set to "" if using a preset theme.',
         ],
         [
             'color2',
             process.env.VITE_COLOR2,
             true,
             'If theme is set to "custom", this is the second hex color to use such as FF0000. ' +
-            'Leave blank if using a preset theme.',
+            'Set to "" if using a preset theme.',
         ],
         [
             'color3',
             process.env.VITE_COLOR3,
             true,
             'If theme is set to "custom", this is the third hex color to use such as FF0000. ' +
-            'Leave blank if using a preset theme.',
+            'Set to "" if using a preset theme.',
         ],
         [
             'color4',
             process.env.VITE_COLOR4,
             true,
             'If theme is set to "custom", this is the fourth hex color to use such as FF0000. ' +
-            'Leave blank if using a preset theme.',
+            'Set to "" if using a preset theme.',
         ],
         [
             'color5',
             process.env.VITE_COLOR5,
             true,
             'If theme is set to "custom", this is the fifth hex color to use such as FF0000. ' +
-            'Leave blank if using a preset theme.',
+            'Set to "" if using a preset theme.',
         ],
         [
             'border',
             process.env.VITE_BORDER,
             true,
-            'Border type choices: rounded, square, or none.',
+            'Determines the style of the border. Options are "rounded", "square", or "none" to not ' +
+            'show a border.',
         ],
         [
             'isBackgroundTransparent',
@@ -138,7 +140,7 @@ const getSettingsContent = () => {
             'isConfettiEnabled',
             process.env.VITE_IS_CONFETTI_ENABLED,
             false,
-            'Set to false to not show a confetti animation during a donation alert.',
+            'Set to true to show a fun Extra Life themed confetti animation during a donation alert.',
         ],
         [
             'isRaisedLinePlural',
@@ -149,10 +151,12 @@ const getSettingsContent = () => {
             'raised while in particpant mode. Note that "Our" is always used in team mode.',
         ],
         [
-            'isGoalVisible',
-            process.env.VITE_IS_GOAL_VISIBLE,
-            false,
-            'Set to false to only show amount raised on the main screen and not also your goal.',
+            'progressFormat',
+            process.env.VITE_PROGRESS_FORMAT,
+            true,
+            'Determines how progress is shown on the main view. Set to "raisedOnly" to only show ' +
+            'the amount raised. Set to "raisedAndGoal" to also show the goa. Set to "progressPar" to show ' +
+            'a progres bar in addition to the raised and goal amounts.',
         ],
         [
             'areCentsVisible',
@@ -165,7 +169,8 @@ const getSettingsContent = () => {
             'moneyFormat',
             process.env.VITE_MONEY_FORMAT,
             true,
-            'Money format choices: standard, fancy',
+            'Determines how amounts are formatted. Setting to "fancy" will show the dollar sign and ' +
+            'cents smaller and raised while "standard" will show all characters at the same size.',
         ],
         [
             'isYearModeEnabled',
@@ -177,8 +182,8 @@ const getSettingsContent = () => {
             'voice',
             process.env.VITE_VOICE,
             true,
-            'Set to US-male, US-female, UK-male, UK-female, FR-male, FR-female, ES-male, ES-female ' +
-            'or set to "" to not read messages with text-to-speech.',
+            'Set to "US-male", "US-female", "UK-male", "UK-female", "FR-male", "FR-female", "ES-male", ' +
+            '"ES-female", or set to "" to not read messages with text-to-speech.',
         ],
         [
             'volume',
@@ -190,8 +195,8 @@ const getSettingsContent = () => {
             'lang',
             process.env.VITE_LANG,
             true,
-            'Language to use for all text displayed in the Helper. Supported options are en-us for ' +
-            'English (United States), fr-ca for French (Canada), or es-419 for Spanish (Latin America)',
+            'Language to use for all text displayed in the Helper. Supported options are "en-us" for ' +
+            'English (United States), "fr-ca" for French (Canada), or "es-419" for Spanish (Latin America)',
         ],
     ];
 

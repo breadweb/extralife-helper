@@ -8,6 +8,18 @@
 }
 
 @font-face {
+    font-family: 'Gilroy';
+    font-weight: normal;
+    src: url('assets/fonts/Gilroy-Regular.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'Gilroy';
+    font-weight: bold;
+    src: url('assets/fonts/Gilroy-Bold.otf') format('opentype');
+}
+
+@font-face {
     font-family: 'DigitalBread';
     src: url('assets/fonts/Digital-Bread.ttf') format('opentype');
 }

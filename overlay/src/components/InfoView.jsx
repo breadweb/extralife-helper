@@ -1,8 +1,8 @@
 import { DateTime } from 'luxon';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import LoadingSpinner from './LoadingSpinner';
-import Money from './Money';
+import Progress from './Progress';
 import React from 'react';
 import useTimer from '../hooks/useTimer';
 
@@ -13,108 +13,91 @@ function InfoView ({ data, settings }) {
     const { t } = useTranslation();
     const timer = useTimer(settings?.startDateTime);
 
-    let content;
-
     if (!data || !timer) {
-        content = <LoadingSpinner />;
-    } else {
-        let timerLine;
-        let time;
-
-        if (settings.isYearModeEnabled) {
-            timerLine = t('MAIN_TITLE');
-            time = DateTime.now().toFormat('yyyy');
-        } else {
-            if (timer.ms < 0) {
-                if (timer.ms < -FOUR_DAYS_IN_MS) {
-                    timerLine = t('DAYS_UNTIL');
-                    time = Math.ceil(timer.ms / ONE_DAY_IN_MS) * -1;
-                } else {
-                    timerLine = t('HOURS_UNTIL');
-                    time = timer.clock;
-                }
-            } else {
-                timerLine = t('HOURS_PLAYED');
-                time = timer.clock;
-            }
-        }
-
-        const raisedLine = settings.teamId || settings.isRaisedLinePlural
-            ? t('OUR_AMOUNT_RAISED')
-            : t('MY_AMOUNT_RAISED');
-
-        const raised = (
-            <Money
-                amount={data.sumDonations + data.sumPledges}
-                areCentsVisible={settings.areCentsVisible}
-                format={settings.moneyFormat}
-            />
-        );
-
-        let goal;
-        if (settings.isGoalVisible) {
-            goal = (
-                <>
-                    <div>/</div>
-                    <Money
-                        amount={data.fundraisingGoal}
-                        areCentsVisible={settings.areCentsVisible}
-                        format={settings.moneyFormat}
-                    />
-                </>
-            );
-        }
-
-        content = (
-            <>
-                <div
-                    className={
-                        classNames(
-                            'text-[20px] -mb-1 text-helper3 whitespace-nowrap animate-pop-in',
-                            settings.lang === 'en-us' ? 'font-furore' : 'font-sans font-bold',
-                        )
-                    }
-                >
-                    {timerLine}
-                </div>
-                <div
-                    className={
-                        `text-[92px] leading-none whitespace-nowrap
-                        font-digital text-helper4 animate-fade-in animate-delay-[.4s]`
-                    }
-                >
-                    {time}
-                </div>
-                <div
-                    className={
-                        classNames(
-                            'text-[20px] text-helper3 whitespace-nowrap animate-pop-in animate-delay-[1.2s]',
-                            settings.lang === 'en-us' ? 'font-furore' : 'font-sans font-bold',
-                        )
-                    }
-                >
-                    {raisedLine}
-                </div>
-                <div
-                    className={
-                        classNames(
-                            'flex space-x-2 leading-none font-cantarell text-helper3 whitespace-nowrap',
-                            'animate-fade-in animate-delay-[1.8s]',
-                            settings.isGoalVisible
-                                ? settings.moneyFormat === 'fancy' ? 'text-[38px] mt-1' : 'text-[30px] mt-1'
-                                : settings.moneyFormat === 'fancy' ? 'text-[62px]' : 'text-[54px]',
-                        )
-                    }
-                >
-                    {raised}{goal}
-                </div>
-            </>
+        return (
+            <div className='animate-fade-in animate-delay-[1.8s] flex justify-center items-center w-full'>
+                <LoadingSpinner />
+            </div>
         );
     }
 
+    let timerLine;
+    let time;
+
+    if (settings.isYearModeEnabled) {
+        timerLine = t('MAIN_TITLE');
+        time = DateTime.now().toFormat('yyyy');
+    } else {
+        if (timer.ms < 0) {
+            if (timer.ms < -FOUR_DAYS_IN_MS) {
+                timerLine = t('DAYS_UNTIL');
+                time = Math.ceil(timer.ms / ONE_DAY_IN_MS) * -1;
+            } else {
+                timerLine = t('HOURS_UNTIL');
+                time = timer.clock;
+            }
+        } else {
+            timerLine = t('HOURS_PLAYED');
+            time = timer.clock;
+        }
+    }
+
+    const amountRaised = data.sumDonations + data.sumPledges;
+
+    let raisedLine;
+    if (settings.progressFormat === 'progressBar') {
+        const percent = Math.floor(amountRaised / data.fundraisingGoal * 100);
+        raisedLine = (
+            <Trans
+                i18nKey={settings.teamId || settings.isRaisedLinePlural ? 'OUR_PERCENT_RAISED' : 'MY_PERCENT_RAISED'}
+                values={{
+                    percent: percent,
+                }}
+            />
+        );
+    } else {
+        raisedLine = settings.teamId || settings.isRaisedLinePlural
+            ? t('OUR_AMOUNT_RAISED')
+            : t('MY_AMOUNT_RAISED');
+    }
+
     return (
-        <div className='flex flex-col items-center justify-center'>
-            {content}
+        <div className='flex flex-col items-center justify-center w-full mx-7'>
+            <div
+                className={
+                    classNames(
+                        'text-[20px] -mb-1 text-helper3 whitespace-nowrap animate-pop-in leading-none',
+                        settings.lang === 'en-us' ? 'font-furore' : 'font-cantarell',
+                    )
+                }
+            >
+                {timerLine}
+            </div>
+            <div
+                className={
+                    `text-[92px] leading-none whitespace-nowrap
+                    font-digital text-helper4 animate-fade-in animate-delay-[.4s]`
+                }
+            >
+                {time}
+            </div>
+            <div
+                className={
+                    `text-[20px] font-gilroy text-helper3 whitespace-nowrap leading-none mt-2
+                    animate-pop-in animate-delay-[1.2s]`
+                }
+            >
+                {raisedLine}
+            </div>
+            <div className='animate-fade-in animate-delay-[1.8s] flex justify-center w-full'>
+                <Progress
+                    amountRaised={amountRaised}
+                    fundraisingGoal={data.fundraisingGoal}
+                    areCentsVisible={settings.areCentsVisible}
+                    moneyFormat={settings.moneyFormat}
+                    progressFormat={settings.progressFormat}
+                />
+            </div>
         </div>
     );
 }

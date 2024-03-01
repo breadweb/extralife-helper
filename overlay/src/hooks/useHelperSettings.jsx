@@ -9,6 +9,7 @@ const themeOptions = ['blue1', 'blue2', 'gray1', 'white1', 'custom'];
 const borderOptions = ['rounded', 'square', 'none'];
 const langOptions = ['en-us', 'fr-ca', 'es-419'];
 const moneyFormatOptions = ['standard', 'fancy'];
+const progressFormatOptions = ['raisedOnly', 'raisedAndGoal', 'progressBar'];
 const voiceOptions = [
     'us-male',
     'us-female',
@@ -58,7 +59,6 @@ const getSettingsFromParams = () => {
         areAlertsEnabled: urlParams.get('a') === '1',
         isConfettiEnabled: urlParams.get('f') === '1',
         isRaisedLinePlural: urlParams.get('p') === '1',
-        isGoalVisible: urlParams.get('g') === '1',
         areCentsVisible: urlParams.get('n') === '1',
         moneyFormat: getListItemFromParam(urlParams, 'm', moneyFormatOptions),
         isYearModeEnabled: urlParams.get('y') === '1',
@@ -66,6 +66,12 @@ const getSettingsFromParams = () => {
         volume: urlParams.get('vo'),
         lang: urlParams.get('l') || langOptions[0],
     };
+
+    // The previous Helper supported two progress displays with the 'isGoalVisible' flag. Use that
+    // to pick from the new list of display options if the new display option is not provided.
+    settings.progressFormat = urlParams.has('pd')
+        ? getListItemFromParam(urlParams, 'pd', progressFormatOptions)
+        : urlParams.get('g') === '1' ? 'amountAndGoal' : 'amountOnly';
 
     // The start date and time is a unix timestamp when provided through querystring parameters.
     // Convert to date and time strings that can be validated the same as when the value is provided
@@ -97,7 +103,7 @@ const getSettingsFromGlobal = () => {
         areAlertsEnabled: window.areAlertsEnabled,
         isConfettiEnabled: window.isConfettiEnabled,
         isRaisedLinePlural: window.isRaisedLinePlural,
-        isGoalVisible: window.isGoalVisible,
+        progressFormat: window.progressFormat,
         areCentsVisible: window.areCentsVisible,
         moneyFormat: window.moneyFormat,
         isYearModeEnabled: window.isYearModeEnabled,
@@ -125,7 +131,7 @@ const getSettingsFromEnvVars = () => {
         areAlertsEnabled: envVars.VITE_ARE_ALERTS_ENABLED,
         isConfettiEnabled: envVars.VITE_IS_CONFETTI_ENABLED,
         isRaisedLinePlural: envVars.VITE_IS_RAISED_LINE_PLURAL,
-        isGoalVisible: envVars.VITE_IS_GOAL_VISIBLE,
+        progressFormat: envVars.VITE_PROGRESS_FORMAT,
         areCentsVisible: envVars.VITE_ARE_CENTS_VISIBLE,
         moneyFormat: envVars.VITE_MONEY_FORMAT,
         isYearModeEnabled: envVars.VITE_IS_YEAR_MODE_ENABLED,
@@ -157,7 +163,7 @@ const schema = Joi.object({
     areAlertsEnabled: Joi.boolean().required(),
     isConfettiEnabled: Joi.boolean().required(),
     isRaisedLinePlural: Joi.boolean().required(),
-    isGoalVisible: Joi.boolean().required(),
+    progressFormat: Joi.string().valid(...progressFormatOptions).required(),
     areCentsVisible: Joi.boolean().required(),
     moneyFormat: Joi.string().valid(...moneyFormatOptions).required(),
     isYearModeEnabled: Joi.boolean().required(),
@@ -176,18 +182,18 @@ function useHelperSettings () {
         switch (import.meta.env.VITE_RUNTIME_MODE) {
             case 'DEV':
                 // When previewing in the Vite server during local development, settings will be loaded
-                // from the environment variables contained in the .env.local file. Be sure to create it
-                // using .env.local.example if it does not exist.
+                // from the environment variables contained in the .env.local file. If it does not exist,
+                // create it using the contents from the .env.local.example file.
                 settings = getSettingsFromEnvVars();
                 break;
             case 'LOCAL':
                 // When compiled into a single HTML file for running in a participant's browser from the
                 // local file system, settings will be read from the global window object. The settings
-                // are exposed at the top of the HTML file so participants can easily personalize them.
+                // are exposed at the top of the HTML file so participants can easily modify them.
                 settings = getSettingsFromGlobal();
                 break;
             case 'REMOTE':
-                // When running on https://extralife-helper.breadweb.net, the settings are provided by
+                // When running on https://extralife-helper.breadweb.net the settings are provided by
                 // querystring parameters. Users are expected to generate the full URL with querystring
                 // parameters using the link generator hosted at https://breadweb.net/extralife-helper/
                 settings = getSettingsFromParams();
@@ -219,7 +225,6 @@ function useHelperSettings () {
         settings.areAlertsEnabled = isParamValueTrue(settings.areAlertsEnabled);
         settings.isConfettiEnabled = isParamValueTrue(settings.isConfettiEnabled);
         settings.isRaisedLinePlural = isParamValueTrue(settings.isRaisedLinePlural);
-        settings.isGoalVisible = isParamValueTrue(settings.isGoalVisible);
         settings.areCentsVisible = isParamValueTrue(settings.areCentsVisible);
         settings.isYearModeEnabled = isParamValueTrue(settings.isYearModeEnabled);
         settings.volume = parseInt(settings.volume) / 100;

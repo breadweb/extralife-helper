@@ -13,6 +13,7 @@ module.exports = {
                 cantarell: ['Cantarell'],
                 digital: ['DigitalBread'],
                 furore: ['Furore'],
+                gilroy: ['Gilroy'],
             },
             keyframes: {
                 'fade-in': {
