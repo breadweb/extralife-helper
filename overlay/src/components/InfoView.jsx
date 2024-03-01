@@ -46,12 +46,15 @@ function InfoView ({ data, settings }) {
 
     let raisedLine;
     if (settings.progressFormat === 'progressBar') {
-        const percent = Math.floor(amountRaised / data.fundraisingGoal * 100);
         raisedLine = (
             <Trans
-                i18nKey={settings.teamId || settings.isRaisedLinePlural ? 'OUR_PERCENT_RAISED' : 'MY_PERCENT_RAISED'}
+                i18nKey={
+                    settings.teamId || settings.isRaisedLinePlural
+                        ? 'OUR_PERCENT_RAISED'
+                        : 'MY_PERCENT_RAISED'
+                }
                 values={{
-                    percent: percent,
+                    percent: Math.floor(amountRaised / data.fundraisingGoal * 100),
                 }}
             />
         );
