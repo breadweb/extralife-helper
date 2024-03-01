@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import React from 'react';
 
-function ErrorView ({ message }) {
+const ErrorView = ({ message }) => {
     const { t } = useTranslation();
 
     return (
@@ -22,6 +22,6 @@ function ErrorView ({ message }) {
             </div>
         </div>
     );
-}
+};
 
 export default ErrorView;

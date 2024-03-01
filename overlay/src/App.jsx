@@ -17,7 +17,7 @@ const getEndpoint = (settings, path) => {
     return `${type}/${id}${path ? `/${path}` : ''}`;
 };
 
-function App () {
+const App = () => {
     const [errorMessage, setErrorMessage] = useState(undefined);
     const [totalDonations, setTotalDontaions] = useState(undefined);
     const [donationtoToShow, setDonationToShow] = useState(undefined);
@@ -153,6 +153,6 @@ function App () {
             </div>
         </div>
     );
-}
+};
 
 export default App;

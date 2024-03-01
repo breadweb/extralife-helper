@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon';
 import { useEffect, useState } from 'react';
 
-function useTimer (dt) {
+const useTimer = (dt) => {
     const [data, setData] = useState(undefined);
 
     useEffect(() => {
@@ -42,6 +42,6 @@ function useTimer (dt) {
     }, [dt]);
 
     return data;
-}
+};
 
 export default useTimer;

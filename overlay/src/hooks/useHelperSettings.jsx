@@ -172,7 +172,7 @@ const schema = Joi.object({
     lang: Joi.string().valid(...langOptions).required(),
 });
 
-function useHelperSettings () {
+const useHelperSettings = () => {
     const [data, setData] = useState(undefined);
     const [error, setError] = useState(undefined);
     const { t } = useTranslation();
@@ -248,6 +248,6 @@ function useHelperSettings () {
         data: data,
         error: error,
     };
-}
+};
 
 export default useHelperSettings;

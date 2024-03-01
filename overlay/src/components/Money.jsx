@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Money ({ amount, areCentsVisible, format }) {
+const Money = ({ amount, areCentsVisible, format }) => {
     const dollars = Math.floor(amount);
     const cents = (amount - dollars) * 100;
 
@@ -35,6 +35,6 @@ function Money ({ amount, areCentsVisible, format }) {
             </div>
         );
     }
-}
+};
 
 export default Money;

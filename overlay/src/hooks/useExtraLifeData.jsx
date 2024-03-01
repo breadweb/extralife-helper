@@ -3,7 +3,7 @@ import { parseRequestError } from '../modules/requests';
 import axios from 'axios';
 import logger from '../modules/logger';
 
-function useExtraLifeData () {
+const useExtraLifeData = () => {
     const [extraLifeData, setExtraLifeData] = useState(undefined);
     const [endpoint, setEndpoint] = useState(undefined);
     const [touchId, setTouchId] = useState(0);
@@ -38,6 +38,6 @@ function useExtraLifeData () {
         extraLifeData: extraLifeData,
         requestData: requestData,
     };
-}
+};
 
 export default useExtraLifeData;

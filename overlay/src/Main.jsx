@@ -13,4 +13,6 @@ logger.info(
     '|_.__/|_|  \\___|\\__,_|\\__,_| \\_/\\_/ \\___|_.__(_)_| |_|\\___|\\__|',
 );
 
-ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+ReactDOM.createRoot(
+    document.getElementById('root'),
+).render(<App />);

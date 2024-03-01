@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-function LoadingSpinner ({ delayTime }) {
+const LoadingSpinner = ({ delayTime }) => {
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
@@ -25,6 +25,6 @@ function LoadingSpinner ({ delayTime }) {
             />
         </div>
     );
-}
+};
 
 export default LoadingSpinner;

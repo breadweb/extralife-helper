@@ -6,7 +6,7 @@ import Money from './Money';
 import React, { useEffect } from 'react';
 import useSound from 'use-sound';
 
-function DonationView ({ donation, onDonationAlertEnded, settings }) {
+const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
     const [, { sound }] = useSound(alertSfx);
 
     useEffect(() => {
@@ -127,6 +127,6 @@ function DonationView ({ donation, onDonationAlertEnded, settings }) {
             {message}
         </div>
     );
-}
+};
 
 export default DonationView;

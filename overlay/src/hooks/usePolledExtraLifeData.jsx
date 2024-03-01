@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import logger from '../modules/logger';
 import useExtraLifeData from './useExtraLifeData';
 
-function usePolledExtraLifeData () {
+const usePolledExtraLifeData = () => {
     const [isEnabled, setIsEnabled] = useState(false);
     const [endpoint, setEndpoint] = useState(undefined);
     const { extraLifeData, requestData } = useExtraLifeData();
@@ -46,6 +46,6 @@ function usePolledExtraLifeData () {
         startPolling: startPolling,
         stopPolling: stopPolling,
     };
-}
+};
 
 export default usePolledExtraLifeData;

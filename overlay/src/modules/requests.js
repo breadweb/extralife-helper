@@ -1,4 +1,4 @@
-export function parseRequestError (err) {
+export const parseRequestError = (err) => {
     const result = {
         status: 0,
         message: '',
@@ -22,4 +22,4 @@ export function parseRequestError (err) {
         result.message = err;
     }
     return result;
-}
+};

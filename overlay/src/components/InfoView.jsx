@@ -9,7 +9,7 @@ import useTimer from '../hooks/useTimer';
 const ONE_DAY_IN_MS = 86400000;
 const FOUR_DAYS_IN_MS = ONE_DAY_IN_MS * 4;
 
-function InfoView ({ data, settings }) {
+const InfoView = ({ data, settings }) => {
     const { t } = useTranslation();
     const timer = useTimer(settings?.startDateTime);
 
@@ -43,25 +43,20 @@ function InfoView ({ data, settings }) {
     }
 
     const amountRaised = data.sumDonations + data.sumPledges;
-
+    const isPluarl = settings.teamId || settings.isRaisedLinePlural;
     let raisedLine;
+
     if (settings.progressFormat === 'progressBar') {
         raisedLine = (
             <Trans
-                i18nKey={
-                    settings.teamId || settings.isRaisedLinePlural
-                        ? 'OUR_PERCENT_RAISED'
-                        : 'MY_PERCENT_RAISED'
-                }
+                i18nKey={ isPluarl ? 'OUR_PERCENT_RAISED' : 'MY_PERCENT_RAISED' }
                 values={{
                     percent: Math.floor(amountRaised / data.fundraisingGoal * 100),
                 }}
             />
         );
     } else {
-        raisedLine = settings.teamId || settings.isRaisedLinePlural
-            ? t('OUR_AMOUNT_RAISED')
-            : t('MY_AMOUNT_RAISED');
+        raisedLine = isPluarl ? t('OUR_AMOUNT_RAISED') : t('MY_AMOUNT_RAISED');
     }
 
     return (
@@ -103,6 +98,6 @@ function InfoView ({ data, settings }) {
             </div>
         </div>
     );
-}
+};
 
 export default InfoView;

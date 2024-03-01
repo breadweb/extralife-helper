@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import logger from '../modules/logger';
 import useExtraLifeData from './useExtraLifeData';
 
-function useDonations () {
+const useDonations = () => {
     const [lastQueuedDonationId, setLastQueuedDonationId] = useState(undefined);
     const [unseenDonations, setUnseenDonations] = useState([]);
     const { extraLifeData, requestData } = useExtraLifeData(undefined);
@@ -76,6 +76,6 @@ function useDonations () {
         removeSeenDonation: removeSeenDonation,
         unseenDonations: unseenDonations,
     };
-}
+};
 
 export default useDonations;

@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React from 'react';
 
-function ProgressBar ({ backColor, current, fillColor, required, textColor }) {
+const ProgressBar = ({ backColor, current, fillColor, required }) => {
     const percent = current / required * 100;
 
     return (
@@ -32,6 +32,6 @@ function ProgressBar ({ backColor, current, fillColor, required, textColor }) {
             />
         </div>
     );
-}
+};
 
-export default ProgressBar;
+export default React.memo(ProgressBar);

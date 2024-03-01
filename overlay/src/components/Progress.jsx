@@ -3,7 +3,7 @@ import Money from './Money';
 import ProgressBar from './ProgressBar';
 import React from 'react';
 
-function Progress ({ amountRaised, areCentsVisible, fundraisingGoal, moneyFormat, progressFormat }) {
+const Progress = ({ amountRaised, areCentsVisible, fundraisingGoal, moneyFormat, progressFormat }) => {
     const raised = (
         <Money
             amount={amountRaised}
@@ -63,7 +63,6 @@ function Progress ({ amountRaised, areCentsVisible, fundraisingGoal, moneyFormat
                     required={fundraisingGoal}
                     backColor='bg-helper5'
                     fillColor='bg-helper4'
-                    textColor='text-helper3'
                 />
                 <div className='flex mt-1 text-helper3'>
                     <div className='w-1/2'>
@@ -76,6 +75,6 @@ function Progress ({ amountRaised, areCentsVisible, fundraisingGoal, moneyFormat
             </div>
         );
     }
-}
+};
 
 export default Progress;
