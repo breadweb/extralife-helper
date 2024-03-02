@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import logger from '../modules/logger';
 import useExtraLifeData from './useExtraLifeData';
 
@@ -6,24 +6,25 @@ const usePolledExtraLifeData = () => {
     const [isEnabled, setIsEnabled] = useState(false);
     const [endpoint, setEndpoint] = useState(undefined);
     const { extraLifeData, requestData } = useExtraLifeData();
-    const refreshInterval = useRef();
 
     useEffect(() => {
+        let refreshInterval;
+
         if (endpoint && isEnabled) {
             logger.debug('Starting polling... ');
 
             requestData(endpoint);
 
-            refreshInterval.current = setInterval(() => {
+            refreshInterval = setInterval(() => {
                 requestData(endpoint);
             }, import.meta.env.VITE_POLLING_INTERVAL);
         } else {
             logger.debug('Stopping polling...');
-            clearInterval(refreshInterval.current);
+            clearInterval(refreshInterval);
         }
 
         return () => {
-            clearInterval(refreshInterval.current);
+            clearInterval(refreshInterval);
         };
     }, [endpoint, isEnabled, requestData]);
 
