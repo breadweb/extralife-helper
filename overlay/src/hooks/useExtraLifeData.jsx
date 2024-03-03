@@ -1,19 +1,15 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { parseRequestError } from '../modules/requests';
+import { serializeError } from '../modules/utils';
 import axios from 'axios';
 import logger from '../modules/logger';
 
 const useExtraLifeData = () => {
     const [extraLifeData, setExtraLifeData] = useState(undefined);
-    const [endpoint, setEndpoint] = useState(undefined);
-    const [touchId, setTouchId] = useState(0);
+    const [requestError, setRequestError] = useState(undefined);
 
-    useEffect(() => {
-        if (touchId > 0 && endpoint) {
-            logger.debug(`Making request to ${endpoint} endpoint...`);
-        } else {
-            return;
-        }
+    const requestData = useCallback(endpoint => {
+        logger.debug(`Making request to ${endpoint} endpoint...`);
 
         const axiosOptions = {
             method: 'GET',
@@ -25,18 +21,16 @@ const useExtraLifeData = () => {
                 setExtraLifeData(res.data);
             })
             .catch(err => {
-                logger.error(parseRequestError(err));
+                const error = parseRequestError(err);
+                logger.error(`Error making request. Endpoint: ${endpoint}, Details: ${serializeError(error)}`);
+                setRequestError(error);
             });
-    }, [endpoint, touchId]);
-
-    const requestData = useCallback(value => {
-        setEndpoint(value);
-        setTouchId(prevTouchId => prevTouchId + 1);
     }, []);
 
     return {
         extraLifeData: extraLifeData,
         requestData: requestData,
+        requestError: requestError,
     };
 };
 
