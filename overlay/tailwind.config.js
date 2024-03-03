@@ -8,6 +8,7 @@ module.exports = {
             animation: {
                 'pop-in': 'pop-in .6s both',
                 'fade-in': 'fade-in .8s both',
+                'fade-out': 'fade-out .8s both',
             },
             fontFamily: {
                 cantarell: ['Cantarell'],
@@ -21,6 +22,14 @@ module.exports = {
                         opacity: 0,
                     },
                     '100%': {
+                        opacity: 1,
+                    },
+                },
+                'fade-out': {
+                    '100%': {
+                        opacity: 0,
+                    },
+                    '0%': {
                         opacity: 1,
                     },
                 },

@@ -37,7 +37,7 @@ const InfoView = ({ data, settings }) => {
             <TimeDisplay settings={settings} />
             <div
                 className={
-                    `text-[20px] font-gilroy text-helper3 whitespace-nowrap leading-none mt-2
+                    `text-[20px] font-cantarell text-helper3 whitespace-nowrap leading-none mt-2
                     animate-pop-in animate-delay-[1.2s]`
                 }
             >

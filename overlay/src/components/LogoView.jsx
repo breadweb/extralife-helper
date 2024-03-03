@@ -1,11 +1,31 @@
-import React from 'react';
+import classNames from 'classnames';
+import React, { useEffect, useState } from 'react';
 import logo from '../assets/images/extra-life-logo.svg';
 
 const LogoView = () => {
+    const [isVisible, setIsVisible] = useState(true);
+
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            setIsVisible(false);
+        }, import.meta.env.VITE_LOGO_TTL - 800);
+
+        return () => {
+            clearTimeout(timeoutId);
+        };
+    }, []);
+
     return (
-        <div className='flex'>
-            <img src={logo} className='animate-fade-in' alt='Extra Life' />
-        </div>
+        <img
+            src={logo}
+            className={
+                classNames(
+                    'animate-delay-[500ms]',
+                    isVisible ? 'animate-fade-in' : 'animate-fade-out',
+                )
+            }
+            alt='Extra Life'
+        />
     );
 };
 

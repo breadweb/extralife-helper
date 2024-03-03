@@ -131,6 +131,12 @@ const getSettingsContent = () => {
             'Set to true to set the background as transparent instead of a solid color.',
         ],
         [
+            'isRecentDonationsEnabled',
+            process.env.VITE_IS_RECENT_DONATIONS_ENABLED,
+            false,
+            'Set to true to occassionally show the last three donations received.',
+        ],
+        [
             'areAlertsEnabled',
             process.env.VITE_ARE_ALERTS_ENABLED,
             false,

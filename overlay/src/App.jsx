@@ -8,6 +8,7 @@ import InfoView from './components/InfoView';
 import logger from './modules/logger';
 import React from 'react';
 import useDonations from './hooks/useDonations';
+import useFillerContent from './hooks/userFillerContent';
 import useHelperSettings from './hooks/useHelperSettings';
 import usePolledExtraLifeData from './hooks/usePolledExtraLifeData';
 
@@ -15,6 +16,10 @@ const getEndpoint = (settings, path) => {
     const type = settings.participantId ? 'participants' : 'teams';
     const id = settings.participantId || settings.teamId;
     return `${type}/${id}${path ? `/${path}` : ''}`;
+};
+
+const getScale = () => {
+    return window.innerWidth / import.meta.env.VITE_CONTENT_WIDTH;
 };
 
 const App = () => {
@@ -25,7 +30,9 @@ const App = () => {
     const { i18n } = useTranslation();
     const helperSettings = useHelperSettings();
     const { extraLifeData, isPolling, startPolling } = usePolledExtraLifeData();
-    const { getUnseenDonations, removeSeenDonation, unseenDonations } = useDonations();
+    const { getUnseenDonations, recentDonations, removeSeenDonation, unseenDonations } = useDonations();
+    const { fillerContent, startFillerTimer, stopFillerTimer } =
+        useFillerContent(recentDonations, helperSettings.data);
 
     useEffect(() => {
         if (helperSettings?.error !== undefined) {
@@ -79,16 +86,21 @@ const App = () => {
     useEffect(() => {
         if (unseenDonations.length > 0) {
             setDonationToShow(unseenDonations[0]);
-            return;
         } else {
             setDonationToShow(undefined);
         }
     }, [unseenDonations]);
 
     useEffect(() => {
-        const getScale = () => {
-            return window.innerWidth / import.meta.env.VITE_CONTENT_WIDTH;
-        };
+        if (unseenDonations.length > 0) {
+            stopFillerTimer();
+        } else {
+            startFillerTimer();
+        }
+    }, [startFillerTimer, stopFillerTimer, unseenDonations]);
+
+    useEffect(() => {
+        startFillerTimer();
 
         const onWindowResize = () => {
             setContentScale(getScale());
@@ -101,7 +113,7 @@ const App = () => {
         return () => {
             window.removeEventListener('resize', onWindowResize);
         };
-    }, []);
+    }, [startFillerTimer]);
 
     let content;
 
@@ -109,7 +121,7 @@ const App = () => {
         content = (
             <ErrorView message={errorMessage} />
         );
-    } else if (donationtoToShow && helperSettings.data) {
+    } else if (donationtoToShow) {
         content = (
             <DonationView
                 donation={donationtoToShow}
@@ -117,6 +129,8 @@ const App = () => {
                 settings={helperSettings.data}
             />
         );
+    } else if (fillerContent) {
+        content = fillerContent;
     } else if (helperSettings.data) {
         content = (
             <InfoView

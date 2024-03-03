@@ -118,7 +118,7 @@ const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
                         'text-helper3 whitespace-nowrap',
                         donation.displayName.length === donation.displayName.normalize('NFD').length
                             ? 'font-furore text-[34px]'
-                            : 'font-sans text-[34px] font-bold',
+                            : 'font-cantarell text-[34px] font-bold',
                     )
                 }
             >

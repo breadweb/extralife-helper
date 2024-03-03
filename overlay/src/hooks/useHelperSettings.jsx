@@ -56,6 +56,7 @@ const getSettingsFromParams = () => {
         color5: urlParams.get('c5'),
         border: getListItemFromParam(urlParams, 'b', borderOptions),
         isBackgroundTransparent: urlParams.get('k') === '1',
+        isRecentDonationsEnabled: urlParams.get('d') === '1',
         areAlertsEnabled: urlParams.get('a') === '1',
         isConfettiEnabled: urlParams.get('f') === '1',
         isRaisedLinePlural: urlParams.get('p') === '1',
@@ -100,6 +101,7 @@ const getSettingsFromGlobal = () => {
         color5: window.color5.replace('#', ''),
         border: window.border,
         isBackgroundTransparent: window.isBackgroundTransparent,
+        isRecentDonationsEnabled: window.isRecentDonationsEnabled,
         areAlertsEnabled: window.areAlertsEnabled,
         isConfettiEnabled: window.isConfettiEnabled,
         isRaisedLinePlural: window.isRaisedLinePlural,
@@ -128,6 +130,7 @@ const getSettingsFromEnvVars = () => {
         color5: envVars.VITE_COLOR5,
         border: envVars.VITE_BORDER,
         isBackgroundTransparent: envVars.VITE_IS_BACKGROUND_TRANSPARENT,
+        isRecentDonationsEnabled: envVars.VITE_IS_RECENT_DONATIONS_ENABLED,
         areAlertsEnabled: envVars.VITE_ARE_ALERTS_ENABLED,
         isConfettiEnabled: envVars.VITE_IS_CONFETTI_ENABLED,
         isRaisedLinePlural: envVars.VITE_IS_RAISED_LINE_PLURAL,
@@ -160,6 +163,7 @@ const schema = Joi.object({
     color5: colorSchema,
     border: Joi.string().valid(...borderOptions).required(),
     isBackgroundTransparent: Joi.boolean().required(),
+    isRecentDonationsEnabled: Joi.boolean().required(),
     areAlertsEnabled: Joi.boolean().required(),
     isConfettiEnabled: Joi.boolean().required(),
     isRaisedLinePlural: Joi.boolean().required(),
@@ -222,6 +226,7 @@ const useHelperSettings = () => {
         }
 
         settings.isBackgroundTransparent = isParamValueTrue(settings.isBackgroundTransparent);
+        settings.isRecentDonationsEnabled = isParamValueTrue(settings.isRecentDonationsEnabled);
         settings.areAlertsEnabled = isParamValueTrue(settings.areAlertsEnabled);
         settings.isConfettiEnabled = isParamValueTrue(settings.isConfettiEnabled);
         settings.isRaisedLinePlural = isParamValueTrue(settings.isRaisedLinePlural);
