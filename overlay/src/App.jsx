@@ -7,6 +7,7 @@ import ErrorView from './components/ErrorView';
 import InfoView from './components/InfoView';
 import logger from './modules/logger';
 import React from 'react';
+import transparencyGrid from './assets/images/transparency-grid.png';
 import useDonations from './hooks/useDonations';
 import useFillerContent from './hooks/userFillerContent';
 import useHelperSettings from './hooks/useHelperSettings';
@@ -142,6 +143,16 @@ const App = () => {
         return null;
     }
 
+    // If running in development mode and transparent backgournd setting is enabled, show a transparency
+    // grid background image to help visualize how elements will look against a transparent background.
+    let containerStyle;
+    if (import.meta.env.VITE_RUNTIME_MODE === 'DEV' && helperSettings.data?.isBackgroundTransparent) {
+        containerStyle = {
+            backgroundImage: `url(${transparencyGrid})`,
+            backgroundRepeat: 'repeat',
+        };
+    }
+
     return (
         <div
             className={
@@ -152,6 +163,7 @@ const App = () => {
                     helperSettings.data?.isBackgroundTransparent ? 'bg-none' : 'bg-helper5',
                 )
             }
+            style={containerStyle}
         >
             <div
                 className='flex justify-center'
