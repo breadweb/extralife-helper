@@ -161,7 +161,7 @@ const getSettingsContent = () => {
             process.env.VITE_PROGRESS_FORMAT,
             true,
             'Determines how progress is shown on the main view. Set to "raisedOnly" to only show ' +
-            'the amount raised. Set to "raisedAndGoal" to also show the goa. Set to "progressPar" to show ' +
+            'the amount raised. Set to "raisedAndGoal" to also show the goal. Set to "progressPar" to show ' +
             'a progres bar in addition to the raised and goal amounts.',
         ],
         [
