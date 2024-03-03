@@ -27,4 +27,4 @@ const LoadingSpinner = ({ delayTime }) => {
     );
 };
 
-export default LoadingSpinner;
+export default React.memo(LoadingSpinner);

@@ -9,7 +9,7 @@ const InfoView = ({ data, settings }) => {
 
     if (!data) {
         return (
-            <div className='animate-fade-in animate-delay-[1.8s] flex justify-center items-center w-full'>
+            <div className='animate-fade-in animate-delay-[1s] flex justify-center items-center w-full'>
                 <LoadingSpinner />
             </div>
         );
@@ -49,4 +49,4 @@ const InfoView = ({ data, settings }) => {
     );
 };
 
-export default InfoView;
+export default React.memo(InfoView);
