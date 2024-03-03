@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import DonationView from './DonationView';
 import ErrorView from './ErrorView';
 import InfoView from './InfoView';
@@ -8,6 +9,8 @@ import useDonations from '../hooks/useDonations';
 import useFillerContent from '../hooks/userFillerContent';
 import usePolledExtraLifeData from '../hooks/usePolledExtraLifeData';
 
+const MAX_REQUEST_ERRORS = 4;
+
 const getEndpoint = (settings, path) => {
     const type = settings.participantId ? 'participants' : 'teams';
     const id = settings.participantId || settings.teamId;
@@ -15,11 +18,14 @@ const getEndpoint = (settings, path) => {
 };
 
 const Content = ({ errorMessage, settings }) => {
+    const [totalRequestErrors, setTotalRequestErrors] = useState(0);
     const [totalDonations, setTotalDontaions] = useState(undefined);
     const [donationtoToShow, setDonationToShow] = useState(undefined);
-    const { extraLifeData, isPolling, startPolling } = usePolledExtraLifeData();
+    const [errorMessageToShow, setErrorMessageToShow] = useState(errorMessage);
+    const { extraLifeData, isPolling, startPolling, requestError } = usePolledExtraLifeData();
     const { getDonations, recentDonations, removeSeenDonation, unseenDonations } = useDonations();
     const { fillerContent, startFillerTimer, stopFillerTimer } = useFillerContent(recentDonations, settings);
+    const { t } = useTranslation();
 
     useEffect(() => {
         if (!settings) {
@@ -32,6 +38,13 @@ const Content = ({ errorMessage, settings }) => {
     }, [isPolling, settings, startPolling]);
 
     useEffect(() => {
+        if (requestError) {
+            setTotalRequestErrors(prevTotalErrors => prevTotalErrors += 1);
+            return;
+        } else {
+            setTotalRequestErrors(0);
+        }
+
         if (!extraLifeData) {
             return;
         }
@@ -41,7 +54,39 @@ const Content = ({ errorMessage, settings }) => {
             getDonations(getEndpoint(settings, 'donations'));
             setTotalDontaions(extraLifeData.numDonations);
         }
-    }, [extraLifeData, getDonations, settings, totalDonations]);
+    }, [extraLifeData, getDonations, requestError, settings, totalDonations]);
+
+    useEffect(() => {
+        let errorLangKey;
+
+        if (requestError) {
+            // Some errors should only be shown if they happen multiple times in a row. These errors
+            // can happen occasionally due to intermittent client, server, or network issues which
+            // might resolve on their own. No need to show a disruptive error message too quickly.
+            if (totalRequestErrors > MAX_REQUEST_ERRORS) {
+                if (requestError.status === 429) {
+                    errorLangKey = 'REQUEST_ERROR_RATE_LIMITED';
+                } else if (requestError.status >= 500 && requestError.status < 600) {
+                    errorLangKey = 'REQUEST_ERROR_SERVICE_ERROR';
+                } else if (requestError.status === 0) {
+                    errorLangKey = 'REQUEST_ERROR_NO_CONNECTION';
+                } else {
+                    errorLangKey = 'REQUEST_ERROR_OTHER';
+                }
+            } else {
+                // These errors will not get resolved without action from the user.
+                if (requestError.status === 404) {
+                    errorLangKey = 'REQUEST_ERROR_NOT_FOUND';
+                }
+            }
+        }
+
+        if (errorLangKey) {
+            setErrorMessageToShow(t(errorLangKey));
+        } else {
+            setErrorMessageToShow(undefined);
+        }
+    }, [requestError, t, totalRequestErrors]);
 
     useEffect(() => {
         if (unseenDonations.length > 0) {
@@ -59,10 +104,10 @@ const Content = ({ errorMessage, settings }) => {
         }
     }, [startFillerTimer, stopFillerTimer, unseenDonations]);
 
-    if (errorMessage) {
+    if (errorMessageToShow) {
         return (
             <ErrorView
-                message={errorMessage}
+                message={errorMessageToShow}
             />
         );
     }

@@ -6,7 +6,7 @@ const useDonations = () => {
     const [lastQueuedDonationId, setLastQueuedDonationId] = useState(undefined);
     const [recentDonations, setRecentDonations] = useState([]);
     const [unseenDonations, setUnseenDonations] = useState([]);
-    const { extraLifeData, requestData } = useExtraLifeData(undefined);
+    const { extraLifeData, requestData, requestError } = useExtraLifeData(undefined);
 
     useEffect(() => {
         if (!extraLifeData) {
@@ -83,6 +83,7 @@ const useDonations = () => {
         removeSeenDonation: removeSeenDonation,
         unseenDonations: unseenDonations,
         recentDonations: recentDonations,
+        requestError: requestError,
     };
 };
 

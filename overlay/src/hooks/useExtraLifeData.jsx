@@ -19,6 +19,7 @@ const useExtraLifeData = () => {
         axios(axiosOptions)
             .then(res => {
                 setExtraLifeData(res.data);
+                setRequestError(undefined);
             })
             .catch(err => {
                 const error = parseRequestError(err);

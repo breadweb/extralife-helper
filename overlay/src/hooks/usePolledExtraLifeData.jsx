@@ -5,7 +5,7 @@ import useExtraLifeData from './useExtraLifeData';
 const usePolledExtraLifeData = () => {
     const [isEnabled, setIsEnabled] = useState(false);
     const [endpoint, setEndpoint] = useState(undefined);
-    const { extraLifeData, requestData } = useExtraLifeData();
+    const { extraLifeData, requestData, requestError } = useExtraLifeData();
 
     useEffect(() => {
         let refreshInterval;
@@ -43,6 +43,7 @@ const usePolledExtraLifeData = () => {
 
     return {
         extraLifeData: extraLifeData,
+        requestError: requestError,
         isPolling: isPolling,
         startPolling: startPolling,
         stopPolling: stopPolling,
