@@ -74,12 +74,12 @@ const useDonations = () => {
         });
     }, []);
 
-    const getUnseenDonations = useCallback(endpoint => {
+    const getDonations = useCallback(endpoint => {
         requestData(endpoint);
     }, [requestData]);
 
     return {
-        getUnseenDonations: getUnseenDonations,
+        getDonations: getDonations,
         removeSeenDonation: removeSeenDonation,
         unseenDonations: unseenDonations,
         recentDonations: recentDonations,

@@ -18,7 +18,7 @@ const Content = ({ errorMessage, settings }) => {
     const [totalDonations, setTotalDontaions] = useState(undefined);
     const [donationtoToShow, setDonationToShow] = useState(undefined);
     const { extraLifeData, isPolling, startPolling } = usePolledExtraLifeData();
-    const { getUnseenDonations, recentDonations, removeSeenDonation, unseenDonations } = useDonations();
+    const { getDonations, recentDonations, removeSeenDonation, unseenDonations } = useDonations();
     const { fillerContent, startFillerTimer, stopFillerTimer } = useFillerContent(recentDonations, settings);
 
     useEffect(() => {
@@ -37,11 +37,11 @@ const Content = ({ errorMessage, settings }) => {
         }
 
         if (totalDonations !== extraLifeData.numDonations) {
-            logger.debug('Requesting unseen donations!');
-            getUnseenDonations(getEndpoint(settings, 'donations'));
+            logger.debug('Requesting donations...');
+            getDonations(getEndpoint(settings, 'donations'));
             setTotalDontaions(extraLifeData.numDonations);
         }
-    }, [extraLifeData, getUnseenDonations, settings, totalDonations]);
+    }, [extraLifeData, getDonations, settings, totalDonations]);
 
     useEffect(() => {
         if (unseenDonations.length > 0) {
