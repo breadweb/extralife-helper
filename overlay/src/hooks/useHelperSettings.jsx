@@ -6,7 +6,7 @@ import Joi from 'joi';
 import logger from '../modules/logger';
 
 const themeOptions = ['blue1', 'blue2', 'gray1', 'white1', 'custom'];
-const borderOptions = ['rounded', 'square', 'none'];
+const borderOptions = ['none', 'rounded', 'square'];
 const langOptions = ['en-us', 'fr-ca', 'es-419'];
 const moneyFormatOptions = ['standard', 'fancy'];
 const progressFormatOptions = ['raisedOnly', 'raisedAndGoal', 'progressBar'];
@@ -37,9 +37,13 @@ const datePattern = new RegExp(/\d{1,2}\/\d{1,2}\/\d{4}/);
 const timePattern = new RegExp(/\d{1,2}:\d{1,2}:\d{2}/);
 const colorPattern = new RegExp(/[A-Fa-f0-9]{6}/);
 
-const getListItemFromParam = (urlParams, paramName, options) => {
+const getListItemFromParam = (urlParams, paramName, options, defaultIndex) => {
     const index = urlParams.get(paramName);
-    return index !== undefined && index >= 0 && index < options.length ? options[index] : '';
+    if (index !== null && index >= 0 && index < options.length) {
+        return options[index];
+    } else {
+        return defaultIndex !== undefined ? options[defaultIndex] : '';
+    }
 };
 
 const getSettingsFromParams = () => {
@@ -61,9 +65,9 @@ const getSettingsFromParams = () => {
         isConfettiEnabled: urlParams.get('f') === '1',
         isRaisedLinePlural: urlParams.get('p') === '1',
         areCentsVisible: urlParams.get('n') === '1',
-        moneyFormat: getListItemFromParam(urlParams, 'm', moneyFormatOptions),
+        moneyFormat: getListItemFromParam(urlParams, 'm', moneyFormatOptions, 0),
         isYearModeEnabled: urlParams.get('y') === '1',
-        voice: urlParams.get('v') === -1 ? '' : getListItemFromParam(urlParams, 'v', voiceOptions),
+        voice: urlParams.get('v') === '-1' ? '' : getListItemFromParam(urlParams, 'v', voiceOptions),
         volume: urlParams.get('vo'),
         lang: urlParams.get('l') || langOptions[0],
     };
@@ -72,7 +76,7 @@ const getSettingsFromParams = () => {
     // to pick from the new list of display options if the new display option is not provided.
     settings.progressFormat = urlParams.has('pd')
         ? getListItemFromParam(urlParams, 'pd', progressFormatOptions)
-        : urlParams.get('g') === '1' ? 'amountAndGoal' : 'amountOnly';
+        : urlParams.get('g') === '1' ? 'raisedAndGoal' : 'raisedOnly';
 
     // The start date and time is a unix timestamp when provided through querystring parameters.
     // Convert to date and time strings that can be validated the same as when the value is provided
@@ -147,7 +151,7 @@ const getSettingsFromEnvVars = () => {
 const colorSchema = Joi.when('theme', {
     is: 'custom',
     then: Joi.string().pattern(colorPattern).required(),
-    otherwise: Joi.string().allow(''),
+    otherwise: Joi.string().allow(null, ''),
 });
 
 const schema = Joi.object({
