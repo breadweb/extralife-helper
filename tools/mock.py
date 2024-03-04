@@ -30,7 +30,7 @@ def process_args():
          help='removes all donations and sets totals to zero')
 
     parser_totals = subparsers.add_parser(
-        'totals',
+        'set-totals',
          help='sets raised and goal amounts')
     parser_totals.add_argument(
         'total', type=float,
@@ -60,6 +60,16 @@ def process_args():
     parser_donate.add_argument(
         '--lang', dest='lang', choices=['en', 'es', 'fr'],
         help='The language to use for donation names and messages')
+
+    parser_add_milestone = subparsers.add_parser(
+        'add-milestone',
+         help='adds a random milestone')
+    parser_add_milestone.add_argument(
+        'amount', type=float, default=0.00,
+        help='the goal amount')
+    parser_add_milestone.add_argument(
+        'desc',
+        help='the milestone description')
 
     args = parser.parse_args()
     return args
@@ -141,6 +151,12 @@ def reset(paths):
     set_endpoint_content(paths['participants_donations'], [])
     set_endpoint_content(paths['teams_donations'], [])
 
+    contents = get_endpoint_content(paths['participants_milestones'])
+    for idx, milestone in enumerate(contents):
+        if 'isComplete' in contents[idx]:
+            del contents[idx]['isComplete']
+    set_endpoint_content(paths['participants_milestones'], contents)
+
 
 def set_totals(args, paths):
     """
@@ -214,6 +230,16 @@ def add_donations(args, paths):
     contents['numDonations'] = contents['numDonations'] + args.total
     set_endpoint_content(info_path, contents)
 
+    total_raised = contents['sumDonations'] + total_amount
+
+    if args.type == 'participant':
+        milestones_path = paths['participants_milestones']
+        contents = get_endpoint_content(milestones_path)
+        for idx, milestone in enumerate(contents):
+            if total_raised >= contents[idx]['fundraisingGoal']:
+                contents[idx]['isComplete'] = True
+        set_endpoint_content(milestones_path, contents)
+
 
 def main():
     """
@@ -227,6 +253,7 @@ def main():
     paths = {
         'participants_info': os.path.join(base_dir, 'participants', '531439', 'index.html'),
         'participants_donations': os.path.join(base_dir, 'participants', '531439', 'donations', 'index.html'),
+        'participants_milestones': os.path.join(base_dir, 'participants', '531439', 'milestones', 'index.html'),
         'teams_info': os.path.join(base_dir, 'teams', '66495', 'index.html'),
         'teams_donations': os.path.join(base_dir, 'teams', '66495', 'donations', 'index.html')
     }
