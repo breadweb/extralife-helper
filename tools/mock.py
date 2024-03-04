@@ -42,22 +42,22 @@ def process_args():
         'type', nargs='?', choices=['participant', 'team'], default='participant',
          help='the type of info to update')
 
-    parser_donate = subparsers.add_parser(
-        'donate',
+    parser_add_donos = subparsers.add_parser(
+        'add-donos',
          help='adds one more more test donations')
-    parser_donate.add_argument(
+    parser_add_donos.add_argument(
         'total', nargs='?', type=int, default=1,
         help='the total number of donations to add')
-    parser_donate.add_argument(
+    parser_add_donos.add_argument(
         'amount', nargs='?', type=float, default=0.00,
         help='the amount of the donation(s) or leave blank for random amounts')
-    parser_donate.add_argument(
+    parser_add_donos.add_argument(
         'type', nargs='?', choices=['participant', 'team'], default='participant',
          help='the type of donation to make')
-    parser_donate.add_argument(
+    parser_add_donos.add_argument(
         '--no-message', dest='no_message', action='store_true',
         help='Do not include a message in the donation(s)')
-    parser_donate.add_argument(
+    parser_add_donos.add_argument(
         '--lang', dest='lang', choices=['en', 'es', 'fr'],
         help='The language to use for donation names and messages')
 
@@ -146,6 +146,7 @@ def reset(paths):
         contents['sumDonations'] = 0.00
         contents['sumPledges'] = 0.00
         contents['numDonations'] = 0
+        contents['fundraisingGoal'] = 2000.00
         set_endpoint_content(path, contents)
 
     set_endpoint_content(paths['participants_donations'], [])
@@ -261,10 +262,10 @@ def main():
     if args.action == 'reset':
         reset(paths)
         print('Reset complete.')
-    elif args.action == 'totals':
+    elif args.action == 'set-totals':
         set_totals(args, paths)
         print('Totals updated.')
-    elif args.action == 'donate':
+    elif args.action == 'add-donos':
         add_donations(args, paths)
         print('{0} donation{1} added.'.format(args.total, '' if args.total == 1 else 's'))
 
