@@ -53,14 +53,17 @@ const Content = ({ errorMessage, settings }) => {
             return;
         }
 
-        // FIXME: Only get milestones and donations if alert settings are on!
         if (totalDonations !== extraLifeData.numDonations) {
-            if (settings.participantId) {
+            if (settings.participantId && settings.areMilestoneAlertsEnabled) {
                 logger.debug('Requesting milestones...');
                 getMilestones(getEndpoint(settings, 'milestones'));
             }
-            logger.debug('Requesting donations...');
-            getDonations(getEndpoint(settings, 'donations'));
+
+            if (settings.areDonationAlertsEnabled) {
+                logger.debug('Requesting donations...');
+                getDonations(getEndpoint(settings, 'donations'));
+            }
+
             setTotalDontaions(extraLifeData.numDonations);
         }
     }, [extraLifeData, getDonations, getMilestones, requestError, settings, totalDonations]);
