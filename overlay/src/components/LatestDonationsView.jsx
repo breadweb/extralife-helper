@@ -14,14 +14,14 @@ const LatestDonationsView = ({ latestDonations, settings }) => {
         <div
             key={donation.donationID}
             className={
-                `text-helper3 font-cantarell text-[20px] animate-fade-in flex w-full rounded-full
+                `text-helper3 font-cantarell text-[20px] animate-fade-in flex w-full rounded-lg
                 border border-helper1 leading-none relative`
             }
             style={{
                 animationDelay: `${(index + 1) * .2}s`,
             }}
         >
-            <div className='z-0 absolute w-full rounded-full h-full bg-helper5 brightness-75'>
+            <div className='z-0 absolute w-full rounded-lg h-full bg-helper5 brightness-75'>
 
             </div>
             <div className='z-10 w-full whitespace-nowrap pl-2 py-1.5'>
