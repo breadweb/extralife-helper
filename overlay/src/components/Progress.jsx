@@ -2,7 +2,7 @@ import { Trans } from 'react-i18next';
 import classNames from 'classnames';
 import MoneyDisplay from './MoneyDisplay';
 import ProgressBar from './ProgressBar';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 const Progress = ({
     amountRaised,
@@ -14,6 +14,14 @@ const Progress = ({
     moneyFormat,
     progressFormat,
 }) => {
+    const [markers, setMarkers] = useState([]);
+
+    useEffect(() => {
+        if (areMilestoneMarkersVisible) {
+            setMarkers(milestones.map(milestone => milestone.fundraisingGoal));
+        }
+    }, [areMilestoneMarkersVisible, milestones]);
+
     const raised = (
         <MoneyDisplay
             amount={amountRaised}
@@ -72,10 +80,6 @@ const Progress = ({
         if (percentRaised >= 1) {
             raisedLangKey += '_EXCITED';
         }
-
-        const markers = areMilestoneMarkersVisible
-            ? milestones.map(milestone => milestone.fundraisingGoal)
-            : [];
 
         return (
             <div className='flex flex-col mt-2 text-[28px] w-full font-cantarell leading-none'>
