@@ -87,7 +87,7 @@ const getSettingsContent = () => {
             process.env.VITE_COLOR1,
             true,
             'If theme is set to "custom", this is the first hex color to use such as FF0000. ' +
-            'Set to "" if using a preset theme.',
+            'Set to "" if using a theme preset.',
         ],
         [
             'color2',
@@ -152,7 +152,7 @@ const getSettingsContent = () => {
             'isConfettiEnabled',
             process.env.VITE_IS_CONFETTI_ENABLED,
             false,
-            'Set to true to show a fun Extra Life themed confetti animation during a donation alert.',
+            'Set to true to show a fun Extra Life themed confetti animation during alerts.',
         ],
         [
             'isRaisedLinePlural',
@@ -168,7 +168,7 @@ const getSettingsContent = () => {
             true,
             'Determines how progress is shown on the main view. Set to "raisedOnly" to only show ' +
             'the amount raised. Set to "raisedAndGoal" to also show the goal. Set to "progressBar" to show ' +
-            'a progres bar in addition to the raised and goal amounts.',
+            'a progress bar in addition to the raised and goal amounts.',
         ],
         [
             'areMilestoneMarkersVisible',
@@ -181,8 +181,9 @@ const getSettingsContent = () => {
             'areCentsVisible',
             process.env.VITE_ARE_CENTS_VISIBLE,
             false,
-            'Set to true to show cents in the raised and/or goal amounts shown. Note that cents ' +
-            'are always shown in donation amounts.',
+            'For raised and goal amounts that have cents, setting this to true will display those ' +
+            'cents and not just the nearest dollar. Note that cents are always shown in donation and ' +
+            'milestone alerts if the amounts have them.',
         ],
         [
             'moneyFormat',
@@ -195,7 +196,8 @@ const getSettingsContent = () => {
             'isYearModeEnabled',
             process.env.VITE_IS_YEAR_MODE_ENABLED,
             false,
-            'An alternate display to support fundraising all year. The count down/up timer is hidden.',
+            'An alternate display aimed to support participants and teams that fundraise all year ' +
+            'long. The count down/up timer is hidden and replaced with the current year.',
         ],
         [
             'voice',
@@ -208,7 +210,7 @@ const getSettingsContent = () => {
             'volume',
             process.env.VITE_VOLUME,
             false,
-            'The volume for all sound effects and text-to-speech.',
+            'The volume for all sound effects and text-to-speech. 100 is full volume and 0 is muted.',
         ],
         [
             'lang',
@@ -219,44 +221,44 @@ const getSettingsContent = () => {
         ],
     ];
 
-    const colWidth1 = 48;
-    const colWidth2 = 66;
+    const colWidth1 = 36;
+    const colWidth2 = 46;
 
     let content = '\n';
     content += '    <script type="text/javascript">\n';
     content += '        // For use details and instructions, visit https://github.com/breadweb/extralife-helper\n';
-    content += '        // For support or feature requests, visit https://bit.ly/to-the-bakery\n';
+    content += '        // For support or feature requests, visit https://bread4kids.tv/discord\n';
     content += '        // ====================================================================================\n';
 
     items.forEach(item => {
-        let output = `        ${item[0]} = ${item[2] ? `"${item[1]}"` : item[1]};`;
-        output += ' '.repeat(colWidth1 - output.length);
+        let firstLineStart = `${item[0]} = ${item[2] ? `"${item[1]}"` : item[1]};`;
+        firstLineStart += ' '.repeat(colWidth1 - firstLineStart.length);
+        const emptyLineStart = ' '.repeat(colWidth1);
+
         const words = item[3].split(' ');
-        let lineNumber = 0;
-        let portion = '';
-        let shouldWrite = false;
+
+        const lines = [];
+        let line = '';
         for (let i = 0; i < words.length; i++) {
             const word = words[i];
-            if (portion.length + word.length + 1 <= colWidth2) {
-                portion += `${word} `;
-                if (i === words.length - 1) {
-                    lineNumber++;
-                    shouldWrite = true;
-                }
+            if (line.length + word.length + 1 > colWidth2) {
+                lines.push(`// ${line}`);
+                line = `${word} `;
             } else {
-                lineNumber++;
-                shouldWrite = true;
-            }
-            if (shouldWrite) {
-                if (lineNumber > 1) {
-                    output += ' '.repeat(colWidth1);
-                }
-                output += `// ${portion}\n`;
-                portion = `${word} `;
-                shouldWrite = false;
+                line += `${word} `;
             }
         }
-        content += output;
+        if (line !== '') {
+            lines.push(`// ${line}`);
+        }
+
+        lines.forEach((line, index) => {
+            if (index === 0) {
+                content += `\n        ${firstLineStart}${line}\n`;
+            } else {
+                content += `        ${emptyLineStart}${line}\n`;
+            }
+        });
     });
 
     content += '        // ====================================================================================\n';
