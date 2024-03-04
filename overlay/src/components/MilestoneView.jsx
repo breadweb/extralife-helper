@@ -45,7 +45,7 @@ const MilestoneView = ({ milestone, onMilestoneAlertEnded, settings }) => {
             >
                 <MoneyDisplay
                     amount={milestone.fundraisingGoal}
-                    areCentsVisible={settings.areCentsVisible}
+                    areCentsVisible={true}
                     format={settings.moneyFormat}
                 />
             </div>
