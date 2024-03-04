@@ -4,9 +4,11 @@ import DonationView from './DonationView';
 import ErrorView from './ErrorView';
 import InfoView from './InfoView';
 import logger from '../modules/logger';
+import MilestoneView from './MilestoneView';
 import React from 'react';
 import useDonations from '../hooks/useDonations';
 import useFillerContent from '../hooks/userFillerContent';
+import useMilestones from '../hooks/useMilestones';
 import usePolledExtraLifeData from '../hooks/usePolledExtraLifeData';
 
 const MAX_REQUEST_ERRORS = 4;
@@ -20,10 +22,12 @@ const getEndpoint = (settings, path) => {
 const Content = ({ errorMessage, settings }) => {
     const [totalRequestErrors, setTotalRequestErrors] = useState(0);
     const [totalDonations, setTotalDontaions] = useState(undefined);
-    const [donationtoToShow, setDonationToShow] = useState(undefined);
+    const [donationToShow, setDonationToShow] = useState(undefined);
+    const [milestoneToShow, setMilestoneToShow] = useState(undefined);
     const [errorMessageToShow, setErrorMessageToShow] = useState(errorMessage);
     const { extraLifeData, isPolling, startPolling, requestError } = usePolledExtraLifeData();
     const { getDonations, recentDonations, removeSeenDonation, unseenDonations } = useDonations();
+    const { completedMilestones, getMilestones, milestones, removeCompletedMilestone } = useMilestones();
     const { fillerContent, startFillerTimer, stopFillerTimer } = useFillerContent(recentDonations, settings);
     const { t } = useTranslation();
 
@@ -49,12 +53,17 @@ const Content = ({ errorMessage, settings }) => {
             return;
         }
 
+        // FIXME: Only get milestones and donations if alert settings are on!
         if (totalDonations !== extraLifeData.numDonations) {
+            if (settings.participantId) {
+                logger.debug('Requesting milestones...');
+                getMilestones(getEndpoint(settings, 'milestones'));
+            }
             logger.debug('Requesting donations...');
             getDonations(getEndpoint(settings, 'donations'));
             setTotalDontaions(extraLifeData.numDonations);
         }
-    }, [extraLifeData, getDonations, requestError, settings, totalDonations]);
+    }, [extraLifeData, getDonations, getMilestones, requestError, settings, totalDonations]);
 
     useEffect(() => {
         let errorLangKey;
@@ -89,6 +98,14 @@ const Content = ({ errorMessage, settings }) => {
     }, [requestError, t, totalRequestErrors]);
 
     useEffect(() => {
+        if (completedMilestones.length > 0) {
+            setMilestoneToShow(completedMilestones[0]);
+        } else {
+            setMilestoneToShow(undefined);
+        }
+    }, [completedMilestones]);
+
+    useEffect(() => {
         if (unseenDonations.length > 0) {
             setDonationToShow(unseenDonations[0]);
         } else {
@@ -97,12 +114,12 @@ const Content = ({ errorMessage, settings }) => {
     }, [unseenDonations]);
 
     useEffect(() => {
-        if (unseenDonations.length > 0) {
+        if (unseenDonations.length > 0 || completedMilestones.length > 0) {
             stopFillerTimer();
         } else {
             startFillerTimer();
         }
-    }, [startFillerTimer, stopFillerTimer, unseenDonations]);
+    }, [completedMilestones, startFillerTimer, stopFillerTimer, unseenDonations]);
 
     if (errorMessageToShow) {
         return (
@@ -112,11 +129,21 @@ const Content = ({ errorMessage, settings }) => {
         );
     }
 
-    if (donationtoToShow) {
+    if (donationToShow) {
         return (
             <DonationView
-                donation={donationtoToShow}
+                donation={donationToShow}
                 onDonationAlertEnded={removeSeenDonation}
+                settings={settings}
+            />
+        );
+    }
+
+    if (milestoneToShow) {
+        return (
+            <MilestoneView
+                milestone={milestoneToShow}
+                onMilestoneAlertEnded={removeCompletedMilestone}
                 settings={settings}
             />
         );
@@ -130,6 +157,7 @@ const Content = ({ errorMessage, settings }) => {
         return (
             <InfoView
                 data={extraLifeData}
+                milestones={milestones}
                 settings={settings}
             />
         );

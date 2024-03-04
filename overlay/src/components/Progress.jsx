@@ -4,7 +4,16 @@ import MoneyDisplay from './MoneyDisplay';
 import ProgressBar from './ProgressBar';
 import React from 'react';
 
-const Progress = ({ amountRaised, areCentsVisible, isPlural, fundraisingGoal, moneyFormat, progressFormat }) => {
+const Progress = ({
+    amountRaised,
+    areCentsVisible,
+    areMilestoneMarkersVisible,
+    isPlural,
+    fundraisingGoal,
+    milestones,
+    moneyFormat,
+    progressFormat,
+}) => {
     const raised = (
         <MoneyDisplay
             amount={amountRaised}
@@ -64,6 +73,10 @@ const Progress = ({ amountRaised, areCentsVisible, isPlural, fundraisingGoal, mo
             raisedLangKey += '_EXCITED';
         }
 
+        const markers = areMilestoneMarkersVisible
+            ? milestones.map(milestone => milestone.fundraisingGoal)
+            : [];
+
         return (
             <div className='flex flex-col mt-2 text-[28px] w-full font-cantarell leading-none'>
                 <div className='flex mb-2 text-helper3'>
@@ -79,11 +92,12 @@ const Progress = ({ amountRaised, areCentsVisible, isPlural, fundraisingGoal, mo
                     required={fundraisingGoal}
                     backColor='bg-helper5'
                     fillColor='bg-helper4'
+                    markers={markers}
                 />
                 <div
                     className={
                         `text-[16px] font-cantarell text-helper3 whitespace-nowrap leading-none mt-2
-                        text-center animate-pop-in animate-delay-[1.2s]`
+                        text-center animate-pop-in animate-delay-[1.6s]`
                     }
                 >
                     <Trans

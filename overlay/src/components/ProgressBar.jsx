@@ -1,8 +1,10 @@
 import classNames from 'classnames';
 import React from 'react';
 
-const ProgressBar = ({ backColor, current, fillColor, required }) => {
+const ProgressBar = ({ backColor, current, fillColor, markers, required }) => {
     const percent = current / required * 100;
+
+    // TODO: Render circle markers on the progress bar.
 
     return (
         <div className='relative overflow-hidden rounded-full h-10 w-full 5'>

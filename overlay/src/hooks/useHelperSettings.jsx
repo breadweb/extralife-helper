@@ -61,9 +61,11 @@ const getSettingsFromParams = () => {
         border: getListItemFromParam(urlParams, 'b', borderOptions),
         isBackgroundTransparent: urlParams.get('k') === '1',
         isRecentDonationsEnabled: urlParams.get('d') === '1',
-        areAlertsEnabled: urlParams.get('a') === '1',
+        areDonationAlertsEnabled: urlParams.get('a') === '1',
+        areMilestoneAlertsEnabled: urlParams.get('e') === '1',
         isConfettiEnabled: urlParams.get('f') === '1',
         isRaisedLinePlural: urlParams.get('p') === '1',
+        areMilestoneMarkersVisible: urlParams.get('k') === '1',
         areCentsVisible: urlParams.get('n') === '1',
         moneyFormat: getListItemFromParam(urlParams, 'm', moneyFormatOptions, 0),
         isYearModeEnabled: urlParams.get('y') === '1',
@@ -106,10 +108,12 @@ const getSettingsFromGlobal = () => {
         border: window.border,
         isBackgroundTransparent: window.isBackgroundTransparent,
         isRecentDonationsEnabled: window.isRecentDonationsEnabled,
-        areAlertsEnabled: window.areAlertsEnabled,
+        areDonationAlertsEnabled: window.areDonationAlertsEnabled,
+        areMilestoneAlertsEnabled: window.areMilestoneAlertsEnabled,
         isConfettiEnabled: window.isConfettiEnabled,
         isRaisedLinePlural: window.isRaisedLinePlural,
         progressFormat: window.progressFormat,
+        areMilestoneMarkersVisible: window.areMilestoneMarkersVisible,
         areCentsVisible: window.areCentsVisible,
         moneyFormat: window.moneyFormat,
         isYearModeEnabled: window.isYearModeEnabled,
@@ -135,10 +139,12 @@ const getSettingsFromEnvVars = () => {
         border: envVars.VITE_BORDER,
         isBackgroundTransparent: envVars.VITE_IS_BACKGROUND_TRANSPARENT,
         isRecentDonationsEnabled: envVars.VITE_IS_RECENT_DONATIONS_ENABLED,
-        areAlertsEnabled: envVars.VITE_ARE_ALERTS_ENABLED,
+        areDonationAlertsEnabled: envVars.VITE_ARE_DONATION_ALERTS_ENABLED,
+        areMilestoneAlertsEnabled: envVars.VITE_ARE_MILESTONE_ALERTS_ENABLED,
         isConfettiEnabled: envVars.VITE_IS_CONFETTI_ENABLED,
         isRaisedLinePlural: envVars.VITE_IS_RAISED_LINE_PLURAL,
         progressFormat: envVars.VITE_PROGRESS_FORMAT,
+        areMilestoneMarkersVisible: envVars.VITE_ARE_MILESTONE_MARKERS_VISIBLE,
         areCentsVisible: envVars.VITE_ARE_CENTS_VISIBLE,
         moneyFormat: envVars.VITE_MONEY_FORMAT,
         isYearModeEnabled: envVars.VITE_IS_YEAR_MODE_ENABLED,
@@ -168,10 +174,12 @@ const schema = Joi.object({
     border: Joi.string().valid(...borderOptions).required(),
     isBackgroundTransparent: Joi.boolean().required(),
     isRecentDonationsEnabled: Joi.boolean().required(),
-    areAlertsEnabled: Joi.boolean().required(),
+    areDonationAlertsEnabled: Joi.boolean().required(),
+    areMilestoneAlertsEnabled: Joi.boolean().required(),
     isConfettiEnabled: Joi.boolean().required(),
     isRaisedLinePlural: Joi.boolean().required(),
     progressFormat: Joi.string().valid(...progressFormatOptions).required(),
+    areMilestoneMarkersVisible: Joi.boolean().required(),
     areCentsVisible: Joi.boolean().required(),
     moneyFormat: Joi.string().valid(...moneyFormatOptions).required(),
     isYearModeEnabled: Joi.boolean().required(),
@@ -231,9 +239,11 @@ const useHelperSettings = () => {
 
         settings.isBackgroundTransparent = isParamValueTrue(settings.isBackgroundTransparent);
         settings.isRecentDonationsEnabled = isParamValueTrue(settings.isRecentDonationsEnabled);
-        settings.areAlertsEnabled = isParamValueTrue(settings.areAlertsEnabled);
+        settings.areDonationAlertsEnabled = isParamValueTrue(settings.areDonationAlertsEnabled);
+        settings.areMilestoneAlertsEnabled = isParamValueTrue(settings.areMilestoneAlertsEnabled);
         settings.isConfettiEnabled = isParamValueTrue(settings.isConfettiEnabled);
         settings.isRaisedLinePlural = isParamValueTrue(settings.isRaisedLinePlural);
+        settings.areMilestoneMarkersVisible = isParamValueTrue(settings.areMilestoneMarkersVisible);
         settings.areCentsVisible = isParamValueTrue(settings.areCentsVisible);
         settings.isYearModeEnabled = isParamValueTrue(settings.isYearModeEnabled);
         settings.volume = parseInt(settings.volume) / 100;

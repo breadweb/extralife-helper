@@ -137,10 +137,16 @@ const getSettingsContent = () => {
             'Set to true to occassionally show the last three donations received.',
         ],
         [
-            'areAlertsEnabled',
-            process.env.VITE_ARE_ALERTS_ENABLED,
+            'areDonationAlertsEnabled',
+            process.env.VITE_ARE_DONATION_ALERTS_ENABLED,
             false,
-            'Set to false to suppress donation alerts.',
+            'Set to false to disable donation alerts.',
+        ],
+        [
+            'areMilestoneAlertsEnabled',
+            process.env.VITE_ARE_MILESTONE_ALERTS_ENABLED,
+            false,
+            'Set to true to enable completed milestone alerts.',
         ],
         [
             'isConfettiEnabled',
@@ -161,8 +167,15 @@ const getSettingsContent = () => {
             process.env.VITE_PROGRESS_FORMAT,
             true,
             'Determines how progress is shown on the main view. Set to "raisedOnly" to only show ' +
-            'the amount raised. Set to "raisedAndGoal" to also show the goal. Set to "progressPar" to show ' +
+            'the amount raised. Set to "raisedAndGoal" to also show the goal. Set to "progressBar" to show ' +
             'a progres bar in addition to the raised and goal amounts.',
+        ],
+        [
+            'areMilestoneMarkersVisible',
+            process.env.VITE_ARE_MILESTONE_MARKERS_VISIBLE,
+            false,
+            'Set to true to show milestone markers on the progress bar. Only applies if progressFormat ' +
+            'is set to "progressBar".',
         ],
         [
             'areCentsVisible',
