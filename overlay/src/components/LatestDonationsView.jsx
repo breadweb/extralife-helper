@@ -3,14 +3,14 @@ import classNames from 'classnames';
 import MoneyDisplay from './MoneyDisplay';
 import React from 'react';
 
-const RecentDonationsView = ({ recentDonations, settings }) => {
+const LatestDonationsView = ({ latestDonations, settings }) => {
     const { t } = useTranslation();
 
     if (!settings) {
         return;
     }
 
-    const donations = recentDonations.slice(0, 5).map((donation, index) => (
+    const donations = latestDonations.slice(0, 5).map((donation, index) => (
         <div
             key={donation.donationID}
             className={
@@ -56,4 +56,4 @@ const RecentDonationsView = ({ recentDonations, settings }) => {
     );
 };
 
-export default React.memo(RecentDonationsView);
+export default React.memo(LatestDonationsView);

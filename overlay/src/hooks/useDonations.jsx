@@ -4,7 +4,7 @@ import useExtraLifeData from './useExtraLifeData';
 
 const useDonations = () => {
     const [lastQueuedDonationId, setLastQueuedDonationId] = useState(undefined);
-    const [recentDonations, setRecentDonations] = useState([]);
+    const [latestDonations, setLatestDonations] = useState([]);
     const [unseenDonations, setUnseenDonations] = useState([]);
     const { extraLifeData, requestData, requestError } = useExtraLifeData(undefined);
 
@@ -16,7 +16,7 @@ const useDonations = () => {
         // Always update the recent donations from the response received. There will be up to 100
         // donations since only one request to the endpoint is made. These recent donations may be
         // from the previous session, the current session or both.
-        setRecentDonations(extraLifeData);
+        setLatestDonations(extraLifeData);
 
         // Next, process unseen donations for the current session. If the last queued donation ID is
         // undefined, this is the first time processing donation data for this session and nothing
@@ -82,7 +82,7 @@ const useDonations = () => {
         getDonations: getDonations,
         removeSeenDonation: removeSeenDonation,
         unseenDonations: unseenDonations,
-        recentDonations: recentDonations,
+        latestDonations: latestDonations,
         requestError: requestError,
     };
 };

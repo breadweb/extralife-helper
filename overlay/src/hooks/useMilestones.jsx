@@ -16,14 +16,15 @@ const useMilestones = () => {
         // Always update the list of milestones in case they were changed by the user.
         setMilestones(extraLifeData);
 
-        // Next, process unseen completed milestones for the current session. If the last completed
+        // Next, process milestones that completed during the current session. If the last completed
         // milestone ID is undefined, this is the first time processing milestone data for this session
         // and nothing should be marked as completed.
         if (lastCompletedMilestoneId === undefined) {
             let milestoneId = 'nonce';
             for (let i = 0; i < extraLifeData.length; i++) {
-                if (extraLifeData[i].isComplete === true) {
-                    milestoneId = extraLifeData[i].milestoneID;
+                const milestone = extraLifeData[i];
+                if (milestone.isComplete === true) {
+                    milestoneId = milestone.milestoneID;
                 } else {
                     break;
                 }

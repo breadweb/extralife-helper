@@ -60,7 +60,7 @@ const getSettingsFromParams = () => {
         color5: urlParams.get('c5'),
         border: getListItemFromParam(urlParams, 'b', borderOptions),
         isBackgroundTransparent: urlParams.get('k') === '1',
-        isRecentDonationsEnabled: urlParams.get('d') === '1',
+        isLatestDonationsEnabled: urlParams.get('d') === '1',
         areDonationAlertsEnabled: urlParams.get('a') === '1',
         areMilestoneAlertsEnabled: urlParams.get('e') === '1',
         isConfettiEnabled: urlParams.get('f') === '1',
@@ -107,7 +107,7 @@ const getSettingsFromGlobal = () => {
         color5: window.color5.replace('#', ''),
         border: window.border,
         isBackgroundTransparent: window.isBackgroundTransparent,
-        isRecentDonationsEnabled: window.isRecentDonationsEnabled,
+        isLatestDonationsEnabled: window.isLatestDonationsEnabled,
         areDonationAlertsEnabled: window.areDonationAlertsEnabled,
         areMilestoneAlertsEnabled: window.areMilestoneAlertsEnabled,
         isConfettiEnabled: window.isConfettiEnabled,
@@ -138,7 +138,7 @@ const getSettingsFromEnvVars = () => {
         color5: envVars.VITE_COLOR5,
         border: envVars.VITE_BORDER,
         isBackgroundTransparent: envVars.VITE_IS_BACKGROUND_TRANSPARENT,
-        isRecentDonationsEnabled: envVars.VITE_IS_RECENT_DONATIONS_ENABLED,
+        isLatestDonationsEnabled: envVars.VITE_IS_LATEST_DONATIONS_ENABLED,
         areDonationAlertsEnabled: envVars.VITE_ARE_DONATION_ALERTS_ENABLED,
         areMilestoneAlertsEnabled: envVars.VITE_ARE_MILESTONE_ALERTS_ENABLED,
         isConfettiEnabled: envVars.VITE_IS_CONFETTI_ENABLED,
@@ -173,7 +173,7 @@ const schema = Joi.object({
     color5: colorSchema,
     border: Joi.string().valid(...borderOptions).required(),
     isBackgroundTransparent: Joi.boolean().required(),
-    isRecentDonationsEnabled: Joi.boolean().required(),
+    isLatestDonationsEnabled: Joi.boolean().required(),
     areDonationAlertsEnabled: Joi.boolean().required(),
     areMilestoneAlertsEnabled: Joi.boolean().required(),
     isConfettiEnabled: Joi.boolean().required(),
@@ -238,7 +238,7 @@ const useHelperSettings = () => {
         }
 
         settings.isBackgroundTransparent = isParamValueTrue(settings.isBackgroundTransparent);
-        settings.isRecentDonationsEnabled = isParamValueTrue(settings.isRecentDonationsEnabled);
+        settings.isLatestDonationsEnabled = isParamValueTrue(settings.isLatestDonationsEnabled);
         settings.areDonationAlertsEnabled = isParamValueTrue(settings.areDonationAlertsEnabled);
         settings.areMilestoneAlertsEnabled = isParamValueTrue(settings.areMilestoneAlertsEnabled);
         settings.isConfettiEnabled = isParamValueTrue(settings.isConfettiEnabled);

@@ -1,8 +1,8 @@
+import LatestDonationsView from '../components/LatestDonationsView';
 import LogoView from '../components/LogoView';
 import React, { useCallback, useEffect, useState } from 'react';
-import RecentDonationsView from '../components/RecentDonationsView';
 
-const useFillerContent = (recentDonations, settings) => {
+const useFillerContent = (latestDonations, settings) => {
     const [isEnabled, setIsEnabled] = useState(false);
     const [fillerContent, setFillerContent] = useState(null);
 
@@ -13,10 +13,10 @@ const useFillerContent = (recentDonations, settings) => {
         if (isEnabled) {
             let content, setDelay, removeDelay;
 
-            if (settings?.isRecentDonationsEnabled && recentDonations.length > 0) {
+            if (settings?.isLatestDonationsEnabled && latestDonations.length > 0) {
                 content = (
-                    <RecentDonationsView
-                        recentDonations={recentDonations}
+                    <LatestDonationsView
+                        latestDonations={latestDonations}
                         settings={settings}
                     />
                 );
@@ -46,7 +46,7 @@ const useFillerContent = (recentDonations, settings) => {
             clearInterval(showContentInteval);
             clearTimeout(removeContentTimeout);
         };
-    }, [isEnabled, recentDonations, settings]);
+    }, [isEnabled, latestDonations, settings]);
 
     const startFillerTimer = useCallback(() => {
         setIsEnabled(true);

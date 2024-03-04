@@ -26,9 +26,9 @@ const Content = ({ errorMessage, settings }) => {
     const [milestoneToShow, setMilestoneToShow] = useState(undefined);
     const [errorMessageToShow, setErrorMessageToShow] = useState(errorMessage);
     const { extraLifeData, isPolling, startPolling, requestError } = usePolledExtraLifeData();
-    const { getDonations, recentDonations, removeSeenDonation, unseenDonations } = useDonations();
+    const { getDonations, latestDonations, removeSeenDonation, unseenDonations } = useDonations();
     const { completedMilestones, getMilestones, milestones, removeCompletedMilestone } = useMilestones();
-    const { fillerContent, startFillerTimer, stopFillerTimer } = useFillerContent(recentDonations, settings);
+    const { fillerContent, startFillerTimer, stopFillerTimer } = useFillerContent(latestDonations, settings);
     const { t } = useTranslation();
 
     useEffect(() => {
