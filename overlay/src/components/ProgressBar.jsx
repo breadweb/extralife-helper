@@ -4,10 +4,19 @@ import React from 'react';
 const ProgressBar = ({ backColor, current, fillColor, markers, required }) => {
     const percent = current / required * 100;
 
-    // TODO: Render circle markers on the progress bar.
+    const markerIcons = markers.map((marker, index) => (
+        <div
+            className='absolute rounded-full w-3 h-3 bg-helper3 drop-shadow'
+            style={{
+                left: `calc(${marker / required * 100}% - 6px)`,
+                top: 'calc(50% - 6px)',
+            }}
+            key={index}
+        />
+    ));
 
     return (
-        <div className='relative overflow-hidden rounded-full h-10 w-full 5'>
+        <div className='relative overflow-hidden rounded-full h-10 w-full'>
             <div
                 className={
                     classNames(
@@ -32,6 +41,9 @@ const ProgressBar = ({ backColor, current, fillColor, markers, required }) => {
                     backgroundSize: '40px 40px',
                 }}
             />
+            <div className='absolute h-full w-full'>
+                {markerIcons}
+            </div>
         </div>
     );
 };
