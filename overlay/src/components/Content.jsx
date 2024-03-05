@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import DonationView from './DonationView';
 import ErrorView from './ErrorView';
 import InfoView from './InfoView';
+import LoadingSpinner from './LoadingSpinner';
 import logger from '../modules/logger';
 import MilestoneView from './MilestoneView';
 import React from 'react';
@@ -156,12 +157,22 @@ const Content = ({ errorMessage, settings }) => {
         return fillerContent;
     }
 
+    if (!extraLifeData) {
+        return (
+            <div className='animate-fade-in animate-delay-[1s] flex justify-center items-center w-full'>
+                <LoadingSpinner />
+            </div>
+        );
+    }
+
     if (settings) {
         return (
             <InfoView
-                data={extraLifeData}
+                amountRaised={extraLifeData.sumDonations + extraLifeData.sumPledges}
+                fundraisingGoal={extraLifeData.fundraisingGoal}
                 milestones={milestones}
                 settings={settings}
+                unseenDonations={unseenDonations}
             />
         );
     }
