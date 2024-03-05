@@ -28,7 +28,7 @@ const ProgressBar = ({ backColor, current, fillColor, markers, required }) => {
             <div
                 className={
                     classNames(
-                        'absolute h-full transition-all',
+                        'absolute h-full transition-all duration-[2s] ease-in-out',
                         fillColor,
                     )
                 }

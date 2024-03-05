@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import DonationView from './DonationView';
 import ErrorView from './ErrorView';
 import InfoView from './InfoView';
 import LoadingSpinner from './LoadingSpinner';
-import logger from '../modules/logger';
 import MilestoneView from './MilestoneView';
 import React from 'react';
 import useDonations from '../hooks/useDonations';
@@ -23,10 +22,12 @@ const getEndpoint = (settings, path) => {
 const Content = ({ errorMessage, settings }) => {
     const [totalRequestErrors, setTotalRequestErrors] = useState(0);
     const [totalDonations, setTotalDontaions] = useState(undefined);
+    const [amountToIncrement, setAmountToIncrement] = useState(0);
+    const [amountRaisedToShow, setAmountRaisedToShow] = useState(0);
     const [donationToShow, setDonationToShow] = useState(undefined);
     const [milestoneToShow, setMilestoneToShow] = useState(undefined);
     const [errorMessageToShow, setErrorMessageToShow] = useState(errorMessage);
-    const { extraLifeData, isPolling, startPolling, requestError } = usePolledExtraLifeData();
+    const { isPolling, startPolling, polledDataResponse, polledDataError } = usePolledExtraLifeData();
     const { getDonations, latestDonations, removeSeenDonation, unseenDonations } = useDonations();
     const { completedMilestones, getMilestones, milestones, removeCompletedMilestone } = useMilestones();
     const { fillerContent, startFillerTimer, stopFillerTimer } = useFillerContent(latestDonations, settings);
@@ -43,52 +44,58 @@ const Content = ({ errorMessage, settings }) => {
     }, [isPolling, settings, startPolling]);
 
     useEffect(() => {
-        if (requestError) {
+        if (polledDataError) {
             setTotalRequestErrors(prevTotalErrors => prevTotalErrors += 1);
             return;
         } else {
             setTotalRequestErrors(0);
         }
+    }, [polledDataError]);
 
-        if (!extraLifeData) {
+    useEffect(() => {
+        if (!polledDataResponse.extraLifeData) {
             return;
         }
 
-        if (totalDonations !== extraLifeData.numDonations) {
+        if (!settings.areDonationAlertsEnabled || polledDataResponse.requestCount === 1) {
+            setAmountToIncrement(
+                polledDataResponse.extraLifeData.sumDonations + polledDataResponse.extraLifeData.sumPledges,
+            );
+        }
+
+        if (totalDonations !== polledDataResponse.extraLifeData.numDonations) {
             if (settings.participantId && settings.areMilestoneAlertsEnabled) {
-                logger.debug('Requesting milestones...');
                 getMilestones(getEndpoint(settings, 'milestones'));
             }
 
             if (settings.areDonationAlertsEnabled) {
-                logger.debug('Requesting donations...');
                 getDonations(getEndpoint(settings, 'donations'));
             }
 
-            setTotalDontaions(extraLifeData.numDonations);
+            setTotalDontaions(polledDataResponse.extraLifeData.numDonations);
         }
-    }, [extraLifeData, getDonations, getMilestones, requestError, settings, totalDonations]);
+    }, [getDonations, getMilestones, polledDataResponse, settings, totalDonations]);
 
     useEffect(() => {
         let errorLangKey;
 
-        if (requestError) {
+        if (polledDataError) {
             // Some errors should only be shown if they happen multiple times in a row. These errors
             // can happen occasionally due to intermittent client, server, or network issues which
             // might resolve on their own. No need to show a disruptive error message too quickly.
             if (totalRequestErrors > MAX_REQUEST_ERRORS) {
-                if (requestError.status === 429) {
+                if (polledDataError.status === 429) {
                     errorLangKey = 'REQUEST_ERROR_RATE_LIMITED';
-                } else if (requestError.status >= 500 && requestError.status < 600) {
+                } else if (polledDataError.status >= 500 && polledDataError.status < 600) {
                     errorLangKey = 'REQUEST_ERROR_SERVICE_ERROR';
-                } else if (requestError.status === 0) {
+                } else if (polledDataError.status === 0) {
                     errorLangKey = 'REQUEST_ERROR_NO_CONNECTION';
                 } else {
                     errorLangKey = 'REQUEST_ERROR_OTHER';
                 }
             } else {
                 // These errors will not get resolved without action from the user.
-                if (requestError.status === 404) {
+                if (polledDataError.status === 404) {
                     errorLangKey = 'REQUEST_ERROR_NOT_FOUND';
                 }
             }
@@ -99,7 +106,7 @@ const Content = ({ errorMessage, settings }) => {
         } else {
             setErrorMessageToShow(undefined);
         }
-    }, [requestError, t, totalRequestErrors]);
+    }, [polledDataError, t, totalRequestErrors]);
 
     useEffect(() => {
         if (completedMilestones.length > 0) {
@@ -111,19 +118,28 @@ const Content = ({ errorMessage, settings }) => {
 
     useEffect(() => {
         if (unseenDonations.length > 0) {
-            setDonationToShow(unseenDonations[0]);
+            const unseenDonation = unseenDonations[0];
+            setDonationToShow(unseenDonation);
+            setAmountToIncrement(
+                prevUnseenDonationsAmount => prevUnseenDonationsAmount + unseenDonation.amount,
+            );
         } else {
             setDonationToShow(undefined);
         }
     }, [unseenDonations]);
 
     useEffect(() => {
-        if (unseenDonations.length > 0 || completedMilestones.length > 0) {
-            stopFillerTimer();
-        } else {
+        if (donationToShow === undefined || milestoneToShow === undefined) {
             startFillerTimer();
+        } else {
+            stopFillerTimer();
         }
-    }, [completedMilestones, startFillerTimer, stopFillerTimer, unseenDonations]);
+    }, [donationToShow, milestoneToShow, startFillerTimer, stopFillerTimer]);
+
+    const onAmountIncremented = useCallback(() => {
+        setAmountRaisedToShow(prevAmountRaisedToShow => prevAmountRaisedToShow + amountToIncrement);
+        setAmountToIncrement(0);
+    }, [amountToIncrement]);
 
     if (errorMessageToShow) {
         return (
@@ -157,7 +173,7 @@ const Content = ({ errorMessage, settings }) => {
         return fillerContent;
     }
 
-    if (!extraLifeData) {
+    if (!polledDataResponse) {
         return (
             <div className='animate-fade-in animate-delay-[1s] flex justify-center items-center w-full'>
                 <LoadingSpinner />
@@ -165,11 +181,13 @@ const Content = ({ errorMessage, settings }) => {
         );
     }
 
-    if (settings) {
+    if (settings && polledDataResponse.extraLifeData) {
         return (
             <InfoView
-                amountRaised={extraLifeData.sumDonations + extraLifeData.sumPledges}
-                fundraisingGoal={extraLifeData.fundraisingGoal}
+                amountRaisedToShow={amountRaisedToShow}
+                amountToIncrement={amountToIncrement}
+                onAmountIncremented={onAmountIncremented}
+                fundraisingGoal={polledDataResponse.extraLifeData.fundraisingGoal}
                 milestones={milestones}
                 settings={settings}
                 unseenDonations={unseenDonations}

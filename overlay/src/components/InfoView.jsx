@@ -1,10 +1,34 @@
 import { useTranslation } from 'react-i18next';
 import Progress from './Progress';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import TimeDisplay from './TimeDisplay';
 
-const InfoView = ({ amountRaised, fundraisingGoal, milestones, settings }) => {
+const InfoView = ({
+    amountRaisedToShow,
+    amountToIncrement,
+    fundraisingGoal,
+    milestones,
+    onAmountIncremented,
+    settings,
+}) => {
+    const [amountRaised, setAmountRaised] = useState(amountRaisedToShow);
     const { t } = useTranslation();
+
+    useEffect(() => {
+        let didTimeoutFire = false;
+        const timeoutId = setTimeout(() => {
+            didTimeoutFire = true;
+            setAmountRaised(prevAmountRaised => prevAmountRaised + amountToIncrement);
+            onAmountIncremented();
+        }, 2000);
+
+        return () => {
+            if (!didTimeoutFire) {
+                onAmountIncremented();
+            }
+            clearTimeout(timeoutId);
+        };
+    }, [onAmountIncremented, amountToIncrement]);
 
     const isPlural = settings.teamId || settings.isRaisedLinePlural;
 

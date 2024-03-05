@@ -1,25 +1,23 @@
 import { useCallback, useEffect, useState } from 'react';
-import logger from '../modules/logger';
 import useExtraLifeData from './useExtraLifeData';
 
 const usePolledExtraLifeData = () => {
     const [isEnabled, setIsEnabled] = useState(false);
     const [endpoint, setEndpoint] = useState(undefined);
+    const [polledDataResponse, setPolledDataResponse] = useState({
+        requestCount: -1,
+    });
     const { extraLifeData, requestData, requestError } = useExtraLifeData();
 
     useEffect(() => {
         let refreshInterval;
 
         if (endpoint && isEnabled) {
-            logger.debug('Starting polling... ');
-
             requestData(endpoint);
-
             refreshInterval = setInterval(() => {
                 requestData(endpoint);
             }, import.meta.env.VITE_POLLING_INTERVAL);
         } else {
-            logger.debug('Stopping polling...');
             clearInterval(refreshInterval);
         }
 
@@ -27,6 +25,15 @@ const usePolledExtraLifeData = () => {
             clearInterval(refreshInterval);
         };
     }, [endpoint, isEnabled, requestData]);
+
+    useEffect(() => {
+        setPolledDataResponse(prevPolledDataResponse => {
+            return {
+                extraLifeData: extraLifeData,
+                requestCount: prevPolledDataResponse.requestCount + 1,
+            };
+        });
+    }, [extraLifeData]);
 
     const startPolling = useCallback(endpoint => {
         setEndpoint(endpoint);
@@ -42,8 +49,8 @@ const usePolledExtraLifeData = () => {
     }, [isEnabled]);
 
     return {
-        extraLifeData: extraLifeData,
-        requestError: requestError,
+        polledDataResponse: polledDataResponse,
+        polledDataError: requestError,
         isPolling: isPolling,
         startPolling: startPolling,
         stopPolling: stopPolling,
