@@ -70,7 +70,10 @@ const ContentManager = ({ errorMessage, settings }) => {
         }
 
         if (totalDonations !== polledDataResponse.extraLifeData.numDonations) {
-            if (settings.participantId && settings.areMilestoneAlertsEnabled) {
+            if (
+                settings.participantId &&
+                (settings.areMilestoneAlertsEnabled || settings.areMilestoneMarkersVisible)
+            ) {
                 getMilestones(getEndpoint(settings, 'milestones'));
             }
 
@@ -115,12 +118,16 @@ const ContentManager = ({ errorMessage, settings }) => {
     }, [polledDataError, t, totalRequestErrors]);
 
     useEffect(() => {
+        if (!settings?.areMilestoneAlertsEnabled) {
+            return;
+        }
+
         if (completedMilestones.length > 0) {
             setMilestoneToShow(completedMilestones[0]);
         } else {
             setMilestoneToShow(undefined);
         }
-    }, [completedMilestones]);
+    }, [completedMilestones, settings]);
 
     useEffect(() => {
         if (unseenDonations.length > 0) {
