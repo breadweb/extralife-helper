@@ -237,7 +237,6 @@ def add_donations(args, paths):
         milestones_path = paths['participants_milestones']
         contents = get_endpoint_content(milestones_path)
         for idx, milestone in enumerate(contents):
-            print(total_raised, type(total_raised), contents[idx]['fundraisingGoal'], type(contents[idx]['fundraisingGoal']))
             if total_raised >= contents[idx]['fundraisingGoal']:
                 contents[idx]['isComplete'] = True
         set_endpoint_content(milestones_path, contents)
