@@ -12,7 +12,6 @@ const ErrorView = ({ message }) => {
         >
             <div className='flex items-center space-x-4 text-4xl font-bold mb-2'>
                 <div className='-mt-1 text-rose-800'>{t('ERROR')}</div>
-                <div className='fa-regular fa-face-surprise text-4xl'/>
             </div>
             <div className='text-center text-xl leading-6'>
                 {message}

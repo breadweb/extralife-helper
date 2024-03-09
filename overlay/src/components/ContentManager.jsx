@@ -26,7 +26,7 @@ const ContentManager = ({ errorMessage, settings }) => {
     const [amountRaisedToShow, setAmountRaisedToShow] = useState(0);
     const [donationToShow, setDonationToShow] = useState(undefined);
     const [milestoneToShow, setMilestoneToShow] = useState(undefined);
-    const [errorMessageToShow, setErrorMessageToShow] = useState(errorMessage);
+    const [errorMessageToShow, setErrorMessageToShow] = useState(undefined);
     const { isPolling, startPolling, polledDataResponse, polledDataError } = usePolledExtraLifeData();
     const { getDonations, latestDonations, removeSeenDonation, unseenDonations } = useDonations();
     const { completedMilestones, getMilestones, milestones, removeCompletedMilestone } = useMilestones();
@@ -42,6 +42,12 @@ const ContentManager = ({ errorMessage, settings }) => {
             startPolling(getEndpoint(settings));
         }
     }, [isPolling, settings, startPolling]);
+
+    useEffect(() => {
+        if (errorMessage) {
+            setErrorMessageToShow(errorMessage);
+        }
+    }, [errorMessage]);
 
     useEffect(() => {
         if (polledDataError) {
