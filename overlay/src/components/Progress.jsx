@@ -27,6 +27,7 @@ const Progress = ({
             amount={amountRaised}
             areCentsVisible={areCentsVisible}
             format={moneyFormat}
+            animationLength={2}
         />
     );
 

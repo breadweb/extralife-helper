@@ -16,6 +16,18 @@ const InfoView = ({
 
     useEffect(() => {
         let didTimeoutFire = false;
+
+        // The amount to increment is the sum of all recent donations that arrived between the
+        // previous rendering of this component and the current rendering. It may be one donation
+        // if donation alerts are disabled or if only one arrived. It could be up to N donations
+        // that all happened back to back.
+        //
+        // The reason to have both totals is to show some nice animations from the previous amount
+        // raised to the new amount. The progress bar (if enabled) will aniamte to the next
+        // percentage amount. And the amount raised money display will do a nice counting effect.
+        //
+        // After the animations are complete, this component informs the parent so it can then roll
+        // the incremented amount into the total amount to support animating to the next total.
         const timeoutId = setTimeout(() => {
             didTimeoutFire = true;
             setAmountRaised(prevAmountRaised => prevAmountRaised + amountToIncrement);
@@ -23,6 +35,8 @@ const InfoView = ({
         }, 2000);
 
         return () => {
+            // If this component is dismounted before the timer fires, the parent still needs to
+            // be notified so it can combine the amounts into the new total.
             if (!didTimeoutFire) {
                 onAmountIncremented();
             }

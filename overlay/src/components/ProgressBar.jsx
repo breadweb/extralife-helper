@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import React from 'react';
 
 const ProgressBar = ({ backColor, current, fillColor, markers, required }) => {
-    const percent = current / required * 100;
+    const percent = Math.min(current / required * 100, 100);
 
     const markerIcons = markers.map((marker, index) => (
         <div
