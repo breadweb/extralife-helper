@@ -12,7 +12,7 @@ const MoneyDisplay = ({ amount, animationLength, areCentsVisible, format }) => {
     const dollars = Math.floor(amount);
     const cents = (amount - dollars) * 100;
     const shouldDisplayCents = areCentsVisible && cents > 0;
-    const centsDisplay = `.${cents.toFixed(0).padEnd(2, '0')}`;
+    const centsDisplay = `${format === 'standard' ? '.' : ''}${cents.toFixed(0).padEnd(2, '0')}`;
     const shouldAnimate = animationLength !== undefined && amount !== undefined && prevAmount !== undefined;
 
     if (format === 'standard') {
