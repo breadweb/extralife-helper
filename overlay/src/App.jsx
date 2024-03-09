@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import colorConvert from 'color-convert';
-import Content from './components/Content';
+import ContentManager from './components/ContentManager';
 import logger from './modules/logger';
 import React from 'react';
 import transparencyGrid from './assets/images/transparency-grid.png';
@@ -96,7 +96,7 @@ const App = () => {
                     }
                 }
             >
-                <Content
+                <ContentManager
                     settings={helperSettings.data}
                     errorMessage={errorMessage}
                 />
