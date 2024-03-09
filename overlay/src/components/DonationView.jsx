@@ -1,10 +1,9 @@
-// import { confetti } from '@tsparticles/confetti';
 import alertSfx from '../assets/audio/alert.mp3';
 import classNames from 'classnames';
-// import confettiImage from '../assets/images/confetti.png';
+import confettiImage from '../assets/images/confetti.png';
+import MoneyDisplay from './MoneyDisplay';
 import React, { useEffect } from 'react';
 import useSound from 'use-sound';
-import MoneyDisplay from './MoneyDisplay';
 
 const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
     const [, { sound }] = useSound(alertSfx);
@@ -42,28 +41,28 @@ const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
                 return;
             }
 
-            // confetti({
-            //     ...defaults,
-            //     particleCount: 40,
-            //     scalar: 2.2,
-            //     shapes: ['image'],
-            //     shapeOptions: {
-            //         image: [
-            //             {
-            //                 src: confettiImage,
-            //                 width: 32,
-            //                 height: 32,
-            //             },
-            //         ],
-            //     },
-            // });
+            window.confetti({
+                ...defaults,
+                particleCount: 40,
+                scalar: 2.2,
+                shapes: ['image'],
+                shapeOptions: {
+                    image: [
+                        {
+                            src: confettiImage,
+                            width: 32,
+                            height: 32,
+                        },
+                    ],
+                },
+            });
 
-            // confetti({
-            //     ...defaults,
-            //     particleCount: 10,
-            //     scalar: 1.55,
-            //     shapes: ['circle'],
-            // });
+            window.confetti({
+                ...defaults,
+                particleCount: 10,
+                scalar: 1.55,
+                shapes: ['circle'],
+            });
         };
 
         const confettiTimeout1 = setTimeout(fireConfetti, 100);
