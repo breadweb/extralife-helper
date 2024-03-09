@@ -4,6 +4,7 @@ import confetti from '../modules/confetti';
 import donationAlert from '../assets/audio/donation-alert.mp3';
 import logger from '../modules/logger';
 import MoneyDisplay from './MoneyDisplay';
+import oneEightSevenSeven from '../assets/audio/1877.mp3';
 import React, { useEffect } from 'react';
 import useSound from 'use-sound';
 
@@ -16,6 +17,10 @@ synth.addEventListener('voiceschanged', () => {
 const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
     const { t } = useTranslation();
     const [playAlert, { duration }] = useSound(donationAlert, { volume: settings?.volume || 0 });
+    const [playAlert1877, { duration: duration1877 } ] = useSound(
+        oneEightSevenSeven,
+        { volume: settings?.volume || 0 },
+    );
 
     useEffect(() => {
         let didCallbackTimeoutFire = false;
@@ -65,13 +70,17 @@ const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
     }, [donation, onDonationAlertEnded, settings]);
 
     useEffect(() => {
-        if (!duration) {
+        if (!duration || !duration1877) {
             return;
         }
 
-        playAlert();
+        if (donation.amount.toString().replace('.', '').includes('1877')) {
+            playAlert1877();
+        } else {
+            playAlert();
+        }
 
-    }, [donation, duration, playAlert]);
+    }, [donation, duration, duration1877, playAlert, playAlert1877]);
 
     let message;
     if (donation.message) {
