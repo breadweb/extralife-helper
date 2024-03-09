@@ -4,11 +4,14 @@ import confetti from '../modules/confetti';
 import donationAlert from '../assets/audio/donation-alert.mp3';
 import MoneyDisplay from './MoneyDisplay';
 import React, { useEffect, useState } from 'react';
+import oneEightSevenSeven from '../assets/audio/1877.mp3';
+import React, { useEffect } from 'react';
 import useSound from 'use-sound';
 
 const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
     const { t } = useTranslation();
     const [playAlert] = useSound(donationAlert, { volume: settings?.volume || 0 });
+    const [play1877Alert] = useSound(oneEightSevenSeven, { volume: settings?.volume || 0 });
     const [wasHandled, setWasHandled] = useState(false);
 
     useEffect(() => {
@@ -30,7 +33,11 @@ const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
             return;
         }
 
-        playAlert();
+        if (donation.amount.toString().replace('.', '').includes('1877')) {
+            play1877Alert();
+        } else {
+            playAlert();
+        }
 
         const textToSpeechTimeout = setTimeout(() => {
             if (settings.voice !== '' && window.responsiveVoice) {
@@ -57,7 +64,7 @@ const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
                 confetti.stop();
             }
         };
-    }, [donation, settings, playAlert, wasHandled]);
+    }, [donation, settings, playAlert, play1877Alert, wasHandled]);
 
     let message;
     if (donation.message) {
