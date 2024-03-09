@@ -16,6 +16,7 @@ export default defineConfig(({ command }) => {
         plugins: [react()],
         root: 'src',
     };
+
     if (command === 'build') {
         config.base = `${process.env.BASE_URL}`;
         if (process.env.VITE_RUNTIME_MODE === 'LOCAL') {
@@ -30,6 +31,7 @@ export default defineConfig(({ command }) => {
             port: '5173',
         };
     }
+
     return config;
 });
 
