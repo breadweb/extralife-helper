@@ -6,7 +6,7 @@ import React, { useEffect } from 'react';
 import useSound from 'use-sound';
 
 const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
-    const [, { sound }] = useSound(alertSfx);
+    const [playAlert] = useSound(alertSfx, { volume: settings?.volume || 0 });
 
     useEffect(() => {
         const timeoutId = setTimeout(() => {
@@ -19,7 +19,7 @@ const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
     }, [donation, onDonationAlertEnded]);
 
     useEffect(() => {
-        if (!sound || !donation) {
+        if (!playAlert || !donation) {
             return;
         }
 
@@ -69,8 +69,7 @@ const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
         const confettiTimeout2 = setTimeout(fireConfetti, 200);
         const confettiTimeout3 = setTimeout(fireConfetti, 300);
 
-        sound.volume(settings.volume);
-        sound.play();
+        playAlert();
 
         const textToSpeechTimeout = setTimeout(() => {
             if (settings.voice !== '' && window.responsiveVoice) {
@@ -91,7 +90,7 @@ const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
             clearTimeout(confettiTimeout3);
             clearTimeout(textToSpeechTimeout);
         };
-    }, [donation, settings, sound]);
+    }, [donation, settings, playAlert]);
 
     let message;
     if (donation.message) {
