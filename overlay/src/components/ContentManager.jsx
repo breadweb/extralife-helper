@@ -120,9 +120,7 @@ const ContentManager = ({ errorMessage, settings }) => {
         if (unseenDonations.length > 0) {
             const unseenDonation = unseenDonations[0];
             setDonationToShow(unseenDonation);
-            setAmountToIncrement(
-                prevUnseenDonationsAmount => prevUnseenDonationsAmount + unseenDonation.amount,
-            );
+            setAmountToIncrement(prevAmountToIncrement => prevAmountToIncrement + unseenDonation.amount);
         } else {
             setDonationToShow(undefined);
         }
