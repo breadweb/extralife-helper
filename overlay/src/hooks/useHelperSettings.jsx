@@ -224,7 +224,11 @@ const useHelperSettings = () => {
         if (validationResult.error) {
             const key = validationResult.error.details[0].context.key;
             const message = validationResult.error.details[0].message;
-            errorMessage = t('KEY_IS_INVALID', { key, message, interpolation: { 'escapeValue': false } });
+            errorMessage = t('KEY_IS_INVALID', {
+                settingName: key,
+                message,
+                interpolation: { 'escapeValue': false },
+            });
         }
 
         if (settings.participantId && settings.teamId) {

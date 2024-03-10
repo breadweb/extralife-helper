@@ -4,7 +4,7 @@
     "ERROR": "Error!",
     "HOURS_PLAYED": "TOTAL TIME PLAYED:",
     "HOURS_UNTIL": "TIME UNTIL EXTRA LIFE:",
-    "KEY_IS_INVALID": "The {{key}} setting is invalid. Details: {{message}}",
+    "KEY_IS_INVALID": "The {{settingName}} setting is invalid. Details: {{message}}",
     "LATEST_DONATIONS": "LATEST DONATIONS",
     "MAIN_TITLE": "PLAYING GAMES TO HEAL KIDS!",
     "MILESTONE_COMPLETED": "MILESTONE COMPLETED!",

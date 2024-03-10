@@ -4,7 +4,7 @@
     "ERROR": "¡Error!",
     "HOURS_PLAYED": "TIEMPO TOTAL JUGADO:",
     "HOURS_UNTIL": "HORAS HASTA EXTRA LIFE:",
-    "KEY_IS_INVALID": "La configuración de {{key}} proporcionada no es válida. Detalles: {{message}}",
+    "KEY_IS_INVALID": "La configuración de {{settingName}} proporcionada no es válida. Detalles: {{message}}",
     "LATEST_DONATIONS": "ÚLTIMAS DONACIONES",
     "MAIN_TITLE": "¡JUGANDO JUEGOS PARA SANAR NIÑOS!",
     "MILESTONE_COMPLETED": "¡HITO COMPLETADO!",
