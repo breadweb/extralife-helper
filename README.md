@@ -94,7 +94,7 @@ User settings are parsed differently based on what mode the Helper is running in
 
 ### Application Settings
 
-The application settings are highly tuned and not able to be changed by users. The most relevant use case is for developers to change them to support rapid development and testing.
+The application settings are highly tuned and not able to be changed by users. The most common use case is developers changing them to support rapid development and testing.
 
 > [!CAUTION]
 > Do not change the `VITE_POLLING_INTERVAL` application setting to a value below `15000` if you are targeting the Extra Life API via the `VITE_API_BASE_URL` value. A smaller value will almost certainly result in you getting rate limited by the Extra Life team.
@@ -125,7 +125,7 @@ npm run build:REMOTE
 
 ### Deployment
 
-If you are considering deploying your modified Helper to your own hosting, it is assumed you are familiar with deploying a React web application.
+Instructions for deployment is out of scope for this documentation. If you are considering deploying your modified Helper to your own hosting, it is assumed you are familiar with the requirements for deploying a React web application.
 
 ### Contributing Back
 
@@ -134,7 +134,7 @@ If you have fixed a bug or made a feature change that would benefit all users of
 Before creating the PR, please ensure the following:
 
 * You have run `npm run lint` in the `helper` directory and have corrected all warnings and errors.
-* You have reverted any changes to the `.env.deploy.*` file, `mock-api` files, or any other files made only to support your personal testing.
+* You have reverted any changes to the `.env.deploy.*` files, `mock-api` files, or any other files made only to support your personal testing.
 
 ## License
 
