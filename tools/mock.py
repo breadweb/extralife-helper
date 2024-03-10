@@ -52,24 +52,11 @@ def process_args():
         'amount', nargs='?', type=float, default=0.00,
         help='the amount of the donation(s) or leave blank for random amounts')
     parser_add_donos.add_argument(
-        'type', nargs='?', choices=['participant', 'team'], default='participant',
-         help='the type of donation to make')
-    parser_add_donos.add_argument(
         '--no-message', dest='no_message', action='store_true',
         help='Do not include a message in the donation(s)')
     parser_add_donos.add_argument(
         '--lang', dest='lang', choices=['en', 'es', 'fr'],
         help='The language to use for donation names and messages')
-
-    parser_add_milestone = subparsers.add_parser(
-        'add-milestone',
-         help='adds a random milestone')
-    parser_add_milestone.add_argument(
-        'amount', type=float, default=0.00,
-        help='the goal amount')
-    parser_add_milestone.add_argument(
-        'desc',
-        help='the milestone description')
 
     args = parser.parse_args()
     return args
@@ -161,7 +148,8 @@ def reset(paths):
 
 def set_totals(args, paths):
     """
-    Sets total amounts in an info mock endpoint.
+    Explicitly sets the total amounts in the participant or team info mock API endpoint. Note
+    that using this will result in totals not matching the sum of the mock donations.
     """
     path = paths['{0}s_info'.format(args.type)]
 
@@ -201,10 +189,8 @@ def add_donations(args, paths):
         'messageVisibility': 'ALL'
     }
 
-    info_path = paths['{0}s_info'.format(args.type)]
-    donations_path = paths['{0}s_donations'.format(args.type)]
-
-    contents = get_endpoint_content(donations_path)
+    contents_participants = get_endpoint_content(paths['participants_donations'])
+    contents_team = get_endpoint_content(paths['teams_donations'])
     total_amount = 0
 
     for n in range(args.total):
@@ -222,24 +208,31 @@ def add_donations(args, paths):
 
         print(f'Adding donation: {name} | {amount} | {message}')
 
-        contents.insert(0, donation)
+        contents_participants.insert(0, donation)
+        contents_team.insert(0, donation)
 
-    set_endpoint_content(donations_path, contents)
+    set_endpoint_content(paths['participants_donations'], contents_participants)
+    set_endpoint_content(paths['teams_donations'], contents_team)
 
-    contents = get_endpoint_content(info_path)
-    contents['sumDonations'] = contents['sumDonations'] + total_amount
-    contents['numDonations'] = contents['numDonations'] + args.total
-    set_endpoint_content(info_path, contents)
+    contents_participants = get_endpoint_content(paths['participants_info'])
+    contents_team = get_endpoint_content(paths['teams_info'])
 
-    total_raised = contents['sumDonations'] + contents['sumPledges']
+    contents_participants['sumDonations'] = contents_participants['sumDonations'] + total_amount
+    contents_participants['numDonations'] = contents_participants['numDonations'] + args.total
+    contents_team['sumDonations'] = contents_team['sumDonations'] + total_amount
+    contents_team['numDonations'] = contents_team['numDonations'] + args.total
 
-    if args.type == 'participant':
-        milestones_path = paths['participants_milestones']
-        contents = get_endpoint_content(milestones_path)
-        for idx, milestone in enumerate(contents):
-            if total_raised >= contents[idx]['fundraisingGoal']:
-                contents[idx]['isComplete'] = True
-        set_endpoint_content(milestones_path, contents)
+    set_endpoint_content(paths['participants_info'], contents_participants)
+    set_endpoint_content(paths['teams_info'], contents_team)
+
+    total_raised = contents_participants['sumDonations'] + contents_participants['sumPledges']
+
+    milestones_path = paths['participants_milestones']
+    contents = get_endpoint_content(milestones_path)
+    for idx, milestone in enumerate(contents):
+        if total_raised >= contents[idx]['fundraisingGoal']:
+            contents[idx]['isComplete'] = True
+    set_endpoint_content(milestones_path, contents)
 
 
 def main():
@@ -262,9 +255,11 @@ def main():
     if args.action == 'reset':
         reset(paths)
         print('Reset complete.')
+
     elif args.action == 'set-totals':
         set_totals(args, paths)
         print('Totals updated.')
+
     elif args.action == 'add-donos':
         add_donations(args, paths)
         print('{0} donation{1} added.'.format(args.total, '' if args.total == 1 else 's'))
