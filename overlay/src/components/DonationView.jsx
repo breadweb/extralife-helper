@@ -1,12 +1,12 @@
-import alertSfx from '../assets/audio/alert.mp3';
 import classNames from 'classnames';
-import confettiImage from '../assets/images/confetti.png';
+import confetti from '../modules/confetti';
+import donationAlert from '../assets/audio/donation-alert.mp3';
 import MoneyDisplay from './MoneyDisplay';
 import React, { useEffect } from 'react';
 import useSound from 'use-sound';
 
 const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
-    const [playAlert] = useSound(alertSfx, { volume: settings?.volume || 0 });
+    const [playAlert] = useSound(donationAlert, { volume: settings?.volume || 0 });
 
     useEffect(() => {
         const timeoutId = setTimeout(() => {
@@ -23,52 +23,6 @@ const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
             return;
         }
 
-        const defaults = {
-            spread: 360,
-            ticks: 50,
-            gravity: 0,
-            decay: 0.94,
-            startVelocity: 30,
-            shapes: ['star'],
-            colors: ['FFE400', 'FFBD00', 'E89400', 'FFCA6C', 'FDFFB8'],
-            origin: {
-                y: 0.4,
-            },
-        };
-
-        const fireConfetti = () => {
-            if (!settings.isConfettiEnabled) {
-                return;
-            }
-
-            window.confetti({
-                ...defaults,
-                particleCount: 40,
-                scalar: 2.2,
-                shapes: ['image'],
-                shapeOptions: {
-                    image: [
-                        {
-                            src: confettiImage,
-                            width: 32,
-                            height: 32,
-                        },
-                    ],
-                },
-            });
-
-            window.confetti({
-                ...defaults,
-                particleCount: 10,
-                scalar: 1.55,
-                shapes: ['circle'],
-            });
-        };
-
-        const confettiTimeout1 = setTimeout(fireConfetti, 100);
-        const confettiTimeout2 = setTimeout(fireConfetti, 200);
-        const confettiTimeout3 = setTimeout(fireConfetti, 300);
-
         playAlert();
 
         const textToSpeechTimeout = setTimeout(() => {
@@ -83,12 +37,16 @@ const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
             }
         }, import.meta.env.VITE_TTS_DELAY);
 
+        if (settings.isConfettiEnabled) {
+            confetti.start();
+        }
+
         return () => {
             window.responsiveVoice?.cancel();
-            clearTimeout(confettiTimeout1);
-            clearTimeout(confettiTimeout2);
-            clearTimeout(confettiTimeout3);
             clearTimeout(textToSpeechTimeout);
+            if (settings.isConfettiEnabled) {
+                confetti.stop();
+            }
         };
     }, [donation, settings, playAlert]);
 

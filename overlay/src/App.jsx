@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import colorConvert from 'color-convert';
+import confetti from './modules/confetti';
 import ContentManager from './components/ContentManager';
 import logger from './modules/logger';
 import React from 'react';
@@ -13,6 +14,26 @@ const App = () => {
     const [errorMessage, setErrorMessage] = useState(undefined);
     const [contentScale, setContentScale] = useState(1);
     const helperSettings = useHelperSettings();
+
+    useEffect(() => {
+        const onKeyPress = evt => {
+            switch (evt.key) {
+                case 'c':
+                    confetti.start();
+                    break;
+                default:
+                    // Do nothing.
+            }
+        };
+
+        if (['DEV', 'LOCAL'].includes(import.meta.env.VITE_RUNTIME_MODE)) {
+            document.addEventListener('keypress', onKeyPress);
+        }
+
+        return () => {
+            document.removeEventListener('keypress', onKeyPress);
+        };
+    }, []);
 
     useEffect(() => {
         if (helperSettings?.error !== undefined) {

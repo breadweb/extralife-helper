@@ -1,9 +1,13 @@
-import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import React, { useEffect } from 'react';
+import classNames from 'classnames';
+import confetti from '../modules/confetti';
+import milestoneAlert from '../assets/audio/milestone-alert.mp3';
 import MoneyDisplay from './MoneyDisplay';
+import React, { useEffect } from 'react';
+import useSound from 'use-sound';
 
 const MilestoneView = ({ milestone, onMilestoneAlertEnded, settings }) => {
+    const [playAlert] = useSound(milestoneAlert, { volume: settings?.volume || 0 });
     const { t } = useTranslation();
 
     useEffect(() => {
@@ -15,6 +19,24 @@ const MilestoneView = ({ milestone, onMilestoneAlertEnded, settings }) => {
             clearTimeout(timeoutId);
         };
     }, [milestone, onMilestoneAlertEnded]);
+
+    useEffect(() => {
+        if (!playAlert || !milestone) {
+            return;
+        }
+
+        playAlert();
+
+        if (settings.isConfettiEnabled) {
+            confetti.start();
+        }
+
+        return () => {
+            if (settings.isConfettiEnabled) {
+                confetti.stop();
+            }
+        };
+    }, [settings, playAlert, milestone]);
 
     return (
         <div className='flex flex-col justify-center items-center w-full mx-7'>
