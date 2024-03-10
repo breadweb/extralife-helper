@@ -7,7 +7,7 @@ import LoadingSpinner from './LoadingSpinner';
 import MilestoneView from './MilestoneView';
 import React from 'react';
 import useDonations from '../hooks/useDonations';
-import useFillerContent from '../hooks/userFillerContent';
+import useFillerContent from '../hooks/useFillerContent';
 import useMilestones from '../hooks/useMilestones';
 import usePolledExtraLifeData from '../hooks/usePolledExtraLifeData';
 
