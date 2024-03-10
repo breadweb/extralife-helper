@@ -1,286 +1,178 @@
-## Extra Life Helper v3.5
-https://github.com/breadweb/extralife-helper
+# Extra Life Helper
 
-Copyright (c) 2013-2022 Adam "Bread" Slesinger http://www.breadweb.net
+![Helper](helper.gif)
 
-Distributed under the MIT license. See [LICENSE](https://github.com/breadweb/extralife-helper/blob/main/LICENSE.txt) for details.
+## About
 
-Last Update: 8/31/2021 6:37:44
+The Extra Life Helper is a web application that Extra Life participants and teams can use to support their fundarising efforts. It was designed for the following use cases:
 
-<br>
+* Added to an OBS scene as a browser source for inclusion in a LIVE stream on Twitch, YouTube, or TikTok
 
-### Introduction
+* Embedded in any website via an `iframe`
+* Displayed fullscreen on a large monitor or projector for a local Extra Life event
 
-This is an application I created in 2013 for [Extra Life](http://extra-life.org). I wanted something to track the time until Extra Life, track my total time playing on game day, and show my fundraising information. I also wanted to celebrate new donations in real time when streaming during the marathon. The following year I made it available to the community and I was excited to see it adopted by so many other participants.
+## Features
 
-<br>
+The Helper has been developed and maintained for over a decade. It has a lot of features to help Extra Life participants and teams with their success!
 
-### Features
+* Works in "participant" mode or "team" mode.
 
 * Counts down the days until Extra Life if there are three or more days left.
 * Counts down the hours until Extra Life if there are less than four days left.
 * Counts the total hours played if the start time has passed.
-* Continually displays the total amount raised as it changes.
-* Shows new donation alerts as they arrive in real-time.
-* Works in "participant" mode or "team" mode.
-* Donation messages are read with text-to-speech during donation alerts.
-* Adjust the volume for all sound effects and text-to-speech.
+* Continually updates the total amount raised as it changes.
+* Provides multiple ways to display progress:
+  - Amount raised only
+  - Amound raised and goal
+  - Progress bar with optional milestone markers
+* Shows fun and exciting real-time alerts as donations arrive.
+* Provides the option for donation messages to be read with text-to-speech.
+* Allows adjusting volume for all sound effects and text-to-speech.
 * Occasionally shows the Extra Life logo.
-* Supports four color themes and three border styles.
-* Works in XSplit, any flavor of OBS, and any modern browser.
-* Available in English, French, and Spanish.
-* (Download version only) Custom sound effects can be specified for the donation alert.
-* (Download version only) Provides a hook to run custom JavaScript when a new donation arrives.
-* (Download version only) Core functionality and appearance can be modified with little JavaScript experience.
+* Ocassionally shows the last five donations that were made to recognize supporters.
+* Provides four color theme choices that are Extra Life branded **and** provides the ability to design a custom color theme.
+* Works in any flavor of OBS and any modern browser.
+* Looks sharp at any 16:9 or 16:10 resolution size including full screen.
+* Fully localized in English, French, and Spanish.
+* Structured for easy modification by other developers who want to make changes for themselves or their Extra Life teams.
 
-<br>
+## How to Use
 
-![](https://github.com/breadweb/extralife-helper/blob/main/images/helper1.jpg)
-<br>Counts down the days.
+If you are simply here to use the Helper, please visit the Helper website! It provides a quick and easy way to customize the Helper and generate a link you can use for your LIVE stream or website.
 
-![](https://github.com/breadweb/extralife-helper/blob/main/images/helper2.jpg)
-<br>Counts down the hours.
+[https://breadweb.net/extralife-helper/](https://breadweb.net/extralife-helper/)
 
-![](https://github.com/breadweb/extralife-helper/blob/main/images/helper3.jpg)
-<br>Counts the hours you have played.
+## For Developers
 
-![](https://github.com/breadweb/extralife-helper/blob/main/images/helper4.jpg)
-<br>Shows new donation alerts with sounds and text-to-speech for donation messages.
+The Extra Life Helper is written in JavaScript and React. [Tailwind](https://tailwindcss.com/) is used for CSS and [Vite](https://vitejs.dev/) is the framework used for local development and builds.
 
-![](https://github.com/breadweb/extralife-helper/blob/main/images/helper5.jpg)
-<br>Occasionally shows the Extra Life logo.
+If you've been wanting to develop your own React application that works with the Extra Life API, there are pleny of reusable components and hooks that you can leverage.
 
-<br>
+If you are interested in modifying the Helper to meet specific requirements for yourself or your Extra Life team, please review the following sections.
 
-### Screenshots
+### Runtime Modes
 
-To see how some Extra Life participants have used the Helper in their live stream presentations, check out the screenshot gallery:
+The Helper runs in one of three different ways:
 
-[http://github.com/breadweb/extralife-helper/blob/main/Examples.md](http://github.com/breadweb/extralife-helper/blob/main/Examples.md)
+1. `DEV` - This is used when developing the Helper with the Vite development server. Changes you make can be previewed instantly.
 
-<br>
+2. `LOCAL` - This is a compiled version of the Helper that is condensed into a single HTML file. This file can be run in a browser from the file system. It is ideal for personal use of your modified Helper or distribution to a team when you don't have a hosting solution.
 
-### NEW! Use the Link Generator
+3. `REMOTE` is used when building the Helper as a collection of files for deployment to a remote hosting solution such as AWS S3. This is what is used for the [official remote version](https://breadweb.net/extralife-helper/) of the Helper but can be used to deploy your modified Helper to your own server.
 
-If you do not need to modify source code or use features only supported in the download version, you can
-now use the Extra Life link generator to customize the Helper and get a link for easy copy and paste into
-OBS or XSplit. Downloading or editing files is no longer required for the majority of Helper users!
+### Development Setup
 
-[http://breadweb.net/extralife-helper/](http://breadweb.net/extralife-helper/)
-
-<br>
-
-### Download
-
-To modify the core functionality or appearance, or take advantage of extra features, you can download the
-Helper and run it on your computer. Not as easy as using the link generator, but still very easy. Right-click
-the following link and select "Save link as..."
-
-[ExtraLifeHelper-v3.5.zip](https://github.com/breadweb/extralife-helper/releases/download/3.5/ExtraLifeHelper-v3.5.zip) (277 KB)
-
-<br>
-
-### XSplit Instructions - Download Version
-
-Minimum Requirements:
-
-* Windows 10, XSplit 3.0
-
-Instructions:
-
-1. Extract the content of the zip file you downloaded to a folder on your computer.
-1. Personalize the Helper using the instructions below.
-1. Open up XSplit.
-1. Select a scene.
-1. In the scene sources section, click "Add" and then click "Webpage..."
-![](https://github.com/breadweb/extralife-helper/blob/main/images/xsplit1.jpg)
-1. Click the "Browse" button and select **ExtraLifeHelper.html** from the location you extracted the files.
-![](https://github.com/breadweb/extralife-helper/blob/main/images/xsplit2.jpg)
-
-<br>
-
-### OBS Studio Instructions - Download Version
-
-Minimum Requirements:
-
-* Windows 7/8/10, OBS Studio 20.0.1
-* OSX Sierra, OBS Studio 20.0.1
-
-Instructions:
-
-1. Extract the contents of the zip file you downloaded to a folder on your computer.
-1. Personalize the Helper using the instructions below.
-1. Open up OBS Studio.
-1. Select a scene in the "Scenes" section.
-1. Right-click in the "Sources" section, select "Add" and then select "BrowserSource".   ![](https://github.com/breadweb/extralife-helper/blob/main/images/obs1.jpg)
-1. Select "Create New", type in a name such as "Helper" and click OK.
-![](https://github.com/breadweb/extralife-helper/blob/main/images/obs2.jpg)
-1. In the Properties screen, check the box that says "Local file", click the "Browse" button and select **ExtraLifeHelper.html** from the files you extracted.
-![](https://github.com/breadweb/extralife-helper/blob/main/images/obs3.jpg)
-1. Set the Width and Height to whatever is specified in the HTML file. Delete everything in the CSS field. Click OK.
-![](https://github.com/breadweb/extralife-helper/blob/main/images/obs4.jpg)
-
-<br>
-
-### Personalizing the Helper - Download Version
-
-First, get your participant ID. It can be found in the URL for your fundraising page. Look for the "participantID" in the URL towards the end. For example:
-
-`http://www.extra-life.org/index.cfm?fuseaction=donorDrive.participant&participantID=101425`
-
-If you want to use the Helper in team mode, get your team ID. It can be found in the URL for your team's fundraising page. Look for the "teamID" in the URL towards the end. For example:
-
-`http://www.extra-life.org/index.cfm?fuseaction=donorDrive.team&teamID=16539`
-
-Open the **ExtraLifeHelper.html** file using a text editor such as Notepad and enter in your participant ID, start date, start time, etc.
-
-```
-// Extra Life Helper
-// ============================================================================================
-// For use details and use instructions, visit https://github.com/breadweb/extralife-helper
-// For support or feature requests, visit https://discord.gg/aArewEc
-//
-participantId = "449007";              // Set this to blank to run in team mode.
-teamId = "";                           // Set this to blank to run in participant mode.
-startDate = "11-05-2021";              // Set to your local Extra Life start date.
-startTime = "10:00:00";                // Set to your local Extra Life start time.
-helperTheme = "blue1";                 // Color theme: white1, gray1, blue1, or blue2.
-helperBorder = "rounded";              // Border type: rounded, square, or none.
-helperWidth = 540;                     // Width of the Helper, in pixels.
-showDonationAlerts = true;             // Set to false to suppress donation alerts.
-showGoal = true;                       // Set to false to only show amount raised on the
-//                                     // main screen and not also your goal.
-showYearMode = false;                  // An alternate display to support fundraising all
-//                                     // year. The count down/up timer is hidden.
-donationSounds = "cash.mp3,kids.mp3";  // Set this to your custom set of sounds, separated
-//                                     // by commas. Or set to "" to play no sounds.
-donationMessageVoice = "US-female";    // Set to US-male, US-female, UK-male, UK-female,
-//                                     // FR-male, FR-female, ES-male, ES-female or set
-//                                     // to "" to not read messages with text-to-speech.
-testDonationSeconds = 0;               // Number of seconds to show a test donation after
-//                                     // the Helper loads. Set to 0 to disable.
-volume = 100;                          // The volume for all sound effects and text-to-speech.
-lang = "en-us";                        // Language to use for all text displayed in the
-//                                     // Helper. Supported options are en-us for
-//                                     // English (United States), fr-ca for French (Canada),
-//                                     // or es-419 for Spanish (Latin America)
-// ============================================================================================
-
-// If you would like additional things to happen when a new donation is
-// received, put them in this function.
-function onNewDonation(donorName, donationAmount, message, avatarImageURL, createdOn, recipientName)
-{
-    // Your custom logic here.
-}
+```shell
+cd helper
+cp .env.local.example .env.local
+npm install
+npm run dev
 ```
 
-Some special notes about editing this file:
+The Helper will now be running via the Vite development server at [http://localhost:5173]().
 
-* The **startTime** value format is military time. 1:00 PM = 13:00, 2:00 PM = 14:00, etc.
-* If specifying multiple sound files for the **donationSounds** value, be sure to separate them with commas.
-* If you know JavaScript and have some smart devices in your house (such as programmable lights or displays) or a remote API you want to work with when you receive a new donation, you can add custom code in the **onNewDonation** function.
+### Config Files
 
-<br>
+There are three config files. These files contain a combination of **application** settings and **user** settings.
 
-### Resizing the Helper
+* `DEV` mode: `.env.local`
+* `LOCAL` mode: `.env.deploy.LOCAL`
+* `REMOTE` mode: `.env.deploy.REMOTE`
 
-The Helper is made with vector art so when stretched, it should always remain sharp no matter what size. The trick to making this work is to be sure that the width and height values for the Helper in XSplit or OBS match what is in the **ExtraLifeHelper.html** file. After you change the values in your streaming software, don't forget to update the html file!
+### User Settings
 
-For OBS Studio, avoid resizing the Helper by dragging it. Open the properties and specify the values there until the size is what you want. This is because resizing by dragging will not update the values in the properties and so you won't know what to set in the html file.
+The Helper is able to be used by anyone by changing the settings. Users will need to provide their participant ID or team ID to identify who they are. The remaining settings affect how the Helper looks and functions.
 
-<br>
+User settings are parsed differently based on what mode the Helper is running in.
 
-### Color Themes, Borders and Sound
+* `DEV` mode: User settings are read directly from the environment variables defined in the config file.
 
-There are a few more options for customizing the Helper to suit your streaming setup.
+* `LOCAL` mode: User settings are read from the compiled single HTML file. The initial values are provided by the config file at build time, but users can edit the values in the HTML file.
 
-* **Color Themes**: There are four color themes available that respect the Extra Life brand guidelines.
-![](https://github.com/breadweb/extralife-helper/blob/main/images/themes.jpg)
-The values that can be set are "blue1", "blue2", "white1", and "gray1".
-* **Borders**: By default, there is a border with rounded corners. You can change it to have square corners or remove it completely. The values are "rounded", "square", or "none".
-* **Sounds**:
-  * To use your own donation sounds, place your mp3, wav, or ogg files in the **audio** directory and update the donationSounds value in the ExtraLifeHelper.html file.
-  * You can mute the Helper by setting the donationSounds value to "".
+* `REMOTE` mode: User settings are read from the querystring.
 
-These options can be changed in the ExtraLifeHelper.html file that you edited during the steps to personalize the Helper.
+### Application Settings
 
-<br>
+The application settings are highly tuned and not able to be changed by users. The most relevant use case is for developers to change them to support rapid development and testing.
 
-### Example Video
+> [!CAUTION]
+> Do not change the `VITE_POLLING_INTERVAL` application setting to a value below `15000` if you are targeting the Extra Life API via the `VITE_API_BASE_URL` value. A smaller value will almost certainly result in you getting rate limited by the Extra Life team.
 
-The following video is a compilation of donations received during the Extra Life 2017 marathon. I use the donation hook to make a call to my light bridge and make my office lights flash.
+### Mock API
 
-[![Alt text for your video](https://img.youtube.com/vi/YUu3rBl8ug0/0.jpg)](https://www.youtube.com/watch?v=YUu3rBl8ug0)
+When developing locally, it is highly reccomended to set the `VITE_API_BASE_URL` value to the URL of a locally running server that mocks the Extra Life API. This will prevent you from accidentally spamming the real Extra Life API and getting rate limited.
 
-<br>
+The `mock-api` directory contains mock responses for participant and team endpoints used by the Helper. Simply run a local webserver with that directory as the root and update the `VITE_API_BASE_URL` to the URL of that server.
 
-### Troubleshooting
+The included `tools/mock.py` Python script provides a convenient way to update the mock API. You can add donations, set progress amounts, reset everything and more.
 
-**You see a "X is missing or invalid" message.**
+### Building
 
-This usually happens due to a typo when editing the **ExtraLifeHelper.html** file. If you can't find the typo, try downloading a fresh copy and trying again.
+To build for `LOCAL` mode:
 
-**You see $0 for your donations received.**
+```shell
+cd helper
+npm run build:LOCAL
+```
 
-There are a few known reasons for this:
-* You are using an old version of the Helper that doesn't work with the current Extra Life API. Download the latest!
-* You haven't received any donations yet. Keep up the fundraising efforts!
-* You got your first donation, but it hasn't been registered fully by the Extra Life API. Just give it a few minutes to show up.
-* The Extra Life API timed out when the Helper was trying to contact it. This can happen if the Extra Life API is under high load. Just be patient and the Helper will get the current total again when the Extra Life API responds.
-* You are trying to use the Helper in an unsupported way. Please review the instructions for proper use.
+To build for `REMOTE` mode:
 
-**The Helper looks blurry.**
+```shell
+cd helper
+npm run build:REMOTE
+```
 
-This is usually because you have stretched the Helper in your presentation but forgot to update the width and height values in the **ExtraLifeHelper.html** file to match.
+### Deployment
 
-<br>
+If you are considering deploying your modified Helper to your own hosting, it is assumed you are familiar with deploying a React web application.
 
-### Donations
+### Contributing Back
 
-It's been really rewarding to see the Helper being used by so many people who are raising money for a great cause. I do not expect anything in return, but if you are determined, you could always make a donation on my [Extra Life page](https://www.extra-life.org/participant/bread) since this is all **F**or **T**he **K**ids! Thank you!
+If you have fixed a bug or made a feature change that would benefit all users of the Helper, please make a pull request and I will be happy to review it.
 
-<br>
+Before creating the PR, please ensure the following:
 
-### Modifying and Contributing Back
+* You have run `npm run lint` in the `helper` directory and have corrected all warnings and errors.
+* You have reverted any changes to the `.env.deploy.*` file, `mock-api` files, or any other files made only to support your personal testing.
 
-Because the source is freely available here, you are welcome to modify the Helper however you see fit. Some modifications that have been done by other participants so far include:
+## License
 
-* Adding a third hour digit to the clock to support a 100+ hour long marathon
-* Changing the fonts or color themes to match a stream presentation
-* Adding a background image to match a steam presentation
-* Adding donation alerts while running in team mode
+Distributed under the MIT license. See [LICENSE](https://github.com/breadweb/extralife-helper/blob/main/LICENSE.txt) for details.
 
-If you make a change that would benefit all users of the Helper, please make a pull request and I would be happy to review it. Thank you!
+## History
 
-<br>
+I originally created the Helper in 2013. I wanted something to track the time until Extra Life, track my total time playing on game day, and show my fundraising progress. I also wanted to celebrate new donations in real time when streaming during the marathon. The following year I made it available to the community and it has been used by thousands of Extra Life participants ever since.
+
+* **2013**: Built with Actionscript as a Flash application which scraped Extra Life website pages for information.
+* **2014**: Added personalization and shared with the Extra Life community. Added an executable wrapper for caputre in OBS.
+* **2015**: Updated to work with the new Extra Life API.
+* **2016**: Added a suite of new configuration options including color themes and borders.
+* **2017**: Refactored as a basic web application written in JavaScript. Added more donation alert features.
+* **2018**: Added displaying of donation messages and text-to-speech reading of them.
+* **2019**: Added a remote version of the Helper that no longer required downloading and modifying files. Added localization in Spanish and French.
+* **2020 - 2023**: Fixed bugs, updated to use latest Extra Life API, and updated to the latest Extra Life branding.
+* **2024**: Refactored to use modern JavaScript frameworks and web app development practices. Added milestone alerts, a latest donations view, progress bar with milestone markers, transparent background support, complete color theme customization, and more.
+
+## Donations
+
+It's been really rewarding to see the Helper being used by so many people who are supporting great cause. I do not expect anything in return, but if you are determined, you could always make a donation on my [Extra Life](https://bread4kids.tv/extralife) since this is all for the kids!
 
 ### Credits
-
-The Helper would not be possible without the following libraries:
-
-* jQuery - [https://jquery.com/](https://jquery.com/)
-* Paper.js - [http://paperjs.org/](http://paperjs.org/)
-* TweenJS - [https://www.createjs.com/tweenjs](https://www.createjs.com/tweenjs)
-* ResponsiveVoice - [https://responsivevoice.org/](https://responsivevoice.org/)
 
 Translations were provided with help from the following awesome people:
 
 * French: Max Delisle, Craig Segal
-* Spanish: Juliet Veulens
+* Spanish: Juliet Veulens, Jesus Lio
 
-<br>
+## Support and Contact
 
+Please [report issues](https://github.com/breadweb/extralife-helper/issues) here on GitHub. For additional support, you can join my [Discord server](https://bread4kids.tv/discord) and send me a DM.
 
-### Contact
-
-If you see any issues that are not covered in the troubleshooting section, please visit my [Discord server](https://discord.gg/aArewEc) and I'll do my best to fix it quickly.
-
-I'd also love to see the Helper being used on your stream. Let me know your streaming URL so I can watch and cheer you on during the marathon. Good luck with your fundraising for Extra Life!
+I'd also love to see the Helper being used on your stream! Let me know about your channel so I can watch and cheer you on. Good luck with your fundraising for Extra Life!
 
 Adam "Bread" Slesinger
 
-* Twitch: [http://www.twitch.tv/bread4kids](http://www.twitch.tv/bread4kids)
-* Extra Life: [https://bit.ly/bread4kids](https://bit.ly/bread4kids)
-* Discord: [https://discord.gg/aArewEc](https://discord.gg/aArewEc)
+* Twitch: [https://bread4kids.tv](https://bread4kids.tv)
+* Extra Life: [https://bread4kids.tv/extralife](https://bread4kids.tv/extralife)
+* Discord: [https://bread4kids.tv/discord](https://bread4kids.tv/discord)
 * YouTube: [https://youtube.com/breadweb](https://youtube.com/breadweb)
-* Steam: [https://steamcommunity.com/id/breadweb](https://steamcommunity.com/id/breadweb)
