@@ -16,11 +16,12 @@
     "OUR_PERCENT_RAISED_EXCITED": "We've raised {{percent}}% of our goal!",
     "OUR_PERCENT_RAISED": "We've raised {{percent}}% of our goal.",
     "PORTRAIT_NOT_ALLOWED": "Portrait aspect ratios are not supported. Please ensure the width is greater than or equal to the height.",
+    "RAISED": "RAISED",
     "RECEIVED": "RECEIVED",
     "REQUEST_ERROR_NO_CONNECTION": "The Helper is unable to connect to the Extra Life API. Please check your network settings.",
     "REQUEST_ERROR_NOT_FOUND": "Unable to request Extra Life data. Please make sure your participant ID or team ID is correct.",
     "REQUEST_ERROR_OTHER": "Unable to request Extra Life data due to an unknown Extra Life API issue.",
     "REQUEST_ERROR_RATE_LIMITED": "The Extra Life API has rate limited your IP address. Please ensure you are not running multiple versions of the Helper or multiple Extra Life tools.",
     "REQUEST_ERROR_SERVICE_ERROR": "The Extra Life API is currently unavailable due to server issues. Please wait.",
-    "VISIT_FOR_HELP": "Unsure what to do? Please visit the bread4kids Discord for support: bit.ly/to-the-bakery"
+    "VISIT_FOR_HELP": "Unsure what to do? Please visit the bread4kids Discord for support: bread4kids.tv/discord"
 }
