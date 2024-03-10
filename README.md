@@ -4,12 +4,12 @@
 
 ## About
 
-The Extra Life Helper is a web application that Extra Life participants and teams can use to support their fundarising efforts. It was designed to be used in the following ways:
+The Extra Life Helper is a web application that Extra Life participants and teams can use to support their fundraising efforts. It was designed to be used in the following ways:
 
 * Added to an OBS scene as a browser source for inclusion in a LIVE stream on Twitch, YouTube, or TikTok
 
 * Embedded in any website via an `iframe`
-* Displayed fullscreen on a large monitor or projector for a local Extra Life event
+* Displayed fullscreen on a large monitor or projector for a local in-person event
 
 ## Features
 
@@ -74,7 +74,7 @@ The Helper will now be running via the Vite development server at [http://localh
 
 ### Configuration
 
-There are three config files. These files contain a combination of **application** settings and **user** settings.
+There is a config file per mode. These files contain a combination of **application** settings and **user** settings.
 
 * `DEV` mode: `.env.local`
 * `LOCAL` mode: `.env.deploy.LOCAL`
@@ -88,7 +88,7 @@ User settings are parsed differently based on what mode the Helper is running in
 
 * `DEV` mode: User settings are read directly from the environment variables defined in the `.env.local` config file.
 
-* `LOCAL` mode: User settings are read from the compiled single HTML file. The initial values are provided by the `.env.deploy.LOCAL` config file at build time, but users can edit the values in the HTML file so it works fo them.
+* `LOCAL` mode: User settings are read from the compiled single HTML file. The initial values are provided by the `.env.deploy.LOCAL` config file at build time, but users can edit the values in the HTML file so it works for them.
 
 * `REMOTE` mode: User settings are read from the querystring.
 
@@ -109,7 +109,7 @@ The `mock-api` directory contains mock responses for participant and team endpoi
 python tools/webserver.py mock-api -p 5174
 ```
 
-The included `tools/mock.py` Python script provides a number of commands to update the mock API quickly and in the same way the Extra Life API would behave. View the help to see the options.
+The included `tools/mock.py` Python script provides a number of commands to update the mock API quickly and in the same way the Extra Life API operates. View the help to see the options.
 
 ```shell
 python tools/mock.py -h
@@ -124,7 +124,7 @@ cd helper
 npm run build:LOCAL
 ```
 
-The output will be a single `index.html` file in the `helper/dist` directory. This file can be run by dragging the file from the file system into a browser.
+The output will be a single `index.html` file in the `helper/dist` directory. The Helper can be run by dragging the file from the file system into a browser.
 
 To build for `REMOTE` mode:
 
@@ -133,11 +133,11 @@ cd helper
 npm run build:REMOTE
 ```
 
-The output will be a collection of files in the `helper/dist`. These need to be deployed to a hosting solution.
+The output will be a collection of files in the `helper/dist` and are intended to be deployed to a hosting solution.
 
 ### Deployment
 
-Deployment instructions is out of scope for this documentation. If you are considering deploying your modified Helper to your own hosting solution, it is assumed you are familiar with the requirements for deploying a React web application.
+Deployment instructions are out of scope for this documentation. If you are considering deploying your modified Helper to your own hosting solution, it is assumed you are familiar with the requirements for deploying a React web application.
 
 ### Contributing Back
 
@@ -154,7 +154,7 @@ Distributed under the MIT license. See [LICENSE](https://github.com/breadweb/ext
 
 ## History
 
-I originally created the Helper in 2013. There were no tools available at the time for tracking the time until Extra Life, tracking total time played on game day, and showing fundraising progress. I also wanted to celebrate new donations in real time when streaming during the marathon. The following year I made it available to the community and it has been used by thousands of Extra Life participants since.
+I originally created the Helper in 2013. There were no tools available at the time for tracking the time until Extra Life, tracking total time played on game day, **and** showing fundraising progress. I also wanted to celebrate new donations in real time with my audience while streaming during the marathon. The following year I made it available to the community and it has been used by thousands of Extra Life participants since.
 
 * **2013**: Built with Actionscript as a Flash application which scraped Extra Life website pages for information.
 
