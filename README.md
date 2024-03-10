@@ -4,7 +4,7 @@
 
 ## About
 
-The Extra Life Helper is a web application that Extra Life participants and teams can use to support their fundarising efforts. It was designed for the following use cases:
+The Extra Life Helper is a web application that Extra Life participants and teams can use to support their fundarising efforts. It was designed to be used in the following ways:
 
 * Added to an OBS scene as a browser source for inclusion in a LIVE stream on Twitch, YouTube, or TikTok
 
@@ -26,6 +26,7 @@ The Helper has been developed and maintained for over a decade. It has a lot of 
   - Amound raised and goal
   - Progress bar with optional milestone markers
 * Shows fun and exciting real-time alerts as donations arrive.
+* Shows celebatory alerts when milestones have been reached.
 * Provides the option for donation messages to be read with text-to-speech.
 * Allows adjusting volume for all sound effects and text-to-speech.
 * Occasionally shows the Extra Life logo.
@@ -44,7 +45,7 @@ If you are simply here to use the Helper, please visit the Helper website! It pr
 
 ## For Developers
 
-The Extra Life Helper is written in JavaScript and React. [Tailwind](https://tailwindcss.com/) is used for CSS and [Vite](https://vitejs.dev/) is the framework used for local development and builds.
+The Extra Life Helper is written in JavaScript and React. [Tailwind](https://tailwindcss.com/) is used for CSS and [Vite](https://vitejs.dev/) is the framework used for local development and making builds.
 
 If you've been wanting to develop your own React application that works with the Extra Life API, there are pleny of reusable components and hooks that you can leverage.
 
