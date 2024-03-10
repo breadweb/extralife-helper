@@ -40,7 +40,9 @@ const App = () => {
             setErrorMessage(helperSettings.error);
             return;
         }
+    }, [helperSettings.error]);
 
+    useEffect(() => {
         if (helperSettings?.data === undefined) {
             return;
         }

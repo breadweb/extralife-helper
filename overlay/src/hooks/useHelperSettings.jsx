@@ -234,7 +234,6 @@ const useHelperSettings = () => {
         if (errorMessage) {
             logger.error(`Settings are invalid. Details: ${errorMessage}`);
             setError(errorMessage);
-            return;
         }
 
         settings.isBackgroundTransparent = isParamValueTrue(settings.isBackgroundTransparent);
