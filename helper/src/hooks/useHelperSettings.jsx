@@ -203,9 +203,9 @@ const useHelperSettings = () => {
                 settings = getSettingsFromEnvVars();
                 break;
             case 'LOCAL':
-                // When compiled into a single HTML file for running in a participant's browser from the
-                // local file system, settings will be read from the global window object. The settings
-                // are exposed at the top of the HTML file so participants can easily modify them.
+                // When compiled into a single HTML file for running in a participant's browser from
+                // the local file system, settings will be read from the global window object. The
+                // settings are exposed at the top of the HTML file so users can easily modify them.
                 settings = getSettingsFromGlobal();
                 break;
             case 'REMOTE':

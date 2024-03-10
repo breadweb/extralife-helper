@@ -27,8 +27,8 @@ const useDonations = () => {
                 // the last queued donation.
                 setLastQueuedDonationId(extraLifeData[0].donationID);
             } else {
-                // No donations have been received at all for the current user or team. Set a value that
-                // will ensure the first donations will be added to the queue during this session.
+                // No donations have been received at all for the current participant or team. Set a
+                // value that will ensure the first donations are added to the queue during this session.
                 setLastQueuedDonationId('nonce');
             }
         } else {
