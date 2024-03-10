@@ -28,18 +28,18 @@ The Helper has been developed and maintained for over a decade. It has a lot of 
 * Shows fun and exciting real-time alerts as donations arrive.
 * Shows celebatory alerts when milestones have been reached.
 * Provides the option for donation messages to be read with text-to-speech.
-* Allows adjusting volume for all sound effects and text-to-speech.
+* Provides volume control for all sound effects and text-to-speech.
 * Occasionally shows the Extra Life logo.
 * Ocassionally shows the last five donations that were made to recognize supporters.
 * Provides four color theme choices that are Extra Life branded **and** provides the ability to design a custom color theme.
 * Works in any flavor of OBS and any modern browser.
-* Looks sharp at any 16:9 or 16:10 resolution size including full screen.
+* Looks sharp at any 16:9 or 16:10 aspect ratio size including full screen.
 * Fully localized in English, French, and Spanish.
 * Structured for easy modification by other developers who want to make changes for themselves or their Extra Life teams.
 
-## How to Use
+## For Extra Life Participants
 
-If you are simply here to use the Helper, please visit the Helper website! It provides a quick and easy way to customize the Helper and generate a link you can use for your LIVE stream or website.
+If you are simply here to use the Helper, please visit the Helper website! It provides a quick and easy way to customize the Helper and generate a link you can use for your stream or website.
 
 [https://breadweb.net/extralife-helper/](https://breadweb.net/extralife-helper/)
 
@@ -47,7 +47,7 @@ If you are simply here to use the Helper, please visit the Helper website! It pr
 
 The Extra Life Helper is written in JavaScript and React. [Tailwind](https://tailwindcss.com/) is used for CSS and [Vite](https://vitejs.dev/) is the framework used for local development and making builds.
 
-If you've been wanting to develop your own React application that works with the Extra Life API, there are pleny of reusable components and hooks that you can leverage.
+If you've been wanting to develop your own React application that works with the Extra Life API, there are pleny of reusable components and hooks that you can leverage. There are also nice Python scripts included in this repo that enable rapid local testing against a mock version of the Extra Life API.
 
 If you are interested in modifying the Helper to meet specific requirements for yourself or your Extra Life team, please review the following sections.
 
@@ -70,9 +70,9 @@ npm install
 npm run dev
 ```
 
-The Helper will now be running via the Vite development server at [http://localhost:5173]().
+The Helper will now be running via the Vite development server at [http://localhost:5173](http://localhost:5173).
 
-### Config Files
+### Configuration
 
 There are three config files. These files contain a combination of **application** settings and **user** settings.
 
@@ -82,13 +82,13 @@ There are three config files. These files contain a combination of **application
 
 ### User Settings
 
-The Helper is able to be used by anyone by changing the settings. Users will need to provide their participant ID or team ID to identify who they are. The remaining settings affect how the Helper looks and functions.
+The Helper is able to be used by anyone by changing the settings. Users will need to provide their participant ID or team ID so the Helper can get their information from the Extra Life API. The remaining settings affect how the Helper looks and functions.
 
 User settings are parsed differently based on what mode the Helper is running in.
 
-* `DEV` mode: User settings are read directly from the environment variables defined in the config file.
+* `DEV` mode: User settings are read directly from the environment variables defined in the `.env.local` config file.
 
-* `LOCAL` mode: User settings are read from the compiled single HTML file. The initial values are provided by the config file at build time, but users can edit the values in the HTML file.
+* `LOCAL` mode: User settings are read from the compiled single HTML file. The initial values are provided by the `.env.deploy.LOCAL` config file at build time, but users can edit the values in the HTML file so it works fo them.
 
 * `REMOTE` mode: User settings are read from the querystring.
 
@@ -101,11 +101,19 @@ The application settings are highly tuned and not able to be changed by users. T
 
 ### Mock API
 
-When developing locally, it is highly reccomended to set the `VITE_API_BASE_URL` value to the URL of a locally running server that mocks the Extra Life API. This will prevent you from accidentally spamming the real Extra Life API and getting rate limited.
+When developing locally, it is highly reccomended to use the mock API. This will prevent you from accidentally spamming the real Extra Life API and getting rate limited. You will also be able to test different flows by simulating donations.
 
-The `mock-api` directory contains mock responses for participant and team endpoints used by the Helper. Simply run a local webserver with that directory as the root and update the `VITE_API_BASE_URL` to the URL of that server.
+The `mock-api` directory contains mock responses for participant and team endpoints currently used by the Helper. Simply run the included webserver script and then update the `VITE_API_BASE_URL` config entry to URL of the mock API. It will be `http://localhost:5174` when using the following command:
 
-The included `tools/mock.py` Python script provides a convenient way to update the mock API. You can add donations, set progress amounts, reset everything and more.
+```shell
+python tools/webserver.py mock-api -p 5174
+```
+
+The included `tools/mock.py` Python script provides a number of commands to update the mock API quickly and in the same way the Extra Life API would behave. View the help to see the options.
+
+```shell
+python tools/mock.py -h
+```
 
 ### Building
 
@@ -116,6 +124,8 @@ cd helper
 npm run build:LOCAL
 ```
 
+The output will be a single `index.html` file in the `helper/dist` directory. This file can be run by dragging the file from the file system into a browser.
+
 To build for `REMOTE` mode:
 
 ```shell
@@ -123,18 +133,20 @@ cd helper
 npm run build:REMOTE
 ```
 
+The output will be a collection of files in the `helper/dist`. These need to be deployed to a hosting solution.
+
 ### Deployment
 
-Instructions for deployment is out of scope for this documentation. If you are considering deploying your modified Helper to your own hosting, it is assumed you are familiar with the requirements for deploying a React web application.
+Deployment instructions is out of scope for this documentation. If you are considering deploying your modified Helper to your own hosting solution, it is assumed you are familiar with the requirements for deploying a React web application.
 
 ### Contributing Back
 
-If you have fixed a bug or made a feature change that would benefit all users of the Helper, please make a pull request and I will be happy to review it.
+If you have fixed a bug or have a suggested feature change that would benefit all users of the Helper, please make a pull request and I will be happy to review it.
 
 Before creating the PR, please ensure the following:
 
 * You have run `npm run lint` in the `helper` directory and have corrected all warnings and errors.
-* You have reverted any changes to the `.env.deploy.*` files, `mock-api` files, or any other files made only to support your personal testing.
+* You have reverted any changes to the tracked `.env.deploy.*` files, `mock-api` files, or any other files made only to support your personal testing.
 
 ## License
 
@@ -142,9 +154,10 @@ Distributed under the MIT license. See [LICENSE](https://github.com/breadweb/ext
 
 ## History
 
-I originally created the Helper in 2013. I wanted something to track the time until Extra Life, track my total time playing on game day, and show my fundraising progress. I also wanted to celebrate new donations in real time when streaming during the marathon. The following year I made it available to the community and it has been used by thousands of Extra Life participants ever since.
+I originally created the Helper in 2013. There were no tools available at the time for tracking the time until Extra Life, tracking total time played on game day, and showing fundraising progress. I also wanted to celebrate new donations in real time when streaming during the marathon. The following year I made it available to the community and it has been used by thousands of Extra Life participants since.
 
 * **2013**: Built with Actionscript as a Flash application which scraped Extra Life website pages for information.
+
 * **2014**: Added personalization and shared with the Extra Life community. Added an executable wrapper for caputre in OBS.
 * **2015**: Updated to work with the new Extra Life API.
 * **2016**: Added a suite of new configuration options including color themes and borders.
@@ -156,7 +169,7 @@ I originally created the Helper in 2013. I wanted something to track the time un
 
 ## Donations
 
-It's been really rewarding to see the Helper being used by so many people who are supporting great cause. I do not expect anything in return, but if you are determined, you could always make a donation on my [Extra Life](https://bread4kids.tv/extralife) since this is all for the kids!
+It's been really rewarding to see the Helper being used by so many people who are supporting great cause. I do not expect anything in return, but if you are determined, you could always make a donation to my [Extra Life](https://bread4kids.tv/extralife) since this is all for the kids!
 
 ### Credits
 
