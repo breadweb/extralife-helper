@@ -21,7 +21,7 @@
     "REQUEST_ERROR_NO_CONNECTION": "El Helper no puede conectarse a la API de Extra Life. Por favor verifique la configuración de su red.",
     "REQUEST_ERROR_NOT_FOUND": "No se pueden solicitar datos de Extra Life. Asegúrese de que su ID de participante (participantID) o ID de equipo(teamID) sea correcto.",
     "REQUEST_ERROR_OTHER": "No se pueden solicitar datos de Extra Life debido a un problema desconocido con la API de Extra Life.",
-    "REQUEST_ERROR_RATE_LIMITED": "La API Extra Life ha limitado su dirección IP. Asegúrese de no estar usando varias versiones del Helper o múltiples herramientas de Extra Life.",
+    "REQUEST_ERROR_RATE_LIMITED": "La API de Extra Life ha limitado su dirección IP. Asegúrese de no estar usando varias versiones del Helper o múltiples herramientas de Extra Life.",
     "REQUEST_ERROR_SERVICE_ERROR": "La API de Extra Life no está disponible actualmente debido a problemas con el servidor. Espere por favor.",
     "VISIT_FOR_HELP": "¿No estás seguro de qué hacer? Visite el Discord  de bread4kids para obtener ayuda: bread4kids.tv/discord"
 }
