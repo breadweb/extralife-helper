@@ -2,8 +2,8 @@
 
 """
 This is an extension of Python's built-in Simple HTTP Server module. It disables CORS and
-caching wich are two things typically desired for local development. It can also host single
-page applications.
+caching which are two things typically desired for local development. It also supports hosting
+single page applications with the --not-found-page argument.
 """
 
 import argparse
