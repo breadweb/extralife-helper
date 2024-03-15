@@ -94,7 +94,7 @@ User settings are parsed differently based on what mode the Helper is running in
 
 * `DEV` mode: User settings are read directly from the environment variables defined in the `.env.local` config file.
 
-* `LOCAL` mode: User settings are read from the compiled single HTML file. The initial values are provided by the `.env.deploy.LOCAL` config file at build time, but users can edit the values in the HTML file so it works for them.
+* `LOCAL` mode: User settings are read from the compiled single HTML file. The initial values are provided by the `.env.deploy.LOCAL` config file at build time, but users can edit the values in the compiled HTML file so it works for them.
 
 * `REMOTE` mode: User settings are read from the querystring.
 
@@ -103,17 +103,19 @@ User settings are parsed differently based on what mode the Helper is running in
 The application settings are highly tuned and not able to be changed by users. The most common use case is developers changing them to support rapid development and testing.
 
 > [!CAUTION]
-> Do not change the `VITE_POLLING_INTERVAL` application setting to a value below `15000` if you are targeting the Extra Life API via the `VITE_API_BASE_URL` value. A smaller value will almost certainly result in you getting rate limited by the Extra Life team.
+> Do not change the `VITE_POLLING_INTERVAL` application setting to a value below `15000` if you are targeting the Extra Life API via the `VITE_API_BASE_URL` value. A smaller value will almost certainly result in you getting rate limited by the Extra Life API.
 
 ### Mock API
 
 When developing locally, it is highly reccomended to use the mock API. This will prevent you from accidentally spamming the real Extra Life API and getting rate limited. You will also be able to test different flows by simulating donations.
 
-The `mock-api` directory contains mock responses for participant and team endpoints currently used by the Helper. Simply run the included webserver script and then update the `VITE_API_BASE_URL` config entry to URL of the mock API. It will be `http://localhost:5174` when using the following command:
+The `mock-api` directory contains mock responses for participant and team endpoints currently used by the Helper. Simply run the following command and the mock API will be running `http://localhost:5174`.
 
 ```shell
 python tools/webserver.py mock-api -p 5174
 ```
+
+Then, update the `VITE_API_BASE_URL` config entry in the `.env.local` file to this URL value.
 
 The included `tools/mock.py` Python script provides a number of commands to update the mock API quickly and in the same way the Extra Life API operates. View the help to see the options.
 
@@ -139,7 +141,7 @@ cd helper
 npm run build:REMOTE
 ```
 
-The output will be a collection of files in the `helper/dist` and are intended to be deployed to a hosting solution.
+The output will be a collection of files in the `helper/dist` which are intended to be deployed to a hosting solution.
 
 ### Deployment
 
@@ -152,7 +154,7 @@ If you have fixed a bug or have a suggested feature change that would benefit al
 Before creating the PR, please ensure the following:
 
 * You have run `npm run lint` in the `helper` directory and have corrected all warnings and errors.
-* You have reverted any changes to the tracked `.env.deploy.*` files, `mock-api` files, or any other files made only to support your personal testing.
+* You have reverted any changes made strictly to support your personal testing and not required for the fix or feature. This includes changes in the tracked `.env.deploy.*` files and `mock-api` files.
 
 <br>
 
@@ -164,7 +166,7 @@ Distributed under the MIT license. See [LICENSE](https://github.com/breadweb/ext
 
 ## History
 
-I originally created the Helper in 2013. There were no tools available at the time for tracking the time until Extra Life, tracking total time played on game day, **and** showing fundraising progress. I also wanted to celebrate new donations in real time with my audience while streaming during the marathon. The following year I made it available to the community and it has been used by thousands of Extra Life participants since.
+I originally created the Helper in 2013. There were no tools available at the time for tracking the time until Extra Life, tracking total time played on game day, **and** showing fundraising progress. I also wanted to celebrate new donations in real time with my audience while streaming during the marathon. The following year I made it available to the community and it has been used by many Extra Life participants since.
 
 * **2013**: Built with Actionscript as a Flash application which scraped Extra Life website pages for information.
 
