@@ -56,7 +56,7 @@ const useMetrics = (settings, extraLifeData) => {
 
         axios(axiosOptions)
             .then(res => {
-                logger.debug('Metrics sent!');
+                logger.debug('Metrics sent. Thank you for helping to improve the Helper!');
             })
             .catch(err => {
                 const error = parseRequestError(err);
