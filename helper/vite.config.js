@@ -221,6 +221,17 @@ const getSettingsContent = () => {
             'Language to use for all text displayed in the Helper. Supported options are "en-us" for ' +
             'English (United States), "fr-ca" for French (Canada), or "es-419" for Spanish (Latin America)',
         ],
+        [
+            'areMetricsNeabled',
+            process.env.VITE_ARE_METRICS_ENABLED,
+            false,
+            'If enabled, some general information will be tracked in order to help bread4kids ' +
+            'understand how participants and teams are using the Helper. This is to support future ' +
+            'feature development and testing. Metrics sent includes Helper settings used, publicly ' +
+            'available participant and team information, browser name and version, device make and ' +
+            'model, and operating system name and version. No private information is collected or ' +
+            'shared and metrics are only accessible by bread4kids',
+        ],
     ];
 
     const colWidth1 = 36;

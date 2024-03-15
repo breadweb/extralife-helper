@@ -8,6 +8,7 @@ import MilestoneView from './MilestoneView';
 import React from 'react';
 import useDonations from '../hooks/useDonations';
 import useFillerContent from '../hooks/useFillerContent';
+import useMetrics from '../hooks/useMetrics';
 import useMilestones from '../hooks/useMilestones';
 import usePolledExtraLifeData from '../hooks/usePolledExtraLifeData';
 
@@ -31,6 +32,7 @@ const ContentManager = ({ errorMessage, settings }) => {
     const { getDonations, latestDonations, removeSeenDonation, unseenDonations } = useDonations();
     const { completedMilestones, getMilestones, milestones, removeCompletedMilestone } = useMilestones();
     const { fillerContent, startFillerTimer, stopFillerTimer } = useFillerContent(latestDonations, settings);
+    useMetrics(settings, polledDataResponse?.extraLifeData);
     const { t } = useTranslation();
 
     useEffect(() => {

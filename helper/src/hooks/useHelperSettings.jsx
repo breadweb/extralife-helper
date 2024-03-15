@@ -72,6 +72,7 @@ const getSettingsFromParams = () => {
         voice: urlParams.get('v') === '-1' ? '' : getListItemFromParam(urlParams, 'v', voiceOptions),
         volume: urlParams.get('vo'),
         lang: urlParams.get('l') || langOptions[0],
+        areMetricsEnabled: urlParams.get('i') === '1',
     };
 
     // The previous Helper supported two progress displays with the 'isGoalVisible' flag. Use that
@@ -120,6 +121,7 @@ const getSettingsFromGlobal = () => {
         voice: window.voice,
         volume: window.volume,
         lang: window.lang,
+        areMetricsEnabled: window.areMetricsEnabled,
     };
 };
 
@@ -151,6 +153,7 @@ const getSettingsFromEnvVars = () => {
         voice: envVars.VITE_VOICE,
         volume: envVars.VITE_VOLUME,
         lang: envVars.VITE_LANG,
+        areMetricsEnabled: envVars.VITE_ARE_METRICS_ENABLED,
     };
 };
 
@@ -186,6 +189,7 @@ const schema = Joi.object({
     voice: Joi.string().valid(...voiceOptions).allow('').required(),
     volume: Joi.number().min(0).max(100).required(),
     lang: Joi.string().valid(...langOptions).required(),
+    areMetricsEnabled: Joi.boolean().required(),
 });
 
 const useHelperSettings = () => {
@@ -249,6 +253,7 @@ const useHelperSettings = () => {
         settings.areMilestoneMarkersVisible = isParamValueTrue(settings.areMilestoneMarkersVisible);
         settings.areCentsVisible = isParamValueTrue(settings.areCentsVisible);
         settings.isYearModeEnabled = isParamValueTrue(settings.isYearModeEnabled);
+        settings.areMetricsEnabled = isParamValueTrue(settings.areMetricsEnabled);
         settings.volume = parseInt(settings.volume) / 100;
         settings.voice = voiceNames[settings.voice];
 
