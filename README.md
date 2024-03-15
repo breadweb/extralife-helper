@@ -11,6 +11,8 @@ The Extra Life Helper is a web application that Extra Life participants and team
 * Embedded in any website via an `iframe`
 * Displayed fullscreen on a large monitor or projector for a local in-person event
 
+<br>
+
 ## Features
 
 The Helper has been developed and maintained for over a decade. It has a lot of features to help Extra Life participants and teams with their success!
@@ -37,11 +39,15 @@ The Helper has been developed and maintained for over a decade. It has a lot of 
 * Fully localized in English, French, and Spanish.
 * Structured for easy modification by other developers who want to make changes for themselves or their Extra Life teams.
 
+<br>
+
 ## For Extra Life Participants
 
-If you are simply here to use the Helper, please visit the Helper website! It provides a quick and easy way to customize the Helper and generate a link you can use for your stream or website.
+If you are simply here to use the Helper, please visit the Helper website! It provides a quick and easy way to customize the Helper and generate a link you can use for your LIVE stream or website.
 
 [https://breadweb.net/extralife-helper/](https://breadweb.net/extralife-helper/)
+
+<br>
 
 ## For Developers
 
@@ -148,9 +154,13 @@ Before creating the PR, please ensure the following:
 * You have run `npm run lint` in the `helper` directory and have corrected all warnings and errors.
 * You have reverted any changes to the tracked `.env.deploy.*` files, `mock-api` files, or any other files made only to support your personal testing.
 
+<br>
+
 ## License
 
 Distributed under the MIT license. See [LICENSE](https://github.com/breadweb/extralife-helper/blob/main/LICENSE.txt) for details.
+
+<br>
 
 ## History
 
@@ -167,16 +177,22 @@ I originally created the Helper in 2013. There were no tools available at the ti
 * **2020 - 2023**: Fixed bugs, updated to use latest Extra Life API, and updated to the latest Extra Life branding.
 * **2024**: Refactored to use modern JavaScript frameworks and web app development practices. Added milestone alerts, a latest donations view, progress bar with milestone markers, transparent background support, complete color theme customization, and more.
 
-## Donations
+<br>
 
-It's been really rewarding to see the Helper being used by so many people who are supporting great cause. I do not expect anything in return, but if you are determined, you could always make a donation to my [Extra Life](https://bread4kids.tv/extralife) since this is all for the kids!
-
-### Credits
+## Credits
 
 Translations were provided with help from the following awesome people:
 
 * French: Max Delisle, Craig Segal
 * Spanish: Juliet Veulens, Jesus Lio
+
+<br>
+
+## Donations
+
+It's been really rewarding to see the Helper being used by so many people who are supporting great cause. I do not expect anything in return, but if you are determined, you could always make a donation to my [Extra Life](https://bread4kids.tv/extralife) since this is all for the kids!
+
+<br>
 
 ## Support and Contact
 

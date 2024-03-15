@@ -23,7 +23,7 @@ const InfoView = ({
         // that all happened back to back.
         //
         // The reason to have both totals is to show some nice animations from the previous amount
-        // raised to the new amount. The progress bar (if enabled) will aniamte to the next
+        // raised to the new amount. The progress bar (if enabled) will animate to the next
         // percentage amount. And the amount raised money display will do a nice counting effect.
         //
         // After the animations are complete, this component informs the parent so it can then roll
