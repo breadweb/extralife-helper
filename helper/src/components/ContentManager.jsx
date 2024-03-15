@@ -27,12 +27,13 @@ const ContentManager = ({ errorMessage, settings }) => {
     const [amountRaisedToShow, setAmountRaisedToShow] = useState(0);
     const [donationToShow, setDonationToShow] = useState(undefined);
     const [milestoneToShow, setMilestoneToShow] = useState(undefined);
-    const [errorMessageToShow, setErrorMessageToShow] = useState(undefined);
+    const [settingsErrorMessageToShow, setSettingsErrorMessageToShow] = useState(undefined);
+    const [requestErrorMessageToShow, setRequestErrorMessageToShow] = useState(undefined);
     const { isPolling, startPolling, polledDataResponse, polledDataError } = usePolledExtraLifeData();
     const { getDonations, latestDonations, removeSeenDonation, unseenDonations } = useDonations();
     const { completedMilestones, getMilestones, milestones, removeCompletedMilestone } = useMilestones();
     const { fillerContent, startFillerTimer, stopFillerTimer } = useFillerContent(latestDonations, settings);
-    useMetrics(settings, polledDataResponse?.extraLifeData);
+    useMetrics(errorMessage, settings, polledDataResponse?.extraLifeData);
     const { t } = useTranslation();
 
     useEffect(() => {
@@ -47,7 +48,7 @@ const ContentManager = ({ errorMessage, settings }) => {
 
     useEffect(() => {
         if (errorMessage) {
-            setErrorMessageToShow(errorMessage);
+            setSettingsErrorMessageToShow(errorMessage);
         }
     }, [errorMessage]);
 
@@ -113,9 +114,9 @@ const ContentManager = ({ errorMessage, settings }) => {
         }
 
         if (errorLangKey) {
-            setErrorMessageToShow(t(errorLangKey));
+            setRequestErrorMessageToShow(t(errorLangKey));
         } else {
-            setErrorMessageToShow(undefined);
+            setRequestErrorMessageToShow(undefined);
         }
     }, [polledDataError, t, totalRequestErrors]);
 
@@ -154,10 +155,10 @@ const ContentManager = ({ errorMessage, settings }) => {
         setAmountToIncrement(0);
     }, [amountToIncrement]);
 
-    if (errorMessageToShow) {
+    if (settingsErrorMessageToShow || requestErrorMessageToShow) {
         return (
             <ErrorView
-                message={errorMessageToShow}
+                message={settingsErrorMessageToShow || requestErrorMessageToShow}
             />
         );
     }

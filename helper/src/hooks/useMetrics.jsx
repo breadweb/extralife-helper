@@ -4,11 +4,11 @@ import { serializeError } from '../modules/utils';
 import axios from 'axios';
 import logger from '../modules/logger';
 
-const useMetrics = (settings, extraLifeData) => {
+const useMetrics = (errorMessage, settings, extraLifeData) => {
     const [wereMetricsSent, setWereMetricsSent] = useState(false);
 
     useEffect(() => {
-        if (!settings?.areMetricsEnabled || !extraLifeData || wereMetricsSent) {
+        if (errorMessage || !settings?.areMetricsEnabled || !extraLifeData || wereMetricsSent) {
             return;
         }
 
@@ -62,7 +62,7 @@ const useMetrics = (settings, extraLifeData) => {
                 const error = parseRequestError(err);
                 logger.error(`Error making metrics request. Details: ${serializeError(error)}`);
             });
-    }, [extraLifeData, settings, wereMetricsSent]);
+    }, [errorMessage, extraLifeData, settings, wereMetricsSent]);
 };
 
 export default useMetrics;
