@@ -7,7 +7,7 @@ import logger from '../modules/logger';
 
 const themeOptions = ['blue1', 'blue2', 'gray1', 'white1', 'custom'];
 const borderOptions = ['none', 'rounded', 'square'];
-const langOptions = ['en-us', 'fr-ca', 'es-419'];
+const langOptions = ['en', 'fr', 'es'];
 const moneyFormatOptions = ['standard', 'fancy'];
 const progressFormatOptions = ['raisedOnly', 'raisedAndGoal', 'progressBar'];
 const voiceOptions = [

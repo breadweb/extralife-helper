@@ -1,8 +1,8 @@
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import enTranslation from '../assets/locales/en-us';
-import esTranslation from '../assets/locales/es-419';
-import frTranslation from '../assets/locales/fr-ca';
+import enTranslation from '../assets/locales/en';
+import esTranslation from '../assets/locales/es';
+import frTranslation from '../assets/locales/fr';
 
 i18next
     .use(initReactI18next)
