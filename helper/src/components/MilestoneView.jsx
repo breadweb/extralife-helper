@@ -44,7 +44,7 @@ const MilestoneView = ({ milestone, onMilestoneAlertEnded, settings }) => {
                 className={
                     classNames(
                         'text-[30px] mb-4 text-helper3 whitespace-nowrap animate-pop-in leading-none',
-                        settings.lang === 'en-us' ? 'font-furore' : 'font-cantarell',
+                        settings.lang === 'en' ? 'font-furore' : 'font-cantarell',
                     )
                 }
             >

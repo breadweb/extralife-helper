@@ -42,7 +42,7 @@ const TimeDisplay = ({ settings }) => {
                 className={
                     classNames(
                         'text-[20px] -mb-1 text-helper3 whitespace-nowrap animate-pop-in leading-none',
-                        settings.lang === 'en-us' ? 'font-furore' : 'font-cantarell',
+                        settings.lang === 'en' ? 'font-furore' : 'font-cantarell',
                     )
                 }
             >

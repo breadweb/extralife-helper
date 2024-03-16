@@ -218,8 +218,8 @@ const getSettingsContent = () => {
             'lang',
             process.env.VITE_LANG,
             true,
-            'Language to use for all text displayed in the Helper. Supported options are "en-us" for ' +
-            'English (United States), "fr-ca" for French (Canada), or "es-419" for Spanish (Latin America)',
+            'Language to use for all text displayed in the Helper. Supported options are "en" for ' +
+            'English (United States), "fr" for French (Canada), or "es" for Spanish (Latin America)',
         ],
         [
             'areMetricsNeabled',
