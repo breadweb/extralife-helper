@@ -17,7 +17,7 @@
     "OUR_PERCENT_RAISED": "Hemos recaudado el {{percent}} % de nuestro objetivo.",
     "PORTRAIT_NOT_ALLOWED": "No se admiten proporciones de aspecto de retrato. Asegúrese de que el ancho sea mayor o igual que la altura.",
     "RAISED": "RECAUDADO",
-    "RECEIVED": "{{name}} RECIBIÓ",
+    "RECEIVED": "{{name}} RECIBIÓ:",
     "REQUEST_ERROR_NO_CONNECTION": "El Helper no puede conectarse a la API de Extra Life. Por favor verifique la configuración de su red.",
     "REQUEST_ERROR_NOT_FOUND": "No se pueden solicitar datos de Extra Life. Asegúrese de que su ID de participante (participantID) o ID de equipo(teamID) sea correcto.",
     "REQUEST_ERROR_OTHER": "No se pueden solicitar datos de Extra Life debido a un problema desconocido con la API de Extra Life.",

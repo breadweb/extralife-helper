@@ -17,7 +17,7 @@
     "OUR_PERCENT_RAISED": "We've raised {{percent}}% of our goal.",
     "PORTRAIT_NOT_ALLOWED": "Portrait aspect ratios are not supported. Please ensure the width is greater than or equal to the height.",
     "RAISED": "RAISED",
-    "RECEIVED": "{{name}} RECEIVED",
+    "RECEIVED": "{{name}} RECEIVED:",
     "REQUEST_ERROR_NO_CONNECTION": "The Helper is unable to connect to the Extra Life API. Please check your network settings.",
     "REQUEST_ERROR_NOT_FOUND": "Unable to request Extra Life data. Please make sure your participant ID or team ID is correct.",
     "REQUEST_ERROR_OTHER": "Unable to request Extra Life data due to an unknown Extra Life API issue.",
