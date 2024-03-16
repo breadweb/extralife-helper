@@ -64,8 +64,8 @@ const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
     let recipient;
     if (settings.teamId) {
         recipient = (
-            <div className='text-helper3 flex justify-center w-full text-[12px] font-cantarell leading-none'>
-                {t('RECEIVED', { name: donation.recipientName })}
+            <div className='text-helper3 flex justify-center w-full text-[16px] font-cantarell leading-none -mb-1'>
+                {t('RECEIVED', { name: donation.recipientName }).toLocaleUpperCase()}
             </div>
         );
     }
