@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import confetti from '../modules/confetti';
 import donationAlert from '../assets/audio/donation-alert.mp3';
@@ -7,6 +8,7 @@ import useSound from 'use-sound';
 
 const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
     const [playAlert] = useSound(donationAlert, { volume: settings?.volume || 0 });
+    const { t } = useTranslation();
 
     useEffect(() => {
         const timeoutId = setTimeout(() => {
@@ -59,8 +61,18 @@ const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
         );
     }
 
+    let recipient;
+    if (settings.teamId) {
+        recipient = (
+            <div className='text-helper3 flex justify-center w-full text-[12px] font-cantarell leading-none'>
+                {t('RECEIVED', { name: donation.recipientName })}
+            </div>
+        );
+    }
+
     return (
         <div className='flex flex-col items-center justify-center'>
+            {recipient}
             <div className='leading-none font-cantarell text-helper4 whitespace-nowrap text-[74px]'>
                 <MoneyDisplay
                     amount={donation.amount}
