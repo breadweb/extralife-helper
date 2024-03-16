@@ -110,7 +110,7 @@ const App = () => {
             style={containerStyle}
         >
             <div
-                className='flex justify-center border'
+                className='flex justify-center'
                 style={
                     {
                         transform: `scale(${contentScale})`,
