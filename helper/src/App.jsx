@@ -52,7 +52,7 @@ const App = () => {
             i18n.changeLanguage(helperSettings.data.lang);
         }
 
-        if (!document.documentElement.classList.contains(helperSettings.data.theme)) {
+        if (helperSettings.data.theme && !document.documentElement.classList.contains(helperSettings.data.theme)) {
             if (helperSettings.data.theme === 'custom') {
                 logger.debug('Overriding theme colors with custom values...');
                 for (let i = 1; i < 6; i++) {

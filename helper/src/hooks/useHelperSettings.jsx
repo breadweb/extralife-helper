@@ -257,16 +257,18 @@ const useHelperSettings = () => {
         settings.volume = parseInt(settings.volume) / 100;
         settings.voice = voiceNames[settings.voice];
 
-        const dateParts = settings.startDate.split('/');
-        const timeParts = settings.startTime.split(':');
-        settings.startDateTime = DateTime.fromObject({
-            year: parseInt(dateParts[2]),
-            month: parseInt(dateParts[0]),
-            day: parseInt(dateParts[1]),
-            hour: parseInt(timeParts[0]),
-            minute: parseInt(timeParts[1]),
-            second: parseInt(timeParts[2]),
-        });
+        if (settings.startDate !== 'Invalid DateTime' && settings.startTime !== 'Invalid DateTime') {
+            const dateParts = settings.startDate.split('/');
+            const timeParts = settings.startTime.split(':');
+            settings.startDateTime = DateTime.fromObject({
+                year: parseInt(dateParts[2]),
+                month: parseInt(dateParts[0]),
+                day: parseInt(dateParts[1]),
+                hour: parseInt(timeParts[0]),
+                minute: parseInt(timeParts[1]),
+                second: parseInt(timeParts[2]),
+            });
+        }
 
         setData(settings);
     }, [t]);
