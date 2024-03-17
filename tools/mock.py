@@ -52,11 +52,14 @@ def process_args():
         'amount', nargs='?', type=float, default=0.00,
         help='the amount of the donation(s) or leave blank for random amounts')
     parser_add_donos.add_argument(
+        '--anonymous', dest='anonymous', action='store_true',
+        help='make the donation anonymous')
+    parser_add_donos.add_argument(
         '--no-message', dest='no_message', action='store_true',
-        help='Do not include a message in the donation(s)')
+        help='do not include a message in the donation(s)')
     parser_add_donos.add_argument(
         '--lang', dest='lang', choices=['en', 'es', 'fr'],
-        help='The language to use for donation names and messages')
+        help='the language to use for donation names and messages')
 
     args = parser.parse_args()
     return args
@@ -115,7 +118,7 @@ def get_random_donation_message(args):
     ]
 
     if args.no_message:
-        return ''
+        return None
     elif args.lang == 'en':
         return messages_en[random.randrange(0, len(messages_en) - 1)]
     elif args.lang == 'es':
@@ -189,6 +192,10 @@ def add_donations(args, paths):
         'messageVisibility': 'ALL'
     }
 
+    if args.anonymous:
+        del donation_base['displayNameVisibility']
+        del donation_base['messageVisibility']
+
     contents_participants = get_endpoint_content(paths['participants_donations'])
     contents_team = get_endpoint_content(paths['teams_donations'])
     total_amount = 0
@@ -201,9 +208,11 @@ def add_donations(args, paths):
 
         donation = donation_base.copy()
         donation['amount'] = amount
-        donation['donorID'] = str(uuid.uuid4()).upper().replace('-', '')[0:15]
+        if not args.anonymous:
+            donation['donorID'] = str(uuid.uuid4()).upper().replace('-', '')[0:15]
         donation['donationID'] = str(uuid.uuid4()).upper().replace('-', '')[0:15]
-        donation['displayName'] = name
+        if not args.anonymous:
+            donation['displayName'] = name
         donation['message'] = message
 
         print(f'Adding donation: {name} | {amount} | {message}')
