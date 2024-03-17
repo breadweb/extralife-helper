@@ -222,7 +222,7 @@ const getSettingsContent = () => {
             'English (United States), "fr" for French (Canada), or "es" for Spanish (Latin America)',
         ],
         [
-            'areMetricsNeabled',
+            'areMetricsEnabled',
             process.env.VITE_ARE_METRICS_ENABLED,
             false,
             'If enabled, some general information will be tracked in order to help bread4kids ' +
