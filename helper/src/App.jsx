@@ -103,7 +103,7 @@ const App = () => {
                 classNames(
                     'w-full h-screen flex flex-col items-center justify-center overflow-hidden',
                     helperSettings.data?.border === 'square' ? 'border-2 border-helper1' : '',
-                    helperSettings.data?.border === 'rounded' ? 'border-2 border-helper1 rounded' : '',
+                    helperSettings.data?.border === 'rounded' ? 'border-2 border-helper1 rounded-2xl' : '',
                     helperSettings.data?.isBackgroundTransparent ? 'bg-none' : 'bg-helper5',
                 )
             }
