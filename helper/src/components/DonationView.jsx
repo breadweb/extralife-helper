@@ -70,6 +70,10 @@ const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
         );
     }
 
+    const displayName = donation.displayName !== undefined
+        ? donation.displayName
+        : t('ANONYMOUS');
+
     return (
         <div className='flex flex-col items-center justify-center'>
             {recipient}
@@ -84,13 +88,13 @@ const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
                 className={
                     classNames(
                         'text-helper3 whitespace-nowrap',
-                        donation.displayName.length === donation.displayName.normalize('NFD').length
+                        displayName.length === displayName.normalize('NFD').length
                             ? 'font-furore text-[34px]'
                             : 'font-cantarell text-[34px] font-bold',
                     )
                 }
             >
-                {donation.displayName}
+                {displayName}
             </div>
             {message}
         </div>
