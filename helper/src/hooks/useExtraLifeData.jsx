@@ -9,10 +9,6 @@ const useExtraLifeData = () => {
     const [requestError, setRequestError] = useState(undefined);
 
     const requestData = useCallback(endpoint => {
-        if (!endpoint) {
-            return;
-        }
-
         logger.debug(`Making request to ${endpoint} endpoint...`);
 
         const axiosOptions = {

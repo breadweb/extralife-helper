@@ -15,7 +15,15 @@ import usePolledExtraLifeData from '../hooks/usePolledExtraLifeData';
 const MAX_REQUEST_ERRORS = 4;
 
 const getEndpoint = (settings, path) => {
-    const type = settings.participantId ? 'participants' : 'teams';
+    let type;
+    if (settings.participantId) {
+        type = 'participants';
+    } else if (settings.teamId) {
+        type = 'teams';
+    } else {
+        return null;
+    }
+
     const id = settings.participantId || settings.teamId;
     return `${type}/${id}${path ? `/${path}` : ''}`;
 };
