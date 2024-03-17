@@ -8,7 +8,13 @@ const useMetrics = (errorMessage, settings, extraLifeData) => {
     const [wereMetricsSent, setWereMetricsSent] = useState(false);
 
     useEffect(() => {
-        if (errorMessage || !settings?.areMetricsEnabled || !extraLifeData || wereMetricsSent) {
+        if (
+            errorMessage ||
+            !settings?.areMetricsEnabled ||
+            settings.previewMode ||
+            !extraLifeData ||
+            wereMetricsSent
+        ) {
             return;
         }
 

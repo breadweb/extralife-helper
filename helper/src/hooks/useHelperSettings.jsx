@@ -20,6 +20,7 @@ const voiceOptions = [
     'es-male',
     'es-female',
 ];
+const previewModeOptions = ['general', 'donationAlert', 'milestoneAlert', 'latestDonations', 'logos'];
 
 const voiceNames = {
     '': '',
@@ -73,6 +74,7 @@ const getSettingsFromParams = () => {
         volume: urlParams.get('vo'),
         lang: urlParams.get('l') ? urlParams.get('l').substring(0, 1) : langOptions[0],
         areMetricsEnabled: urlParams.get('i') === '1',
+        previewMode: getListItemFromParam(urlParams, 'w', previewModeOptions),
     };
 
     // The previous Helper supported two progress displays with the 'isGoalVisible' flag. Use that
@@ -122,6 +124,7 @@ const getSettingsFromGlobal = () => {
         volume: window.volume,
         lang: window.lang,
         areMetricsEnabled: window.areMetricsEnabled,
+        previewMode: '',
     };
 };
 
@@ -154,6 +157,7 @@ const getSettingsFromEnvVars = () => {
         volume: envVars.VITE_VOLUME,
         lang: envVars.VITE_LANG,
         areMetricsEnabled: envVars.VITE_ARE_METRICS_ENABLED,
+        previewMode: envVars.VITE_PREVIEW_MODE,
     };
 };
 
@@ -190,6 +194,7 @@ const schema = Joi.object({
     volume: Joi.number().min(0).max(100).required(),
     lang: Joi.string().valid(...langOptions).required(),
     areMetricsEnabled: Joi.boolean().required(),
+    previewMode: Joi.string().valid(...previewModeOptions).allow('').required(),
 });
 
 const useHelperSettings = () => {
