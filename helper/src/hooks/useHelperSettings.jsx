@@ -71,7 +71,7 @@ const getSettingsFromParams = () => {
         isYearModeEnabled: urlParams.get('y') === '1',
         voice: urlParams.get('v') === '-1' ? '' : getListItemFromParam(urlParams, 'v', voiceOptions),
         volume: urlParams.get('vo'),
-        lang: urlParams.get('l') || langOptions[0],
+        lang: urlParams.get('l') ? urlParams.get('l').substring(0, 1) : langOptions[0],
         areMetricsEnabled: urlParams.get('i') === '1',
     };
 
