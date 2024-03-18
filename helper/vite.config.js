@@ -161,8 +161,9 @@ const getSettingsContent = () => {
             process.env.VITE_IS_RAISED_LINE_PLURAL,
             false,
             'Some participants like to refer to their entire community and/or network of supporters. ' +
-            'If set to true, "Our" will be used instead of "My" in the line that describes the amount ' +
-            'raised while in particpant mode. Note that "Our" is always used in team mode.',
+            'If set to true, "Our" and "We\'ve" will be used instead of "My" and "I\'ve" in the lines ' +
+            'that describe the amount raised while in particpant mode. Note that the plural forms are ' +
+            'always used in team mode.',
         ],
         [
             'progressFormat',
