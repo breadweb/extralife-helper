@@ -17,27 +17,27 @@ The Extra Life Helper is a web application that Extra Life participants and team
 
 The Helper has been developed and maintained for over a decade. It has a lot of features to help Extra Life participants and teams with their success!
 
-* Works in "participant" mode or "team" mode.
+* Works in "participant" mode or "team" mode
 
-* Counts down the days until Extra Life if there are three or more days left.
-* Counts down the hours until Extra Life if there are less than four days left.
-* Counts the total hours played if the start time has passed.
-* Continually updates the total amount raised as it changes.
+* Counts down the days until Extra Life if there are three or more days left
+* Counts down the hours until Extra Life if there are less than four days left
+* Counts the total hours played if the start time has passed
+* Continually updates the total amount raised as it changes
 * Provides multiple ways to display progress:
   - Amount raised only
   - Amound raised and goal
   - Progress bar with optional milestone markers
-* Shows fun and exciting real-time alerts as donations arrive.
-* Shows celebatory alerts when milestones have been reached.
-* Provides the option for donation messages to be read with text-to-speech.
-* Provides volume control for all sound effects and text-to-speech.
-* Occasionally shows the Extra Life logo.
-* Ocassionally shows the last five donations that were made to recognize supporters.
-* Provides four color theme choices that are Extra Life branded **and** provides the ability to design a custom color theme.
-* Works in any flavor of OBS and any modern browser.
-* Looks sharp at any 16:9 or 16:10 aspect ratio size including full screen.
-* Fully localized in English, French, and Spanish.
-* Structured for easy modification by other developers who want to make changes for themselves or their Extra Life teams.
+* Shows fun and exciting real-time alerts as donations are received
+* Shows celebatory alerts when milestones have been reached
+* Provides the option for donation messages to be read with text-to-speech
+* Provides volume control for all sound effects and text-to-speech
+* Occasionally shows the Extra Life logo
+* Ocassionally shows the last five donations that were made to recognize recent supporters
+* Provides four color theme choices that are Extra Life branded and also provides the ability to design a compltely custom color theme
+* Works in any flavor of OBS and any modern browser
+* Looks sharp at any 16:9 or 16:10 aspect ratio size including full screen
+* Fully localized in English, French, and Spanish
+* Architected so other developers can fork and make changes for themselves or their Extra Life teams
 
 <br>
 
@@ -45,15 +45,15 @@ The Helper has been developed and maintained for over a decade. It has a lot of 
 
 If you are simply here to use the Helper, please visit the Helper website! It provides a quick and easy way to customize the Helper and generate a link you can use for your LIVE stream or website.
 
-[https://breadweb.net/extralife-helper/](https://breadweb.net/extralife-helper/)
+[https://breadweb.net/extralife-helper](https://breadweb.net/extralife-helper)
 
 <br>
 
 ## For Developers
 
-The Extra Life Helper is written in JavaScript and React. [Tailwind](https://tailwindcss.com/) is used for CSS and [Vite](https://vitejs.dev/) is the framework used for local development and making builds.
+The Extra Life Helper is written in JavaScript and React. [Tailwind](https://tailwindcss.com/) is used for CSS and [Vite](https://vitejs.dev/) is the framework for local development and making builds.
 
-If you've been wanting to develop your own React application that works with the Extra Life API, there are pleny of reusable components and hooks that you can leverage. There are also nice Python scripts included in this repo that enable rapid local testing against a mock version of the Extra Life API.
+If you've been wanting to develop your own React application that works with the Extra Life API, there are pleny of reusable components and hooks that you can leverage. Also included are some Python scripts that enable rapid local testing against a mock version of the Extra Life API.
 
 If you are interested in modifying the Helper to meet specific requirements for yourself or your Extra Life team, please review the following sections.
 
@@ -65,7 +65,7 @@ The Helper runs in one of three different ways:
 
 2. `LOCAL` - This is a compiled version of the Helper that is condensed into a single HTML file. This file can be run in a browser from the file system. It is ideal for personal use of your modified Helper or distribution to a team when you don't have a hosting solution.
 
-3. `REMOTE` is used when building the Helper as a collection of files for deployment to a remote hosting solution such as AWS S3. This is what is used for the [official remote version](https://breadweb.net/extralife-helper/) of the Helper but can be used to deploy your modified Helper to your own server.
+3. `REMOTE` is used when building the Helper as a collection of files for deployment to a hosting solution such as AWS S3. This is what is used for the [official remote version](https://breadweb.net/extralife-helper/) of the Helper but can be used to deploy your modified Helper to your own server.
 
 ### Development Setup
 
@@ -88,11 +88,11 @@ There is a config file per mode. These files contain a combination of **applicat
 
 ### User Settings
 
-The Helper is able to be used by anyone by changing the settings. Users will need to provide their participant ID or team ID so the Helper can get their information from the Extra Life API. The remaining settings affect how the Helper looks and functions.
+The Helper is able to be used by anyone by changing the settings. Users will need to provide their participant ID or team ID so the Helper can get their information from the Extra Life API. The remaining user settings affect how the Helper looks and functions.
 
 User settings are parsed differently based on what mode the Helper is running in.
 
-* `DEV` mode: User settings are read directly from the environment variables defined in the `.env.local` config file.
+* `DEV` mode: User settings are read from the environment variables defined in the `.env.local` config file.
 
 * `LOCAL` mode: User settings are read from the compiled single HTML file. The initial values are provided by the `.env.deploy.LOCAL` config file at build time, but users can edit the values in the compiled HTML file so it works for them.
 
@@ -185,7 +185,7 @@ I originally created the Helper in 2013. There were no tools available at the ti
 
 Translations were provided with help from the following awesome people:
 
-* French: Max Delisle, Craig Segal
+* French: Max Delisle, Craig Segal, Theo Vaillant
 * Spanish: Juliet Veulens, Jesus Lio
 
 <br>
