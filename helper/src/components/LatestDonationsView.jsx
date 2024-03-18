@@ -10,32 +10,38 @@ const LatestDonationsView = ({ latestDonations, settings }) => {
         return;
     }
 
-    const donations = latestDonations.slice(0, 5).map((donation, index) => (
-        <div
-            key={donation.donationID}
-            className={
-                `text-helper3 font-cantarell text-[20px] animate-fade-in flex w-full rounded-lg
-                border border-helper1 leading-none relative`
-            }
-            style={{
-                animationDelay: `${(index + 1) * .2}s`,
-            }}
-        >
-            <div className='z-0 absolute w-full rounded-lg h-full bg-helper5 brightness-75'>
+    const donations = latestDonations.slice(0, 5).map((donation, index) => {
+        const displayName = donation.displayName !== undefined
+            ? donation.displayName
+            : t('ANONYMOUS');
 
+        return (
+            <div
+                key={donation.donationID}
+                className={
+                    `text-helper3 font-cantarell text-[20px] animate-fade-in flex w-full rounded-lg
+                    border border-helper1 leading-none relative`
+                }
+                style={{
+                    animationDelay: `${(index + 1) * .2}s`,
+                }}
+            >
+                <div className='z-0 absolute w-full rounded-lg h-full bg-helper5 brightness-75'>
+
+                </div>
+                <div className='z-10 w-full whitespace-nowrap pl-2 py-1.5'>
+                    {displayName}
+                </div>
+                <div className='z-10 pr-2 flex justify-end items-center'>
+                    <MoneyDisplay
+                        amount={donation.amount}
+                        areCentsVisible={true}
+                        format={settings.moneyFormat}
+                    />
+                </div>
             </div>
-            <div className='z-10 w-full whitespace-nowrap pl-2 py-1.5'>
-                {donation.displayName}
-            </div>
-            <div className='z-10 pr-2 flex justify-end items-center'>
-                <MoneyDisplay
-                    amount={donation.amount}
-                    areCentsVisible={true}
-                    format={settings.moneyFormat}
-                />
-            </div>
-        </div>
-    ));
+        );
+    });
 
     return (
         <div className='flex flex-col justify-center items-center w-full mx-7'>
