@@ -11,28 +11,17 @@ const langOptions = ['en', 'fr', 'es'];
 const moneyFormatOptions = ['standard', 'fancy'];
 const progressFormatOptions = ['raisedOnly', 'raisedAndGoal', 'progressBar'];
 const voiceOptions = [
-    'us-male',
-    'us-female',
-    'uk-male',
-    'uk-female',
-    'fr-male',
-    'fr-female',
-    'es-male',
-    'es-female',
+    '',
+    'US English Male',
+    'US English Female',
+    'UK English Male',
+    'UK English Female',
+    'French Canadian Male',
+    'French Canadian Female',
+    'Spanish Latin American Male',
+    'Spanish Latin American Female',
 ];
 const previewModeOptions = ['general', 'donationAlert', 'milestoneAlert', 'latestDonations', 'logos'];
-
-const voiceNames = {
-    '': '',
-    'us-male': 'US English Male',
-    'us-female': 'US English Female',
-    'uk-male': 'UK English Male',
-    'uk-female': 'UK English Female',
-    'fr-male': 'French Canadian Male',
-    'fr-female': 'French Canadian Female',
-    'es-male': 'Spanish Latin American Male',
-    'es-female': 'Spanish Latin American Female',
-};
 
 const datePattern = new RegExp(/\d{1,2}\/\d{1,2}\/\d{4}/);
 const timePattern = new RegExp(/\d{1,2}:\d{1,2}:\d{2}/);
@@ -66,7 +55,7 @@ const getSettingsFromParams = () => {
         areMilestoneAlertsEnabled: urlParams.get('e') === '1',
         isConfettiEnabled: urlParams.get('f') === '1',
         isRaisedLinePlural: urlParams.get('p') === '1',
-        areMilestoneMarkersVisible: urlParams.get('k') === '1',
+        areMilestoneMarkersVisible: urlParams.get('o') === '1',
         areCentsVisible: urlParams.get('n') === '1',
         moneyFormat: getListItemFromParam(urlParams, 'm', moneyFormatOptions, 0),
         isYearModeEnabled: urlParams.get('y') === '1',
@@ -260,7 +249,6 @@ const useHelperSettings = () => {
         settings.isYearModeEnabled = isParamValueTrue(settings.isYearModeEnabled);
         settings.areMetricsEnabled = isParamValueTrue(settings.areMetricsEnabled);
         settings.volume = parseInt(settings.volume) / 100;
-        settings.voice = voiceNames[settings.voice];
 
         if (settings.startDate !== 'Invalid DateTime' && settings.startTime !== 'Invalid DateTime') {
             const dateParts = settings.startDate.split('/');

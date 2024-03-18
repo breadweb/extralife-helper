@@ -205,8 +205,9 @@ const getSettingsContent = () => {
             'voice',
             process.env.VITE_VOICE,
             true,
-            'Set to "US-male", "US-female", "UK-male", "UK-female", "FR-male", "FR-female", "ES-male", ' +
-            '"ES-female", or set to "" to not read messages with text-to-speech.',
+            'Set to "US English Male", "US English Female", "UK English Male", "UK English Female", ' +
+            '"French Canadian Male", "French Canadian Female", "Spanish Latin American Male", ' +
+            '"Spanish Latin American Female" or set to "" to not read messages with text-to-speech.',
         ],
         [
             'volume',
