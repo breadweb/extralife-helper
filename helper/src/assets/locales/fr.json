@@ -15,12 +15,13 @@
     "OUR_AMOUNT_RAISED": "Le montant total amassé:",
     "OUR_PERCENT_RAISED_EXCITED": "Nous avons augmenté notre goal de {{percent}}%!",
     "OUR_PERCENT_RAISED": "Nous avons augmenté notre goal de {{percent}}%.",
+    "PORTRAIT_NOT_ALLOWED": "Ce format de portrait n'est pas supporté. Soyez sure que la largeur est égale ou supérieure à la hauteur.",
     "RAISED": "AUGMENTATION",
     "RECEIVED": "{{name}} REÇU:",
-    "REQUEST_ERROR_NO_CONNECTION": "The Helper is unable to connect to the Extra Life API. Please check your network settings.",
-    "REQUEST_ERROR_NOT_FOUND": "Unable to request Extra Life data. Please make sure your participant ID or team ID is correct.",
-    "REQUEST_ERROR_OTHER": "Unable to request Extra Life data due to an unknown Extra Life API issue.",
-    "REQUEST_ERROR_RATE_LIMITED": "The Extra Life API has rate limited your IP address. Please ensure you are not running multiple versions of the Helper or multiple Extra Life tools.",
-    "REQUEST_ERROR_SERVICE_ERROR": "The Extra Life API is currently unavailable due to server issues. Please wait.",
-    "VISIT_FOR_HELP": "Unsure what to do? Please visit the bread4kids Discord for support: bread4kids.tv/discord"
+    "REQUEST_ERROR_NO_CONNECTION": "L'Helper n'est pas en mesure de se connecter à l'API d'Extra Life. Verifiez vos parametres de réseau.",
+    "REQUEST_ERROR_NOT_FOUND": "Impossible de recevoir des donn Extra life. Soyer sure que votre identifiant, ou l'identifiant de votre equipe, est correct.",
+    "REQUEST_ERROR_OTHER": "Impossible de recevoir des données Extra Life parce-que l'API d'Extra Life rencontre des problemes.",
+    "REQUEST_ERROR_RATE_LIMITED": "L'API d'Extra Life a limité votre adresse IP. Verififez que plusieurs versions de l'Helper ou d'autres outils Extra Life ne sont pas en cours d'execution.",
+    "REQUEST_ERROR_SERVICE_ERROR": "L'API d'Extra Life n'est pas disponible à cause d'un probleme de server. Faite preuve de patience.",
+    "VISIT_FOR_HELP": "Perdu? Visite bread4kids Discord pour du support: bread4kids.tv/discord"
 }
