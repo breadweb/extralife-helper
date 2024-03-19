@@ -19,7 +19,7 @@ const LatestDonationsView = ({ latestDonations, settings }) => {
             <div
                 key={donation.donationID}
                 className={
-                    `text-helper3 font-cantarell text-[20px] animate-fade-in flex w-full rounded-lg
+                    `text-helper3 font-cantarell text-[18px] animate-fade-in flex w-full rounded-lg
                     border border-helper1 leading-none relative`
                 }
                 style={{
@@ -48,7 +48,7 @@ const LatestDonationsView = ({ latestDonations, settings }) => {
             <div
                 className={
                     classNames(
-                        'text-[30px] mb-4 text-helper3 whitespace-nowrap animate-pop-in leading-none',
+                        'text-[26px] mb-4 text-helper3 whitespace-nowrap animate-pop-in leading-none',
                         settings.lang === 'en' ? 'font-furore' : 'font-cantarell',
                     )
                 }

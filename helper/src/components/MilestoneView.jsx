@@ -56,7 +56,8 @@ const MilestoneView = ({ milestone, onMilestoneAlertEnded, settings }) => {
             </div>
             <div
                 className={
-                    'text-helper3 flex flex-col items-center mb-4 animate-fade-in animate-delay-[.8s]'
+                    `text-helper3 flex flex-col items-center mb-4 animate-fade-in animate-delay-[.8s]
+                    text-[20px]`
                 }
             >
                 &quot;
@@ -65,7 +66,7 @@ const MilestoneView = ({ milestone, onMilestoneAlertEnded, settings }) => {
             </div>
             <div
                 className={
-                    `leading-none font-cantarell text-helper4 whitespace-nowrap text-[42px]
+                    `leading-none font-cantarell text-helper4 whitespace-nowrap text-[60px]
                     animate-pop-in animate-delay-[1.2s]`
                 }
             >
@@ -77,7 +78,7 @@ const MilestoneView = ({ milestone, onMilestoneAlertEnded, settings }) => {
             </div>
             <div
                 className={
-                    `text-helper3 flex flex-col items-center w-full text-[12px] font-cantarell
+                    `text-helper3 flex flex-col items-center w-full text-[18px] font-cantarell
                     animate-fade-in animate-delay-[1.6s]`
                 }
             >
