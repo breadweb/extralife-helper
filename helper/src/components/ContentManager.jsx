@@ -74,13 +74,15 @@ const ContentManager = ({ errorMessage, settings }) => {
             return;
         }
 
-        if (!settings.areDonationAlertsEnabled || polledDataResponse.requestCount === 1) {
+        const didTotalChange = totalDonations !== polledDataResponse.extraLifeData.numDonations;
+
+        if (polledDataResponse.requestCount === 1 || (!settings.areDonationAlertsEnabled && didTotalChange)) {
             setAmountToIncrement(
                 polledDataResponse.extraLifeData.sumDonations + polledDataResponse.extraLifeData.sumPledges,
             );
         }
 
-        if (totalDonations !== polledDataResponse.extraLifeData.numDonations) {
+        if (didTotalChange) {
             if (
                 settings.participantId &&
                 (settings.areMilestoneAlertsEnabled || settings.areMilestoneMarkersVisible)
