@@ -11,6 +11,10 @@ const MilestoneView = ({ milestone, onMilestoneAlertEnded, settings }) => {
     const { t } = useTranslation();
 
     useEffect(() => {
+        if (!onMilestoneAlertEnded) {
+            return;
+        }
+
         const timeoutId = setTimeout(() => {
             onMilestoneAlertEnded();
         }, import.meta.env.VITE_MILESTONE_TTL);

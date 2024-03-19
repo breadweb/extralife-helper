@@ -3,8 +3,9 @@ import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import colorConvert from 'color-convert';
 import confetti from './modules/confetti';
-import ContentManager from './components/ContentManager';
+import LiveContent from './components/LiveContent';
 import logger from './modules/logger';
+import PreviewContent from './components/PreviewContent';
 import React from 'react';
 import transparencyGrid from './assets/images/transparency-grid.png';
 import useHelperSettings from './hooks/useHelperSettings';
@@ -97,6 +98,27 @@ const App = () => {
         };
     }
 
+    if (!helperSettings?.data) {
+        return null;
+    }
+
+    let content;
+    if (!['', 'general'].includes(helperSettings.data.previewMode)) {
+        content = (
+            <PreviewContent
+                settings={helperSettings.data}
+                errorMessage={errorMessage}
+            />
+        );
+    } else {
+        content = (
+            <LiveContent
+                settings={helperSettings.data}
+                errorMessage={errorMessage}
+            />
+        );
+    }
+
     return (
         <div
             className={
@@ -119,10 +141,7 @@ const App = () => {
                     }
                 }
             >
-                <ContentManager
-                    settings={helperSettings.data}
-                    errorMessage={errorMessage}
-                />
+                {content}
             </div>
         </div>
     );

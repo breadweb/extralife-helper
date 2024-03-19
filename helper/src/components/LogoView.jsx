@@ -2,10 +2,14 @@ import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
 import logo from '../assets/images/extra-life-logo.svg';
 
-const LogoView = () => {
+const LogoView = ({ doFadeOut }) => {
     const [isVisible, setIsVisible] = useState(true);
 
     useEffect(() => {
+        if (!doFadeOut) {
+            return;
+        }
+
         const timeoutId = setTimeout(() => {
             setIsVisible(false);
         }, import.meta.env.VITE_LOGO_TTL - 800);
@@ -13,7 +17,7 @@ const LogoView = () => {
         return () => {
             clearTimeout(timeoutId);
         };
-    }, []);
+    }, [doFadeOut]);
 
     return (
         <img

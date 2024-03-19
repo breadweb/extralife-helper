@@ -11,6 +11,10 @@ const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
     const { t } = useTranslation();
 
     useEffect(() => {
+        if (!onDonationAlertEnded) {
+            return;
+        }
+
         const timeoutId = setTimeout(() => {
             onDonationAlertEnded();
         }, import.meta.env.VITE_DONATION_TTL);

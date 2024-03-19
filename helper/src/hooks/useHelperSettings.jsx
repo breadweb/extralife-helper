@@ -21,7 +21,7 @@ const voiceOptions = [
     'Spanish Latin American Male',
     'Spanish Latin American Female',
 ];
-const previewModeOptions = ['general', 'donationAlert', 'milestoneAlert', 'latestDonations', 'logos'];
+const previewModeOptions = ['general', 'donationAlert', 'milestoneAlert', 'latestDonations', 'logo'];
 
 const datePattern = new RegExp(/\d{1,2}\/\d{1,2}\/\d{4}/);
 const timePattern = new RegExp(/\d{1,2}:\d{1,2}:\d{2}/);

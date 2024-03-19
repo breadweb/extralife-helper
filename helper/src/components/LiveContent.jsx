@@ -28,7 +28,7 @@ const getEndpoint = (settings, path) => {
     return `${type}/${id}${path ? `/${path}` : ''}`;
 };
 
-const ContentManager = ({ errorMessage, settings }) => {
+const LiveContent = ({ errorMessage, settings }) => {
     const [totalRequestErrors, setTotalRequestErrors] = useState(0);
     const [totalDonations, setTotalDontaions] = useState(undefined);
     const [amountToIncrement, setAmountToIncrement] = useState(0);
@@ -224,4 +224,4 @@ const ContentManager = ({ errorMessage, settings }) => {
     return null;
 };
 
-export default React.memo(ContentManager);
+export default React.memo(LiveContent);
