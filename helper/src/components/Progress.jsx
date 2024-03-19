@@ -49,7 +49,7 @@ const Progress = ({
                 className={
                     classNames(
                         'leading-none font-cantarell text-helper3 whitespace-nowrap',
-                        moneyFormat === 'fancy' ? 'text-[62px]' : 'text-[54px]',
+                        moneyFormat === 'fancy' ? 'text-[72px]' : 'text-[62px]',
                     )
                 }
             >
@@ -64,7 +64,7 @@ const Progress = ({
                 className={
                     classNames(
                         'flex space-x-2 leading-none font-cantarell text-helper3 whitespace-nowrap mt-1',
-                        moneyFormat === 'fancy' ? 'text-[44px]' : 'text-[38px]',
+                        moneyFormat === 'fancy' ? 'text-[43px]' : 'text-[34px]',
                     )
                 }
             >

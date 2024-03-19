@@ -74,10 +74,31 @@ const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
         ? donation.displayName
         : t('ANONYMOUS');
 
+    // Ensure the display of the donation amount is as large as possible.
+    const amountLength = donation.amount.toString().length;
+    const isFancy = settings.moneyFormat === 'fancy';
+    let textSize;
+    if (amountLength > 7) {
+        textSize = isFancy ? 'text-[74px]' : 'text-[66px]';
+    } else if (amountLength > 6) {
+        textSize = isFancy ? 'text-[86px]' : 'text-[72px]';
+    } else if (amountLength > 5) {
+        textSize = isFancy ? 'text-[96px]' : 'text-[78px]';
+    } else {
+        textSize = isFancy ? 'text-[100px]' : 'text-[92px]';
+    }
+
     return (
         <div className='flex flex-col items-center justify-center'>
             {recipient}
-            <div className='leading-none font-cantarell text-helper4 whitespace-nowrap text-[74px]'>
+            <div
+                className={
+                    classNames(
+                        'leading-none font-cantarell text-helper4 whitespace-nowrap',
+                        textSize,
+                    )
+                }
+            >
                 <MoneyDisplay
                     amount={donation.amount}
                     areCentsVisible={true}
