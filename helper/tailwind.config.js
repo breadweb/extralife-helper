@@ -6,7 +6,7 @@ module.exports = {
     theme: {
         extend: {
             animation: {
-                'pop-in': 'pop-in .6s both',
+                'pop-in': 'pop-in .8s both',
                 'fade-in': 'fade-in .8s both',
                 'fade-out': 'fade-out .8s both',
             },

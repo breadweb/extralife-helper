@@ -11,28 +11,26 @@ const TimeDisplay = ({ settings }) => {
     const timer = useTimer(settings?.startDateTime);
     const { t } = useTranslation();
 
-    if (!timer) {
-        return;
-    }
+    let timerLine = 'LOADING...';
+    let time = '00:00:00';
 
-    let timerLine;
-    let time;
-
-    if (settings.isYearModeEnabled) {
-        timerLine = t('MAIN_TITLE');
-        time = DateTime.now().toFormat('yyyy');
-    } else {
-        if (timer.ms < 0) {
-            if (timer.ms < -FOUR_DAYS_IN_MS) {
-                timerLine = t('DAYS_UNTIL');
-                time = Math.ceil(timer.ms / ONE_DAY_IN_MS) * -1;
+    if (timer) {
+        if (settings.isYearModeEnabled) {
+            timerLine = t('MAIN_TITLE');
+            time = DateTime.now().toFormat('yyyy');
+        } else {
+            if (timer.ms < 0) {
+                if (timer.ms < -FOUR_DAYS_IN_MS) {
+                    timerLine = t('DAYS_UNTIL');
+                    time = Math.ceil(timer.ms / ONE_DAY_IN_MS) * -1;
+                } else {
+                    timerLine = t('HOURS_UNTIL');
+                    time = timer.clock;
+                }
             } else {
-                timerLine = t('HOURS_UNTIL');
+                timerLine = t('HOURS_PLAYED');
                 time = timer.clock;
             }
-        } else {
-            timerLine = t('HOURS_PLAYED');
-            time = timer.clock;
         }
     }
 
@@ -41,8 +39,9 @@ const TimeDisplay = ({ settings }) => {
             <div
                 className={
                     classNames(
-                        'text-[22px] -mb-1 text-helper3 text-center animate-pop-in leading-none',
+                        'text-[22px] -mb-1 text-helper3 text-center leading-none',
                         settings.lang === 'en' ? 'font-furore' : 'font-cantarell',
+                        timerLine === 'LOADING...' ? 'opacity-0' : 'animate-pop-in',
                     )
                 }
             >
@@ -50,8 +49,10 @@ const TimeDisplay = ({ settings }) => {
             </div>
             <div
                 className={
-                    `text-[92px] leading-none whitespace-nowrap
-                    font-digital text-helper4 animate-fade-in animate-delay-[.4s]`
+                    classNames(
+                        'text-[92px] leading-none whitespace-nowrap font-digital text-helper4',
+                        time === '00:00:00' ? 'opacity-0' : 'animate-fade-in animate-delay-[.4s]',
+                    )
                 }
             >
                 {time}
