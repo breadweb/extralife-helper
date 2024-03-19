@@ -41,7 +41,7 @@ const TimeDisplay = ({ settings }) => {
             <div
                 className={
                     classNames(
-                        'text-[20px] -mb-1 text-helper3 whitespace-nowrap animate-pop-in leading-none',
+                        'text-[22px] -mb-1 text-helper3 text-center animate-pop-in leading-none',
                         settings.lang === 'en' ? 'font-furore' : 'font-cantarell',
                     )
                 }

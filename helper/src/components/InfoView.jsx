@@ -61,7 +61,7 @@ const InfoView = ({
     }
 
     return (
-        <div className='flex flex-col items-center justify-center w-full mx-7'>
+        <div className='flex flex-col items-center justify-center w-full mx-6'>
             <TimeDisplay settings={settings} />
             {raisedLine}
             <div className='animate-fade-in animate-delay-[1.4s] flex justify-center w-full'>
