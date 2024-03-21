@@ -1,8 +1,9 @@
 import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
-import logo from '../assets/images/extra-life-logo.svg';
+import logoBlue from '../assets/images/logo-blue.svg';
+import logoWhite from '../assets/images/logo-white.svg';
 
-const LogoView = ({ doFadeOut }) => {
+const LogoView = ({ doFadeOut, settings }) => {
     const [isVisible, setIsVisible] = useState(true);
 
     useEffect(() => {
@@ -18,6 +19,8 @@ const LogoView = ({ doFadeOut }) => {
             clearTimeout(timeoutId);
         };
     }, [doFadeOut]);
+
+    const logo = settings.theme === 'white1' || settings.color1 === 'FFFFFF' ? logoBlue : logoWhite;
 
     return (
         <img

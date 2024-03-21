@@ -23,7 +23,12 @@ const useFillerContent = (latestDonations, settings) => {
                 setDelay = import.meta.env.VITE_SHOW_DONORS_INTERVAL;
                 removeDelay = import.meta.env.VITE_DONORS_TTL;
             } else {
-                content = <LogoView doFadeOut={true} />;
+                content = (
+                    <LogoView
+                        doFadeOut={true}
+                        settings={settings}
+                    />
+                );
                 setDelay = import.meta.env.VITE_SHOW_LOGO_INTERVAL;
                 removeDelay = import.meta.env.VITE_LOGO_TTL;
             }

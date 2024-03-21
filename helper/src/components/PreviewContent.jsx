@@ -89,7 +89,10 @@ const PreviewContent = ({ errorMessage, settings }) => {
 
         case 'logo':
             return (
-                <LogoView doFadeOut={false} />
+                <LogoView
+                    doFadeOut={false}
+                    settings={settings}
+                />
             );
 
         default:
