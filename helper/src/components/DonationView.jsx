@@ -3,12 +3,13 @@ import classNames from 'classnames';
 import confetti from '../modules/confetti';
 import donationAlert from '../assets/audio/donation-alert.mp3';
 import MoneyDisplay from './MoneyDisplay';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import useSound from 'use-sound';
 
 const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
-    const [playAlert] = useSound(donationAlert, { volume: settings?.volume || 0 });
     const { t } = useTranslation();
+    const [playAlert] = useSound(donationAlert, { volume: settings?.volume || 0 });
+    const [wasHandled, setWasHandled] = useState(false);
 
     useEffect(() => {
         if (!onDonationAlertEnded) {
@@ -25,7 +26,7 @@ const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
     }, [donation, onDonationAlertEnded]);
 
     useEffect(() => {
-        if (!playAlert || !donation) {
+        if (!playAlert || !donation || wasHandled) {
             return;
         }
 
@@ -47,6 +48,8 @@ const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
             confetti.start();
         }
 
+        setWasHandled(true);
+
         return () => {
             window.responsiveVoice?.cancel();
             clearTimeout(textToSpeechTimeout);
@@ -54,7 +57,7 @@ const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
                 confetti.stop();
             }
         };
-    }, [donation, settings, playAlert]);
+    }, [donation, settings, playAlert, wasHandled]);
 
     let message;
     if (donation.message) {
