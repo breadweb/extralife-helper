@@ -1,12 +1,77 @@
+import { Chat } from 'twitch-js';
+import { serializeError } from '../modules/utils';
 import { useTranslation } from 'react-i18next';
+import axios from 'axios';
 import classNames from 'classnames';
 import confetti from '../modules/confetti';
 import donationAlert from '../assets/audio/donation-alert.mp3';
+import logger from '../modules/logger';
 import MoneyDisplay from './MoneyDisplay';
-import React, { useEffect, useState } from 'react';
 import oneEightSevenSeven from '../assets/audio/1877.mp3';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import useSound from 'use-sound';
+
+const sendTwitchChatMessage = async (donation) => {
+    const chat = new Chat({
+        username: 'bread4kids',
+        token: import.meta.env.VITE_TWITCH_CHAT_PASSWORD,
+        log: {
+            level: 0,
+        },
+    });
+
+    try {
+        await chat.connect();
+        await chat.join('bread4kids');
+
+        const formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+        });
+        const amount = formatter.format(donation.amount);
+        const name = donation.displayName;
+        const message = donation.message;
+        const article = donation.amount.toString().startsWith('8') ? 'an' : 'a';
+        const chatMessage = message
+            ? `bread4Wings ${name} just made ${article} ${amount} Extra Life donation: "${message}" bread4ThankYou`
+            : `bread4Wings ${name} just made ${article} ${amount} Extra Life donation! bread4ThankYou`;
+
+        await chat.say('bread4kids', chatMessage);
+
+        chat.disconnect();
+    } catch (err) {
+        logger.error(`Error sending Twitch chat message. Details: ${serializeError(err)}`);
+    }
+};
+
+const flashLights = async () => {
+    const addresses = [
+        '192.168.1.173',
+        '192.168.1.242',
+    ];
+
+    const users = [
+        import.meta.env.VITE_HUE_BRIDGE_USER_1,
+        import.meta.env.VITE_HUE_BRIDGE_USER_2,
+    ];
+
+    for (let i = 0; i < addresses.length; i++) {
+        const address = addresses[i];
+        const user = users[i];
+        const axiosOptions = {
+            method: 'PUT',
+            data: {
+                alert: 'lselect',
+            },
+            url: `http://${address}/api/${user}/groups/1/action`,
+        };
+        try {
+            await axios(axiosOptions);
+        } catch (err) {
+            logger.error(`Error making light request. Bridge: ${address}, Details: ${serializeError(err)}`);
+        }
+    }
+};
 
 const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
     const { t } = useTranslation();
@@ -29,15 +94,23 @@ const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
     }, [donation, onDonationAlertEnded]);
 
     useEffect(() => {
-        if (!playAlert || !donation || wasHandled) {
+        if (!playAlert || !play1877Alert || !donation || wasHandled) {
             return;
         }
 
+        // Play the special 1-877-bread4kids jingle donation alert if the donation amount contains
+        // 1877 anywhere in the donation amount.
         if (donation.amount.toString().replace('.', '').includes('1877')) {
             play1877Alert();
         } else {
             playAlert();
         }
+
+        // Make the HUE light groups flash.
+        flashLights();
+
+        // Post a message to Twitch chat.
+        sendTwitchChatMessage(donation);
 
         const textToSpeechTimeout = setTimeout(() => {
             if (settings.voice !== '' && window.responsiveVoice) {
