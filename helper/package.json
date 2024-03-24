@@ -6,6 +6,7 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build",
+        "build:BREAD": "env-cmd -f ~/.breadweb/helper.env npm run build",
         "build:LOCAL": "env-cmd -f .env.deploy.LOCAL npm run build",
         "build:REMOTE": "env-cmd -f .env.deploy.REMOTE npm run build",
         "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
@@ -23,6 +24,7 @@
         "react-dom": "^18.2.0",
         "react-i18next": "^14.0.5",
         "tw-colors": "^3.3.1",
+        "twitch-js": "^2.0.0-beta.45",
         "use-sound": "^4.0.1"
     },
     "devDependencies": {
