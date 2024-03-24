@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
-import logoBlue from '../assets/images/logo-blue.svg';
+import logoStandard from '../assets/images/logo-standard.svg';
 import logoWhite from '../assets/images/logo-white.svg';
 
 const LogoView = ({ doFadeOut, settings }) => {
@@ -20,8 +20,8 @@ const LogoView = ({ doFadeOut, settings }) => {
         };
     }, [doFadeOut]);
 
-    const logo = settings.theme === 'white1' || settings.color5?.toLowerCase === 'ffffff'
-        ? logoBlue
+    const logo = settings.theme === 'white1' || settings.color5?.toLowerCase() === 'ffffff'
+        ? logoStandard
         : logoWhite;
 
     return (
