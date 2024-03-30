@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import confetti from '../modules/confetti';
 import donationAlert from '../assets/audio/donation-alert.mp3';
+import logger from '../modules/logger';
 import MoneyDisplay from './MoneyDisplay';
 import React, { useEffect, useState } from 'react';
 import useSound from 'use-sound';
@@ -15,6 +16,8 @@ const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
         if (!onDonationAlertEnded || !donation) {
             return;
         }
+
+        logger.debug('Setting donation alert timeout...');
 
         const timeoutId = setTimeout(() => {
             onDonationAlertEnded();

@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import confetti from '../modules/confetti';
+import logger from '../modules/logger';
 import milestoneAlert from '../assets/audio/milestone-alert.mp3';
 import MoneyDisplay from './MoneyDisplay';
 import React, { useEffect, useState } from 'react';
@@ -15,6 +16,8 @@ const MilestoneView = ({ milestone, onMilestoneAlertEnded, settings }) => {
         if (!onMilestoneAlertEnded || !milestone) {
             return;
         }
+
+        logger.debug('Setting milestone alert timeout...');
 
         const timeoutId = setTimeout(() => {
             onMilestoneAlertEnded();
