@@ -1,5 +1,7 @@
 import { defineConfig } from 'vite';
 import { viteSingleFile } from 'vite-plugin-singlefile';
+import fs from 'fs';
+import path from 'path';
 import react from '@vitejs/plugin-react';
 import voices from './src/modules/voices';
 
@@ -24,6 +26,7 @@ export default defineConfig(({ command }) => {
             config.plugins.push(
                 viteSingleFile(),
                 helperSettings(),
+                copyBuildArtifact(),
             );
         }
     } else {
@@ -35,6 +38,23 @@ export default defineConfig(({ command }) => {
 
     return config;
 });
+
+const copyBuildArtifact = () => {
+    return {
+        name: 'copy-build-artifact',
+        enforce: 'post',
+        closeBundle: async () => {
+            console.log('Copying build artifact...');
+            const source = path.join('D:\\', 'src', 'extralife-helper', 'helper', 'dist', 'index.html');
+            const destination = path.join('C:\\', 'Users', 'bread_man', 'Dropbox', 'Helper', 'index.html');
+            fs.copyFile(source, destination, err => {
+                if (err) {
+                    console.error('Unable to copy build artifact!', err);
+                }
+            });
+        },
+    };
+};
 
 const helperSettings = () => {
     return {
