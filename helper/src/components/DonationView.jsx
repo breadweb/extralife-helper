@@ -12,7 +12,7 @@ const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
     const [wasHandled, setWasHandled] = useState(false);
 
     useEffect(() => {
-        if (!onDonationAlertEnded) {
+        if (!onDonationAlertEnded || !donation) {
             return;
         }
 

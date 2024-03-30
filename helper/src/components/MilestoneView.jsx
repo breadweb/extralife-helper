@@ -11,7 +11,7 @@ const MilestoneView = ({ milestone, onMilestoneAlertEnded, settings }) => {
     const { t } = useTranslation();
 
     useEffect(() => {
-        if (!onMilestoneAlertEnded) {
+        if (!onMilestoneAlertEnded || !milestone) {
             return;
         }
 
