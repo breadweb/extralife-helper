@@ -36,11 +36,11 @@ export default defineConfig(({ command }) => {
 });
 
 const helperSettings = () => {
-    console.log('Adding Helper settings section...');
     return {
         name: 'add-helper-settings',
         enforce: 'post',
         generateBundle: (_, bundle) => {
+            console.log('Adding Helper settings section...');            
             const htmlChunk = bundle['index.html'];
             htmlChunk.source = htmlChunk.source.replace(
                 '</title>',
