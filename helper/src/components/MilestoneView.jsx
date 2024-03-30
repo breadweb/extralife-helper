@@ -3,12 +3,13 @@ import classNames from 'classnames';
 import confetti from '../modules/confetti';
 import milestoneAlert from '../assets/audio/milestone-alert.mp3';
 import MoneyDisplay from './MoneyDisplay';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import useSound from 'use-sound';
 
 const MilestoneView = ({ milestone, onMilestoneAlertEnded, settings }) => {
     const [playAlert] = useSound(milestoneAlert, { volume: settings?.volume || 0 });
     const { t } = useTranslation();
+    const [wasHandled, setWasHandled] = useState(false);
 
     useEffect(() => {
         if (!onMilestoneAlertEnded || !milestone) {
@@ -25,7 +26,7 @@ const MilestoneView = ({ milestone, onMilestoneAlertEnded, settings }) => {
     }, [milestone, onMilestoneAlertEnded]);
 
     useEffect(() => {
-        if (!playAlert || !milestone) {
+        if (!playAlert || !milestone || wasHandled) {
             return;
         }
 
@@ -35,12 +36,14 @@ const MilestoneView = ({ milestone, onMilestoneAlertEnded, settings }) => {
             confetti.start();
         }
 
+        setWasHandled(true);
+
         return () => {
             if (settings.isConfettiEnabled) {
                 confetti.stop();
             }
         };
-    }, [settings, playAlert, milestone]);
+    }, [settings, playAlert, milestone, wasHandled]);
 
     return (
         <div className='flex flex-col justify-center items-center w-full mx-7'>
