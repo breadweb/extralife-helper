@@ -35,7 +35,7 @@ const sendTwitchChatMessage = async (donation) => {
             currency: 'USD',
         });
         const amount = formatter.format(donation.amount);
-        const name = donation.displayName;
+        const name = donation.displayName !== undefined ? donation.displayName : 'Anonymous';
         const message = donation.message;
         const article = donation.amount.toString().startsWith('8') ? 'an' : 'a';
         const chatMessage = message
