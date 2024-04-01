@@ -45,8 +45,16 @@ const copyBuildArtifact = () => {
         enforce: 'post',
         closeBundle: async () => {
             console.log('Copying build artifact...');
-            const source = path.join('D:\\', 'src', 'extralife-helper', 'helper', 'dist', 'index.html');
-            const destination = path.join('C:\\', 'Users', 'bread_man', 'Dropbox', 'Helper', 'index.html');
+            let source, destination;
+            if (process.platform === 'win32') {
+                source = path.join('D:\\', 'src', 'extralife-helper', 'helper', 'dist', 'index.html');
+                destination = path.join('C:\\', 'Users', 'bread_man', 'Dropbox', 'Helper', 'index.html');
+            } else {
+                source = path.join(
+                    '/', 'Users', 'bread', 'src-personal', 'extralife-helper', 'helper', 'dist', 'index.html',
+                );
+                destination = path.join('/', 'Users', 'bread', 'Dropbox', 'Helper', 'index.html');
+            }
             fs.copyFile(source, destination, err => {
                 if (err) {
                     console.error('Unable to copy build artifact!', err);
