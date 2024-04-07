@@ -1,52 +1,40 @@
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import confetti from '../modules/confetti';
-import logger from '../modules/logger';
 import milestoneAlert from '../assets/audio/milestone-alert.mp3';
 import MoneyDisplay from './MoneyDisplay';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import useSound from 'use-sound';
 
 const MilestoneView = ({ milestone, onMilestoneAlertEnded, settings }) => {
-    const [playAlert] = useSound(milestoneAlert, { volume: settings?.volume || 0 });
     const { t } = useTranslation();
-    const [wasHandled, setWasHandled] = useState(false);
+    const [playAlert, { duration }] = useSound(milestoneAlert, { volume: settings?.volume || 0 });
 
     useEffect(() => {
-        if (!onMilestoneAlertEnded || !milestone) {
-            return;
-        }
-
-        logger.debug('Setting milestone alert timeout...');
-
         const timeoutId = setTimeout(() => {
             onMilestoneAlertEnded();
         }, import.meta.env.VITE_MILESTONE_TTL);
-
-        return () => {
-            clearTimeout(timeoutId);
-        };
-    }, [milestone, onMilestoneAlertEnded]);
-
-    useEffect(() => {
-        if (!playAlert || !milestone || wasHandled) {
-            return;
-        }
-
-        playAlert();
 
         if (settings.isConfettiEnabled) {
             confetti.start();
         }
 
-        setWasHandled(true);
-
         return () => {
+            clearTimeout(timeoutId);
             if (settings.isConfettiEnabled) {
                 confetti.stop();
             }
         };
-    }, [settings, playAlert, milestone, wasHandled]);
+    }, [milestone, onMilestoneAlertEnded, settings]);
+
+    useEffect(() => {
+        if (!duration) {
+            return;
+        }
+
+        playAlert();
+
+    }, [milestone, duration, playAlert]);
 
     return (
         <div className='flex flex-col justify-center items-center w-full mx-7'>

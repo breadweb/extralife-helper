@@ -2,40 +2,20 @@ import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import confetti from '../modules/confetti';
 import donationAlert from '../assets/audio/donation-alert.mp3';
-import logger from '../modules/logger';
 import MoneyDisplay from './MoneyDisplay';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import useSound from 'use-sound';
 
 const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
     const { t } = useTranslation();
-    const [playAlert] = useSound(donationAlert, { volume: settings?.volume || 0 });
-    const [wasHandled, setWasHandled] = useState(false);
+    const [playAlert, { duration }] = useSound(donationAlert, { volume: settings?.volume || 0 });
 
     useEffect(() => {
-        if (!onDonationAlertEnded || !donation) {
-            return;
-        }
-
-        logger.debug('Setting donation alert timeout...');
-
         const timeoutId = setTimeout(() => {
             onDonationAlertEnded();
         }, import.meta.env.VITE_DONATION_TTL);
 
-        return () => {
-            clearTimeout(timeoutId);
-        };
-    }, [donation, onDonationAlertEnded]);
-
-    useEffect(() => {
-        if (!playAlert || !donation || wasHandled) {
-            return;
-        }
-
-        playAlert();
-
-        const textToSpeechTimeout = setTimeout(() => {
+        const textToSpeechTimeoutId = setTimeout(() => {
             if (settings.voice !== '' && window.responsiveVoice) {
                 window.responsiveVoice.speak(
                     donation.message,
@@ -51,16 +31,24 @@ const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
             confetti.start();
         }
 
-        setWasHandled(true);
-
         return () => {
+            clearTimeout(timeoutId);
+            clearTimeout(textToSpeechTimeoutId);
             window.responsiveVoice?.cancel();
-            clearTimeout(textToSpeechTimeout);
             if (settings.isConfettiEnabled) {
                 confetti.stop();
             }
         };
-    }, [donation, settings, playAlert, wasHandled]);
+    }, [donation, onDonationAlertEnded, settings]);
+
+    useEffect(() => {
+        if (!duration) {
+            return;
+        }
+
+        playAlert();
+
+    }, [donation, duration, playAlert]);
 
     let message;
     if (donation.message) {
