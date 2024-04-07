@@ -43,6 +43,10 @@ def process_args():
         '--use-cors', action='store_true',
         help='enable cross-origin (CORS) protection (default: False)'
     )
+    parser.add_argument(
+        '--status-code', dest='status_code', choices=['429', '500'], default=None,
+        help='force a response with a status code for testing (default: None)'
+    )
     args = parser.parse_args()
     return args
 
@@ -54,6 +58,18 @@ class CustomSimpleHTTPRequestHandler(server.SimpleHTTPRequestHandler):
 
 
     def do_GET(self):
+        if self.cli_args.status_code is not None:
+            status_code = int(self.cli_args.status_code)
+            self.send_response(status_code)
+            self.end_headers()
+            message = ''
+            if status_code == 429:
+                message = 'Too Many Requests'
+            elif status_code == 500:
+                message = 'Server Error'
+            self.wfile.write(str.encode(message))
+            return
+
         # Setting the 'If-Modified-Since' header date to the past before executing the requst
         # ensures that the resource is always served.
         if not self.cli_args.use_caching:
