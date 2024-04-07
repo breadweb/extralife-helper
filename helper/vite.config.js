@@ -40,7 +40,7 @@ const helperSettings = () => {
         name: 'add-helper-settings',
         enforce: 'post',
         generateBundle: (_, bundle) => {
-            console.log('Adding Helper settings section...');            
+            console.log('Adding Helper settings section...');
             const htmlChunk = bundle['index.html'];
             htmlChunk.source = htmlChunk.source.replace(
                 '</title>',

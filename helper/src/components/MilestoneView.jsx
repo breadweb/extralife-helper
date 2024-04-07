@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import confetti from '../modules/confetti';
+import logger from '../modules/logger';
 import milestoneAlert from '../assets/audio/milestone-alert.mp3';
 import MoneyDisplay from './MoneyDisplay';
 import React, { useEffect } from 'react';
@@ -11,7 +12,12 @@ const MilestoneView = ({ milestone, onMilestoneAlertEnded, settings }) => {
     const [playAlert, { duration }] = useSound(milestoneAlert, { volume: settings?.volume || 0 });
 
     useEffect(() => {
+        let didCallbackTimeoutFire = false;
+
+        logger.debug('Setting milestone alert timeout...');
+
         const timeoutId = setTimeout(() => {
+            didCallbackTimeoutFire = true;
             if (onMilestoneAlertEnded) {
                 onMilestoneAlertEnded();
             }
@@ -22,9 +28,18 @@ const MilestoneView = ({ milestone, onMilestoneAlertEnded, settings }) => {
         }
 
         return () => {
+            logger.debug('Dismounting milestone and clearing timer...');
+
             clearTimeout(timeoutId);
+
             if (settings.isConfettiEnabled) {
                 confetti.stop();
+            }
+
+            // If this component is dismounted before the timer fires, the parent still needs to
+            // be notified.
+            if (!didCallbackTimeoutFire) {
+                onMilestoneAlertEnded();
             }
         };
     }, [milestone, onMilestoneAlertEnded, settings]);

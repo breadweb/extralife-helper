@@ -6,7 +6,7 @@ const ProgressBar = ({ backColor, current, fillColor, markers, required }) => {
 
     const markerIcons = markers.map((marker, index) => (
         <div
-            className='absolute rounded-full w-3 h-3 bg-helper3 drop-shadow'
+            className='absolute rounded-full w-3 h-3 bg-helper3 drop-shadow animate-fade-in'
             style={{
                 left: `calc(${marker / required * 100}% - 6px)`,
                 top: 'calc(50% - 6px)',

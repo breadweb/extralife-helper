@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import confetti from '../modules/confetti';
 import donationAlert from '../assets/audio/donation-alert.mp3';
+import logger from '../modules/logger';
 import MoneyDisplay from './MoneyDisplay';
 import React, { useEffect } from 'react';
 import useSound from 'use-sound';
@@ -11,7 +12,12 @@ const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
     const [playAlert, { duration }] = useSound(donationAlert, { volume: settings?.volume || 0 });
 
     useEffect(() => {
+        let didCallbackTimeoutFire = false;
+
+        logger.debug('Setting donation alert timeout...');
+
         const timeoutId = setTimeout(() => {
+            didCallbackTimeoutFire = true;
             if (onDonationAlertEnded) {
                 onDonationAlertEnded();
             }
@@ -39,6 +45,12 @@ const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
             window.responsiveVoice?.cancel();
             if (settings.isConfettiEnabled) {
                 confetti.stop();
+            }
+
+            // If this component is dismounted before the timer fires, the parent still needs to
+            // be notified.
+            if (!didCallbackTimeoutFire) {
+                onDonationAlertEnded();
             }
         };
     }, [donation, onDonationAlertEnded, settings]);

@@ -14,33 +14,39 @@ const InfoView = ({
     const [amountRaised, setAmountRaised] = useState(amountRaisedToShow);
     const { t } = useTranslation();
 
+    // The amount to increment is the sum of all recent donations that arrived between the previous
+    // rendering of this component and the current rendering. It may be one donation if donation alerts
+    // are disabled or if only one arrived. It could be up to N donations that all happened back to back.
+    //
+    // The reason to have both totals is to show some nice animations from the previous amount raised
+    // to the new amount. The progress bar (if enabled) will animate to the next percentage amount. And
+    // the amount raised money display will do a nice counting effect.
+    //
+    // After the animations are complete, this component informs the parent so it can then roll the
+    // incremented amount into the total amount to support animating to the next total.
     useEffect(() => {
-        let didTimeoutFire = false;
+        let didCallbackTimeoutFire = false;
 
-        // The amount to increment is the sum of all recent donations that arrived between the
-        // previous rendering of this component and the current rendering. It may be one donation
-        // if donation alerts are disabled or if only one arrived. It could be up to N donations
-        // that all happened back to back.
-        //
-        // The reason to have both totals is to show some nice animations from the previous amount
-        // raised to the new amount. The progress bar (if enabled) will animate to the next
-        // percentage amount. And the amount raised money display will do a nice counting effect.
-        //
-        // After the animations are complete, this component informs the parent so it can then roll
-        // the incremented amount into the total amount to support animating to the next total.
-        const timeoutId = setTimeout(() => {
-            didTimeoutFire = true;
+        // Delay setting the amount to account for the animation intro sequence.
+        const stateChangeTimeoutId = setTimeout(() => {
             setAmountRaised(prevAmountRaised => prevAmountRaised + amountToIncrement);
-            onAmountIncremented();
         }, 2000);
 
+        // Delay notifying the parent until the incrementing animations have completed.
+        const callbackTimeoutId = setTimeout(() => {
+            didCallbackTimeoutFire = true;
+            onAmountIncremented();
+        }, 4000);
+
         return () => {
-            // If this component is dismounted before the timer fires, the parent still needs to
-            // be notified so it can combine the amounts into the new total.
-            if (!didTimeoutFire) {
+            clearTimeout(stateChangeTimeoutId);
+            clearTimeout(callbackTimeoutId);
+
+            // If this component is dismounted before the callback timer fires, the parent still needs
+            // to be notified so it can combine the amounts into the new total.
+            if (!didCallbackTimeoutFire) {
                 onAmountIncremented();
             }
-            clearTimeout(timeoutId);
         };
     }, [onAmountIncremented, amountToIncrement]);
 

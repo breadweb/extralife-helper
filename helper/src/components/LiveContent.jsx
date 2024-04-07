@@ -83,18 +83,10 @@ const LiveContent = ({ errorMessage, settings }) => {
         }
 
         if (didTotalChange) {
-            if (
-                settings.participantId &&
-                (settings.areMilestoneAlertsEnabled || settings.areMilestoneMarkersVisible)
-            ) {
-                getMilestones(getEndpoint(settings, 'milestones'));
-            }
-
             getDonations(getEndpoint(settings, 'donations'));
-
             setTotalDontaions(polledDataResponse.extraLifeData.numDonations);
         }
-    }, [getDonations, getMilestones, polledDataResponse, settings, totalDonations]);
+    }, [getDonations, polledDataResponse, settings, totalDonations]);
 
     useEffect(() => {
         let errorLangKey;
@@ -163,9 +155,19 @@ const LiveContent = ({ errorMessage, settings }) => {
     }, [donationToShow, milestoneToShow, startFillerTimer, stopFillerTimer]);
 
     const onAmountIncremented = useCallback(() => {
+        // After the amount is incremented, all pending donations to show have been shown and the
+        // animation of the total has completed. This is now the right time to check and see if any
+        // milestones have been completed.
+        if (
+            settings.participantId &&
+            (settings.areMilestoneAlertsEnabled || settings.areMilestoneMarkersVisible)
+        ) {
+            getMilestones(getEndpoint(settings, 'milestones'));
+        }
+
         setAmountRaisedToShow(prevAmountRaisedToShow => prevAmountRaisedToShow + amountToIncrement);
         setAmountToIncrement(0);
-    }, [amountToIncrement]);
+    }, [amountToIncrement, getMilestones, settings]);
 
     if (settingsErrorMessageToShow || requestErrorMessageToShow) {
         return (
@@ -175,7 +177,7 @@ const LiveContent = ({ errorMessage, settings }) => {
         );
     }
 
-    if (donationToShow) {
+    if (donationToShow && !milestoneToShow) {
         return (
             <DonationView
                 donation={donationToShow}
