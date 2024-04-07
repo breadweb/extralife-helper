@@ -49,7 +49,7 @@ const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
 
             // If this component is dismounted before the timer fires, the parent still needs to
             // be notified.
-            if (!didCallbackTimeoutFire) {
+            if (!didCallbackTimeoutFire && onDonationAlertEnded) {
                 onDonationAlertEnded();
             }
         };
