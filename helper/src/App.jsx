@@ -2,39 +2,20 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import colorConvert from 'color-convert';
-import confetti from './modules/confetti';
 import LiveContent from './components/LiveContent';
 import logger from './modules/logger';
 import PreviewContent from './components/PreviewContent';
 import React from 'react';
 import transparencyGrid from './assets/images/transparency-grid.png';
 import useHelperSettings from './hooks/useHelperSettings';
+import useTestContent from './hooks/useTestDonation';
 
 const App = () => {
     const { i18n } = useTranslation();
     const [errorMessage, setErrorMessage] = useState(undefined);
     const [contentScale, setContentScale] = useState(1);
     const helperSettings = useHelperSettings();
-
-    useEffect(() => {
-        const onKeyPress = evt => {
-            switch (evt.key) {
-                case 'c':
-                    confetti.start();
-                    break;
-                default:
-                    // Do nothing.
-            }
-        };
-
-        if (['DEV', 'LOCAL'].includes(import.meta.env.VITE_RUNTIME_MODE)) {
-            document.addEventListener('keypress', onKeyPress);
-        }
-
-        return () => {
-            document.removeEventListener('keypress', onKeyPress);
-        };
-    }, []);
+    const testContent = useTestContent(helperSettings.data);
 
     useEffect(() => {
         if (helperSettings?.error !== undefined) {
@@ -103,7 +84,9 @@ const App = () => {
     }
 
     let content;
-    if (!['', 'general'].includes(helperSettings.data.previewMode)) {
+    if (testContent !== null) {
+        content = testContent;
+    } else if (!['', 'general'].includes(helperSettings.data.previewMode)) {
         content = (
             <PreviewContent
                 settings={helperSettings.data}

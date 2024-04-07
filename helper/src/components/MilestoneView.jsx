@@ -12,7 +12,9 @@ const MilestoneView = ({ milestone, onMilestoneAlertEnded, settings }) => {
 
     useEffect(() => {
         const timeoutId = setTimeout(() => {
-            onMilestoneAlertEnded();
+            if (onMilestoneAlertEnded) {
+                onMilestoneAlertEnded();
+            }
         }, import.meta.env.VITE_MILESTONE_TTL);
 
         if (settings.isConfettiEnabled) {
@@ -50,8 +52,8 @@ const MilestoneView = ({ milestone, onMilestoneAlertEnded, settings }) => {
             </div>
             <div
                 className={
-                    `text-helper3 flex flex-col items-center mb-4 animate-fade-in animate-delay-[.8s]
-                    text-[20px]`
+                    `text-helper3 flex flex-col items-center text-center mb-4 leading-6
+                    animate-fade-in animate-delay-[.8s] text-[20px]`
                 }
             >
                 &quot;

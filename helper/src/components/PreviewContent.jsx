@@ -4,46 +4,7 @@ import LatestDonationsView from './LatestDonationsView';
 import LogoView from './LogoView';
 import MilestoneView from './MilestoneView';
 import React from 'react';
-
-const mockDonation = {
-    amount: 123.45,
-    displayName: 'John & Jane Smith',
-    message: '18 hours of games and still going? Amazing. Keep up the great work! Love, Mom and Dad.',
-    recipientName: 'bread4kids',
-};
-
-const mockLatestDonations = [
-    {
-        donationID: 1,
-        amount: 123.45,
-        displayName: 'Hiiitechpower',
-    },
-    {
-        donationID: 2,
-        amount: 1234.56,
-        displayName: 'Memes',
-    },
-    {
-        donationID: 3,
-        amount: 12.34,
-        displayName: 'Just Blur',
-    },
-    {
-        donationID: 4,
-        amount: 1.23,
-        displayName: 'Chaz',
-    },
-    {
-        donationID: 5,
-        amount: 18.77,
-        displayName: 'Pintificate',
-    },
-];
-
-const mockMilestone = {
-    fundraisingGoal: 1000.00,
-    description: 'Unlock the Gold Medal!',
-};
+import { mockDonation, mockLatestDonations, mockMilestone } from '../modules/mock-content';
 
 const PreviewContent = ({ errorMessage, settings }) => {
 

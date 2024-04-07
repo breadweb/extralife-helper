@@ -12,7 +12,9 @@ const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
 
     useEffect(() => {
         const timeoutId = setTimeout(() => {
-            onDonationAlertEnded();
+            if (onDonationAlertEnded) {
+                onDonationAlertEnded();
+            }
         }, import.meta.env.VITE_DONATION_TTL);
 
         const textToSpeechTimeoutId = setTimeout(() => {
