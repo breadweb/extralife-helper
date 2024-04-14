@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 
 """
-This is an extension of Python's built-in Simple HTTP Server module. It disables CORS and
-caching which are two things typically desired for local development. It also supports hosting
-single page applications with the --not-found-page argument.
+This is an extension of Python's built-in Simple HTTP Server module. It disables CORS and caching
+which are two things typically not desired when iterating in a local development environment. It also
+supports hosting single page applications with the --not-found-page argument and simulating error
+responses such as 429, 500, etc.
 """
 
 import argparse
