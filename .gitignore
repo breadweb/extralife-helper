@@ -1,8 +1,5 @@
 .DS_Store
-node_modules
-dist
-helper.min.js
-*.zip
-src/ExtraLifeHelper-Bread*
-todo.txt
 .env.local
+dist
+node_modules
+todo.txt
