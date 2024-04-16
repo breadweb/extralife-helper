@@ -7,6 +7,9 @@ import MoneyDisplay from './MoneyDisplay';
 import React, { useEffect } from 'react';
 import useSound from 'use-sound';
 
+const synth = window.speechSynthesis;
+const voices = synth.getVoices();
+
 const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
     const { t } = useTranslation();
     const [playAlert, { duration }] = useSound(donationAlert, { volume: settings?.volume || 0 });
@@ -24,14 +27,11 @@ const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
         }, import.meta.env.VITE_DONATION_TTL);
 
         const textToSpeechTimeoutId = setTimeout(() => {
-            if (settings.voice !== '' && window.responsiveVoice) {
-                window.responsiveVoice.speak(
-                    donation.message,
-                    settings.voice,
-                    {
-                        volume: settings.volume,
-                    },
-                );
+            if (donation.message && settings.voice !== '' && synth) {
+                const utterance = new SpeechSynthesisUtterance(donation.message);
+                utterance.voice = voices.find(voice => voice.name === 'Kyoko');
+                utterance.volume = settings.volume;
+                synth.speak(utterance);
             }
         }, import.meta.env.VITE_TTS_DELAY);
 
@@ -42,7 +42,7 @@ const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
         return () => {
             clearTimeout(timeoutId);
             clearTimeout(textToSpeechTimeoutId);
-            window.responsiveVoice?.cancel();
+            synth.cancel();
             if (settings.isConfettiEnabled) {
                 confetti.stop();
             }
