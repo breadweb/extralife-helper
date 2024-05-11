@@ -11,7 +11,7 @@ const TimeDisplay = ({ settings }) => {
     const timer = useTimer(settings?.startDateTime);
     const { t } = useTranslation();
 
-    let timerLine = 'LOADING...';
+    let timerLine = '';
     let time = '00:00:00';
 
     if (timer) {
@@ -41,7 +41,7 @@ const TimeDisplay = ({ settings }) => {
                     classNames(
                         'text-[22px] -mb-1 text-helper3 text-center leading-none',
                         settings.lang === 'en' ? 'font-furore' : 'font-cantarell',
-                        timerLine === 'LOADING...' ? 'opacity-0' : 'animate-pop-in',
+                        timerLine === '' ? 'opacity-0' : 'animate-pop-in',
                     )
                 }
             >
@@ -50,7 +50,7 @@ const TimeDisplay = ({ settings }) => {
             <div
                 className={
                     classNames(
-                        'text-[92px] leading-none whitespace-nowrap font-digital text-helper4',
+                        'text-[92px] leading-none whitespace-nowrap font-digital text-helper4 -mb-2',
                         time === '00:00:00' ? 'opacity-0' : 'animate-fade-in animate-delay-[.4s]',
                     )
                 }

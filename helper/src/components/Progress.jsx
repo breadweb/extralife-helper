@@ -102,7 +102,7 @@ const Progress = ({
                 />
                 <div
                     className={
-                        `text-[16px] font-cantarell text-helper3 whitespace-nowrap leading-none mt-2
+                        `text-[16px] font-cantarell text-helper3 whitespace-nowrap leading-none mt-4
                         text-center animate-pop-in animate-delay-[1.6s]`
                     }
                 >
