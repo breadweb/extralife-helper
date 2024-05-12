@@ -8,7 +8,14 @@ import React, { useEffect } from 'react';
 import useSound from 'use-sound';
 
 const synth = window.speechSynthesis;
-const voices = synth.getVoices();
+let voices = [];
+synth.addEventListener('voiceschanged', () => {
+    voices = synth.getVoices();
+    console.log('Available Voices:');
+    for (let i = 0; i < voices.length; i++) {
+        console.log(`- ${voices[i].name} (${voices[i].lang})`);
+    }
+});
 
 const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
     const { t } = useTranslation();
