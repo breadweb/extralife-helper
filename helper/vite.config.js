@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 import { viteSingleFile } from 'vite-plugin-singlefile';
 import react from '@vitejs/plugin-react';
-import voices from './src/data/voices';
+import voices from './src/modules/voices';
 
 export default defineConfig(({ command }) => {
     const config = {

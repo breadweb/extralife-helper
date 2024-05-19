@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Joi from 'joi';
 import logger from '../modules/logger';
-import voices from '../data/voices';
+import voices from '../modules/voices';
 
 const themeOptions = ['blue1', 'blue2', 'gray1', 'white1', 'custom'];
 const borderOptions = ['none', 'rounded', 'square'];
