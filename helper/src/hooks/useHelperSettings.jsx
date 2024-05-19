@@ -4,23 +4,13 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Joi from 'joi';
 import logger from '../modules/logger';
+import voices from '../data/voices';
 
 const themeOptions = ['blue1', 'blue2', 'gray1', 'white1', 'custom'];
 const borderOptions = ['none', 'rounded', 'square'];
 const langOptions = ['en', 'fr', 'es'];
 const moneyFormatOptions = ['standard', 'fancy'];
 const progressFormatOptions = ['raisedOnly', 'raisedAndGoal', 'progressBar'];
-const voiceOptions = [
-    '',
-    'US English Male',
-    'US English Female',
-    'UK English Male',
-    'UK English Female',
-    'French Canadian Male',
-    'French Canadian Female',
-    'Spanish Latin American Male',
-    'Spanish Latin American Female',
-];
 const previewModeOptions = ['general', 'donationAlert', 'milestoneAlert', 'latestDonations', 'logo'];
 
 const datePattern = new RegExp(/\d{1,2}\/\d{1,2}\/\d{4}/);
@@ -59,7 +49,7 @@ const getSettingsFromParams = () => {
         areCentsVisible: urlParams.get('n') === '1',
         moneyFormat: getListItemFromParam(urlParams, 'm', moneyFormatOptions, 0),
         isYearModeEnabled: urlParams.get('y') === '1',
-        voice: urlParams.get('v') === '-1' ? '' : getListItemFromParam(urlParams, 'v', voiceOptions),
+        voice: urlParams.get('v') === '-1' ? '' : voices[urlParams.get('v')],
         volume: urlParams.get('vo'),
         lang: urlParams.get('l') ? urlParams.get('l').substring(0, 2) : langOptions[0],
         areMetricsEnabled: urlParams.get('i') === '1',
@@ -179,7 +169,7 @@ const schema = Joi.object({
     areCentsVisible: Joi.boolean().required(),
     moneyFormat: Joi.string().valid(...moneyFormatOptions).required(),
     isYearModeEnabled: Joi.boolean().required(),
-    voice: Joi.string().valid(...voiceOptions).allow('').required(),
+    voice: Joi.string().valid(...Object.values(voices)).allow('').required(),
     volume: Joi.number().min(0).max(100).required(),
     lang: Joi.string().valid(...langOptions).required(),
     areMetricsEnabled: Joi.boolean().required(),

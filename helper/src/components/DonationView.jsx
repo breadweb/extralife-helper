@@ -11,10 +11,6 @@ const synth = window.speechSynthesis;
 let voices = [];
 synth.addEventListener('voiceschanged', () => {
     voices = synth.getVoices();
-    console.log('Available Voices:');
-    for (let i = 0; i < voices.length; i++) {
-        console.log(`- ${voices[i].name} (${voices[i].lang})`);
-    }
 });
 
 const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
@@ -36,8 +32,14 @@ const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
         const textToSpeechTimeoutId = setTimeout(() => {
             if (donation.message && settings.voice !== '' && synth) {
                 const utterance = new SpeechSynthesisUtterance(donation.message);
-                utterance.voice = voices.find(voice => voice.name === 'Kyoko');
+                utterance.voice = voices.find(voice => voice.name === settings.voice);
                 utterance.volume = settings.volume;
+                if (!utterance.voice) {
+                    logger.warning(
+                        `The selected voice (${settings.voice}) is not avaialble on this computer. ` +
+                        'Using the default voice.',
+                    );
+                }
                 synth.speak(utterance);
             }
         }, import.meta.env.VITE_TTS_DELAY);

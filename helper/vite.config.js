@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import { viteSingleFile } from 'vite-plugin-singlefile';
 import react from '@vitejs/plugin-react';
+import voices from './src/data/voices';
 
 export default defineConfig(({ command }) => {
     const config = {
@@ -206,9 +207,8 @@ const getSettingsContent = () => {
             'voice',
             process.env.VITE_VOICE,
             true,
-            'Set to "US English Male", "US English Female", "UK English Male", "UK English Female", ' +
-            '"French Canadian Male", "French Canadian Female", "Spanish Latin American Male", ' +
-            '"Spanish Latin American Female" or set to "" to not read messages with text-to-speech.',
+            'Set to "" to not read messages with text-to-speech. Otherwise set to one of the following: ' +
+            Object.values(voices).join(', '),
         ],
         [
             'volume',
