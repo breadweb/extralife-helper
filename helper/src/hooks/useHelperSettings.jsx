@@ -49,7 +49,7 @@ const getSettingsFromParams = () => {
         areCentsVisible: urlParams.get('n') === '1',
         moneyFormat: getListItemFromParam(urlParams, 'm', moneyFormatOptions, 0),
         isYearModeEnabled: urlParams.get('y') === '1',
-        voice: urlParams.get('v') === '-1' ? '' : voices[urlParams.get('v')],
+        voice: urlParams.get('v') === '-1' ? '' : voices[urlParams.get('v')] || '',
         volume: urlParams.get('vo'),
         lang: urlParams.get('l') ? urlParams.get('l').substring(0, 2) : langOptions[0],
         areMetricsEnabled: urlParams.get('i') === '1',
