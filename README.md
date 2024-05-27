@@ -27,13 +27,13 @@ The Helper has been developed and maintained for over a decade. It has a lot of 
   - Amount raised only
   - Amound raised and goal
   - Progress bar with optional milestone markers
-* Shows fun and exciting real-time alerts as donations are received
-* Shows celebatory alerts when milestones have been reached
+* Displays exciting real-time alerts as donations are received
+* Displays celebatory alerts when milestones have been reached
 * Provides the option for donation messages to be read with text-to-speech
 * Provides volume control for all sound effects and text-to-speech
 * Occasionally shows the Extra Life logo
 * Ocassionally shows the last five donations that were made to recognize recent supporters
-* Provides four color theme choices that are Extra Life branded and also provides the ability to design a compltely custom color theme
+* Provides four color theme choices that are Extra Life branded and provides the ability to design a completely custom color theme
 * Works in any flavor of OBS and any modern browser
 * Looks sharp at any 16:9 or 16:10 aspect ratio size including full screen
 * Fully localized in English, French, and Spanish
