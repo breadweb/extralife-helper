@@ -19,8 +19,8 @@ The Helper has been developed and maintained for over a decade. It has a lot of 
 
 * Works in "participant" mode or "team" mode
 
-* Counts down the days until Extra Life if there are three or more days left
-* Counts down the hours until Extra Life if there are less than four days left
+* Counts down the days until an Extra Life event if there are three or more days left
+* Counts down the hours until an Extra Life event if there are less than four days left
 * Counts the total hours played if the start time has passed
 * Continually updates the total amount raised as it changes
 * Provides multiple ways to display progress:
