@@ -36,11 +36,13 @@ const usePolledExtraLifeData = () => {
     }, [extraLifeData]);
 
     const startPolling = useCallback(endpoint => {
+        console.log('Starting polling...');
         setEndpoint(endpoint);
         setIsEnabled(true);
     }, []);
 
     const stopPolling = useCallback(() => {
+        console.log('Stopping polling...');
         setIsEnabled(false);
     }, []);
 
