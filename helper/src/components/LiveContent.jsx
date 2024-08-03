@@ -28,6 +28,10 @@ const getEndpoint = (settings, path) => {
     return `${type}/${id}${path ? `/${path}` : ''}`;
 };
 
+const isFatalStatusCode = (status) => {
+    return status === 404;
+};
+
 const LiveContent = ({ errorMessage, settings }) => {
     const [totalRequestErrors, setTotalRequestErrors] = useState(0);
     const [totalDonations, setTotalDontaions] = useState(undefined);
@@ -37,7 +41,7 @@ const LiveContent = ({ errorMessage, settings }) => {
     const [milestoneToShow, setMilestoneToShow] = useState(undefined);
     const [settingsErrorMessageToShow, setSettingsErrorMessageToShow] = useState(undefined);
     const [requestErrorMessageToShow, setRequestErrorMessageToShow] = useState(undefined);
-    const { isPolling, startPolling, polledDataResponse, polledDataError } = usePolledExtraLifeData();
+    const { isPolling, polledDataResponse, polledDataError, startPolling, stopPolling } = usePolledExtraLifeData();
     const { getDonations, latestDonations, removeSeenDonation, unseenDonations } = useDonations();
     const { completedMilestones, getMilestones, milestones, removeCompletedMilestone } = useMilestones();
     const { fillerContent, startFillerTimer, stopFillerTimer } = useFillerContent(latestDonations, settings);
@@ -49,10 +53,10 @@ const LiveContent = ({ errorMessage, settings }) => {
             return;
         }
 
-        if (!isPolling()) {
+        if (!isPolling() && !isFatalStatusCode(polledDataError?.status)) {
             startPolling(getEndpoint(settings));
         }
-    }, [isPolling, settings, startPolling]);
+    }, [isPolling, polledDataError, settings, startPolling]);
 
     useEffect(() => {
         if (errorMessage) {
@@ -95,7 +99,12 @@ const LiveContent = ({ errorMessage, settings }) => {
             // Some errors should only be shown if they happen multiple times in a row. These errors
             // can happen occasionally due to intermittent client, server, or network issues which
             // might resolve on their own. No need to show a disruptive error message too quickly.
-            if (totalRequestErrors > MAX_REQUEST_ERRORS) {
+            if (isFatalStatusCode(polledDataError.status)) {
+                if (polledDataError.status === 404) {
+                    errorLangKey = 'REQUEST_ERROR_NOT_FOUND';
+                }
+                stopPolling();
+            } else if (totalRequestErrors > MAX_REQUEST_ERRORS) {
                 if (polledDataError.status === 429) {
                     errorLangKey = 'REQUEST_ERROR_RATE_LIMITED';
                 } else if (polledDataError.status >= 500 && polledDataError.status < 600) {
@@ -105,20 +114,12 @@ const LiveContent = ({ errorMessage, settings }) => {
                 } else {
                     errorLangKey = 'REQUEST_ERROR_OTHER';
                 }
-            } else {
-                // These errors will not get resolved without action from the user.
-                if (polledDataError.status === 404) {
-                    errorLangKey = 'REQUEST_ERROR_NOT_FOUND';
-                }
             }
         }
 
-        if (errorLangKey) {
-            setRequestErrorMessageToShow(t(errorLangKey));
-        } else {
-            setRequestErrorMessageToShow(undefined);
-        }
-    }, [polledDataError, t, totalRequestErrors]);
+        setRequestErrorMessageToShow(errorLangKey ? t(errorLangKey) : undefined);
+
+    }, [polledDataError, stopPolling, t, totalRequestErrors]);
 
     useEffect(() => {
         if (!settings?.areMilestoneAlertsEnabled) {
