@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import React from 'react';
 import useTimer from '../hooks/useTimer';
@@ -16,9 +16,7 @@ const TimeDisplay = ({ settings }) => {
 
     if (timer) {
         if (settings.isYearModeEnabled) {
-            timerLine = (
-                <Trans i18nKey={`YEAR_MODE_TITLE_${settings.yearModeTitleOption}`} />
-            );
+            timerLine = t(`YEAR_MODE_TITLE_${settings.yearModeTitleOption}`);
             time = DateTime.now().toFormat('yyyy');
         } else {
             if (timer.ms < 0) {
@@ -41,7 +39,7 @@ const TimeDisplay = ({ settings }) => {
             <div
                 className={
                     classNames(
-                        'text-[22px] -mb-1 text-helper3 text-center leading-none',
+                        'text-[22px] -mb-1 text-helper3 text-center leading-none whitespace-pre-line',
                         settings.lang === 'en' ? 'font-furore' : 'font-cantarell',
                         timerLine === '' ? 'opacity-0' : 'animate-pop-in',
                     )
