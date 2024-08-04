@@ -204,6 +204,12 @@ const getSettingsContent = () => {
             'long. The count down/up timer is hidden and replaced with the current year.',
         ],
         [
+            'yearModeTitleOption',
+            process.env.VITE_YEAR_MODE_TITLE_OPTION,
+            false,
+            'The title text to show above the year when the Helper is operating in year mode.',
+        ],
+        [
             'voice',
             process.env.VITE_VOICE,
             true,
