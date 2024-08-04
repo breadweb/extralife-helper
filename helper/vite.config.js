@@ -207,7 +207,9 @@ const getSettingsContent = () => {
             'yearModeTitleOption',
             process.env.VITE_YEAR_MODE_TITLE_OPTION,
             false,
-            'The title text to show above the year when the Helper is operating in year mode.',
+            'The title text to show above the year when the Helper is operating in year mode. 1 = ' +
+            '"Changing Kids\' Health to Change their Future", 2 = "The Kids Can\'t Wait!", 3 = "' +
+            'Playing Games to Heal Kids"',
         ],
         [
             'voice',
