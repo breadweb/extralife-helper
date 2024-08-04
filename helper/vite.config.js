@@ -242,8 +242,8 @@ const getSettingsContent = () => {
         ],
     ];
 
-    const colWidth1 = 36;
-    const colWidth2 = 46;
+    const colWidth1 = 44;
+    const colWidth2 = 54;
 
     let content = '\n';
     content += '    <script type="text/javascript">\n';
