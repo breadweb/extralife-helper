@@ -49,6 +49,7 @@ const getSettingsFromParams = () => {
         areCentsVisible: urlParams.get('n') === '1',
         moneyFormat: getListItemFromParam(urlParams, 'm', moneyFormatOptions, 0),
         isYearModeEnabled: urlParams.get('y') === '1',
+        yearModeTitleOption: urlParams.get('yt'),
         voice: urlParams.get('v') === '-1' ? '' : voices[urlParams.get('v')] || '',
         volume: urlParams.get('vo'),
         lang: urlParams.get('l') ? urlParams.get('l').substring(0, 2) : langOptions[0],
@@ -99,6 +100,7 @@ const getSettingsFromGlobal = () => {
         areCentsVisible: window.areCentsVisible,
         moneyFormat: window.moneyFormat,
         isYearModeEnabled: window.isYearModeEnabled,
+        yearModeTitleOption: window.yearModeTitleOption,
         voice: window.voice,
         volume: window.volume,
         lang: window.lang,
@@ -132,6 +134,7 @@ const getSettingsFromEnvVars = () => {
         areCentsVisible: envVars.VITE_ARE_CENTS_VISIBLE,
         moneyFormat: envVars.VITE_MONEY_FORMAT,
         isYearModeEnabled: envVars.VITE_IS_YEAR_MODE_ENABLED,
+        yearModeTitleOption: envVars.VITE_YEAR_MODE_TITLE_OPTION,
         voice: envVars.VITE_VOICE,
         volume: envVars.VITE_VOLUME,
         lang: envVars.VITE_LANG,
@@ -169,6 +172,7 @@ const schema = Joi.object({
     areCentsVisible: Joi.boolean().required(),
     moneyFormat: Joi.string().valid(...moneyFormatOptions).required(),
     isYearModeEnabled: Joi.boolean().required(),
+    yearModeTitleOption: Joi.number().integer().min(1).max(3).allow(null).required(),
     voice: Joi.string().valid(...Object.values(voices)).allow('').required(),
     volume: Joi.number().min(0).max(100).required(),
     lang: Joi.string().valid(...langOptions).required(),
@@ -239,6 +243,7 @@ const useHelperSettings = () => {
         settings.isYearModeEnabled = isParamValueTrue(settings.isYearModeEnabled);
         settings.areMetricsEnabled = isParamValueTrue(settings.areMetricsEnabled);
         settings.volume = parseInt(settings.volume) / 100;
+        settings.yearModeTitleOption = settings.yearModeTitleOption || '1';
 
         if (settings.startDate !== 'Invalid DateTime' && settings.startTime !== 'Invalid DateTime') {
             const dateParts = settings.startDate.split('/');

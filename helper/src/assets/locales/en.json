@@ -6,7 +6,6 @@
     "HOURS_UNTIL": "TIME UNTIL EXTRA LIFE:",
     "KEY_IS_INVALID": "The {{settingName}} setting is invalid. Details: {{message}}",
     "LATEST_DONATIONS": "LATEST DONATIONS",
-    "MAIN_TITLE": "PLAYING GAMES TO HEAL KIDS!",
     "MILESTONE_COMPLETED": "MILESTONE COMPLETED!",
     "MY_AMOUNT_RAISED": "My amount raised:",
     "MY_PERCENT_RAISED_EXCITED": "I've raised {{percent}}% of my goal!",
@@ -23,5 +22,8 @@
     "REQUEST_ERROR_OTHER": "Unable to request Extra Life data due to an unknown Extra Life API issue.",
     "REQUEST_ERROR_RATE_LIMITED": "The Extra Life API has rate limited your IP address. Please ensure you are not running multiple versions of the Helper or multiple Extra Life tools.",
     "REQUEST_ERROR_SERVICE_ERROR": "The Extra Life API is currently unavailable due to server issues. Please wait.",
-    "VISIT_FOR_HELP": "Unsure what to do? Please visit the bread4kids Discord for support: bread4kids.tv/discord"
+    "VISIT_FOR_HELP": "Unsure what to do? Please visit the bread4kids Discord for support: bread4kids.tv/discord",
+    "YEAR_MODE_TITLE_1": "CHANGING KIDS' HEALTH<br /> TO CHANGE THEIR FUTURE",
+    "YEAR_MODE_TITLE_2": "THE KIDS CAN'T WAIT!",
+    "YEAR_MODE_TITLE_3": "PLAYING GAMES TO HEAL KIDS!"
 }

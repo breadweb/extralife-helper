@@ -6,7 +6,6 @@
     "HOURS_UNTIL": "NOMBRE D'HEURES JUSQU'À EXTRA LIFE:",
     "KEY_IS_INVALID": "La configuration {{settingName}} n'est pas valide. Details: {{message}}",
     "LATEST_DONATIONS": "DERNIERES DONATIONS",
-    "MAIN_TITLE": "JOUER À DES JEUX POUR SOIGNER LES ENFANTS!",
     "MILESTONE_COMPLETED": "OBJECTIF ATTEINT!",
     "MY_AMOUNT_RAISED": "Le montant que j'ai amassé:",
     "MY_PERCENT_RAISED_EXCITED": "J'ai atteint {{percent}}% de mon but!",
@@ -23,5 +22,8 @@
     "REQUEST_ERROR_OTHER": "Impossible de recevoir des données Extra Life parce-que l'API d'Extra Life rencontre des problemes.",
     "REQUEST_ERROR_RATE_LIMITED": "L'API d'Extra Life a limité votre adresse IP. Verififez que plusieurs versions de l'Helper ou d'autres outils Extra Life ne sont pas en cours d'execution.",
     "REQUEST_ERROR_SERVICE_ERROR": "L'API d'Extra Life n'est pas disponible à cause d'un probleme de server. Faite preuve de patience.",
-    "VISIT_FOR_HELP": "Perdu? Visite bread4kids Discord pour du support: bread4kids.tv/discord"
+    "VISIT_FOR_HELP": "Perdu? Visite bread4kids Discord pour du support: bread4kids.tv/discord",
+    "YEAR_MODE_TITLE_1": "CHANGING KIDS' HEALTH<br /> TO CHANGE THEIR FUTURE",
+    "YEAR_MODE_TITLE_2": "THE KIDS CAN'T WAIT!",
+    "YEAR_MODE_TITLE_3": "JOUER À DES JEUX POUR SOIGNER LES ENFANTS!"
 }
