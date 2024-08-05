@@ -209,7 +209,7 @@ const getSettingsContent = () => {
             false,
             'The title text to show above the year when the Helper is operating in year mode. 1 = ' +
             '"Changing Kids\' Health to Change their Future", 2 = "The Kids Can\'t Wait!", 3 = "' +
-            'Playing Games to Heal Kids"',
+            'Playing Games to Help Kids"',
         ],
         [
             'voice',
