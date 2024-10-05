@@ -14,6 +14,11 @@ const useExtraLifeData = () => {
         const axiosOptions = {
             method: 'GET',
             url: `${import.meta.env.VITE_API_BASE_URL}api/${endpoint}`,
+            headers: {
+                'Cache-Control': 'no-cache',
+                'Pragma': 'no-cache',
+                'Expires': '0',
+            },
         };
 
         axios(axiosOptions)
