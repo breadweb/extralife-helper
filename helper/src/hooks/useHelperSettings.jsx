@@ -13,8 +13,7 @@ const moneyFormatOptions = ['standard', 'fancy'];
 const progressFormatOptions = ['raisedOnly', 'raisedAndGoal', 'progressBar'];
 const previewModeOptions = ['general', 'donationAlert', 'milestoneAlert', 'latestDonations', 'logo'];
 
-const datePattern = new RegExp(/\d{1,2}\/\d{1,2}\/\d{4}/);
-const timePattern = new RegExp(/\d{1,2}:\d{1,2}:\d{2}/);
+const dateTimePattern = new RegExp(/\d{1,2}\/\d{1,2}\/\d{4} \d{1,2}:\d{2}:\d{2}/);
 const colorPattern = new RegExp(/[A-Fa-f0-9]{6}/);
 
 const getListItemFromParam = (urlParams, paramName, options, defaultIndex) => {
@@ -55,6 +54,7 @@ const getSettingsFromParams = () => {
         lang: urlParams.get('l') ? urlParams.get('l').substring(0, 2) : langOptions[0],
         areMetricsEnabled: urlParams.get('i') === '1',
         previewMode: getListItemFromParam(urlParams, 'w', previewModeOptions),
+        startTimestamp: urlParams.get('st'),
     };
 
     // The previous Helper supported two progress displays with the 'isGoalVisible' flag. Use that
@@ -63,16 +63,6 @@ const getSettingsFromParams = () => {
         ? getListItemFromParam(urlParams, 'pd', progressFormatOptions)
         : urlParams.get('g') === '1' ? 'raisedAndGoal' : 'raisedOnly';
 
-    // The start date and time is a unix timestamp when provided through querystring parameters.
-    // Convert to date and time strings that can be validated the same as when the value is provided
-    // from the global window object or environment variables.
-    const timestamp = urlParams.get('st');
-    if (isFinite(timestamp)) {
-        const dt = DateTime.fromMillis(parseInt(timestamp));
-        settings.startDate = dt.toLocaleString(DateTime.DATE_SHORT);
-        settings.startTime = dt.toLocaleString(DateTime.TIME_24_WITH_SECONDS);
-    }
-
     return settings;
 };
 
@@ -80,14 +70,13 @@ const getSettingsFromGlobal = () => {
     return {
         participantId: window.participantId,
         teamId: window.teamId,
-        startDate: window.startDate,
-        startTime: window.startTime,
+        startDateString: `${window.startDate} ${window.startTime}`,
         theme: window.theme,
-        color1: window.color1.replace('#', ''),
-        color2: window.color2.replace('#', ''),
-        color3: window.color3.replace('#', ''),
-        color4: window.color4.replace('#', ''),
-        color5: window.color5.replace('#', ''),
+        color1: window.color1?.replace('#', ''),
+        color2: window.color2?.replace('#', ''),
+        color3: window.color3?.replace('#', ''),
+        color4: window.color4?.replace('#', ''),
+        color5: window.color5?.replace('#', ''),
         border: window.border,
         isBackgroundTransparent: window.isBackgroundTransparent,
         isLatestDonationsEnabled: window.isLatestDonationsEnabled,
@@ -114,8 +103,7 @@ const getSettingsFromEnvVars = () => {
     return {
         participantId: envVars.VITE_PARTICIPANT_ID,
         teamId: envVars.VITE_TEAM_ID,
-        startDate: envVars.VITE_START_DATE,
-        startTime: envVars.VITE_START_TIME,
+        startDateString: `${envVars.VITE_START_DATE} ${envVars.VITE_START_TIME}`,
         theme: envVars.VITE_THEME,
         color1: envVars.VITE_COLOR1,
         color2: envVars.VITE_COLOR2,
@@ -152,8 +140,8 @@ const colorSchema = Joi.when('theme', {
 const schema = Joi.object({
     participantId: Joi.string().allow('').required(),
     teamId: Joi.string().allow('').required(),
-    startDate: Joi.string().pattern(datePattern).required(),
-    startTime: Joi.string().pattern(timePattern).required(),
+    startTimestamp: Joi.date().timestamp('javascript'),
+    startDateString: Joi.string().pattern(dateTimePattern),
     theme: Joi.string().valid(...themeOptions).required(),
     color1: colorSchema,
     color2: colorSchema,
@@ -178,7 +166,7 @@ const schema = Joi.object({
     lang: Joi.string().valid(...langOptions).required(),
     areMetricsEnabled: Joi.boolean().required(),
     previewMode: Joi.string().valid(...previewModeOptions).allow('').required(),
-});
+}).xor('startTimestamp', 'startDateString');
 
 const useHelperSettings = () => {
     const [data, setData] = useState(undefined);
@@ -245,18 +233,12 @@ const useHelperSettings = () => {
         settings.volume = parseInt(settings.volume) / 100;
         settings.yearModeTitleOption = settings.yearModeTitleOption || '1';
 
-        if (settings.startDate !== 'Invalid DateTime' && settings.startTime !== 'Invalid DateTime') {
-            const dateParts = settings.startDate.split('/');
-            const timeParts = settings.startTime.split(':');
-            settings.startDateTime = DateTime.fromObject({
-                year: parseInt(dateParts[2]),
-                month: parseInt(dateParts[0]),
-                day: parseInt(dateParts[1]),
-                hour: parseInt(timeParts[0]),
-                minute: parseInt(timeParts[1]),
-                second: parseInt(timeParts[2]),
-            });
-        }
+        settings.startDateTime = settings.startDateString
+            ? DateTime.fromFormat(settings.startDateString, 'M/d/yyyy h:mm:ss')
+            : DateTime.fromMillis(parseInt(settings.startTimestamp));
+
+        delete settings.startDateString;
+        delete settings.startTimestamp;
 
         setData(settings);
     }, [t]);
