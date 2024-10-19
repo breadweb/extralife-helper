@@ -162,6 +162,7 @@ def main():
     print(f'Use Caching: {args.use_caching}')
     print(f'Use CORS: {args.use_cors}')
     print(f'Not Found Page: {args.not_found_page}')
+    print(f'Mock Status Code: {args.status_code}')
     print()
 
     if args.port == 80:
