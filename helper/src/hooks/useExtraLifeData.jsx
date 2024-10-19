@@ -1,3 +1,4 @@
+import { DateTime } from 'luxon';
 import { useCallback, useState } from 'react';
 import { parseRequestError } from '../modules/requests';
 import { serializeError } from '../modules/utils';
@@ -14,10 +15,9 @@ const useExtraLifeData = () => {
         const axiosOptions = {
             method: 'GET',
             url: `${import.meta.env.VITE_API_BASE_URL}api/${endpoint}`,
-            headers: {
-                'Cache-Control': 'no-cache',
-                'Pragma': 'no-cache',
-                'Expires': '0',
+            params: {
+                version: '1.3',
+                t: DateTime.now().toMillis(),
             },
         };
 
