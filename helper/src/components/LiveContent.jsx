@@ -25,7 +25,7 @@ const getEndpoint = (settings, path) => {
     }
 
     const id = settings.participantId || settings.teamId;
-    return `${type}/${id}${path ? `/${path}` : ''}`;
+    return `${type}/${id}${path ? `/${path}` : ''}/`;
 };
 
 const isFatalStatusCode = (status) => {
