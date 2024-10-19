@@ -103,7 +103,7 @@ User settings are parsed differently based on what mode the Helper is running in
 The application settings are highly tuned and not able to be changed by users. The most common use case is developers changing them to support rapid development and testing.
 
 > [!CAUTION]
-> Do not change the `VITE_POLLING_INTERVAL` application setting to a value below `20000` if you are targeting the Extra Life API via the `VITE_API_BASE_URL` value. A smaller value will almost certainly result in you getting rate limited by the Extra Life API.
+> Do not change the `VITE_POLLING_INTERVAL` application setting to a value below `15000` if you are targeting the Extra Life API via the `VITE_API_BASE_URL` value. A smaller value will almost certainly result in you getting rate limited by the Extra Life API.
 
 ### Mock API
 
