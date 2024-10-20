@@ -192,7 +192,7 @@ Translations were provided with help from the following awesome people:
 
 ## Donations
 
-It's been really rewarding to see the Helper being used by so many people who are supporting great cause. I do not expect anything in return, but if you are determined, you could always make a donation to my [Extra Life](https://bread4kids.tv/extralife) since this is all for the kids!
+It's been really rewarding to see the Helper being used by so many people who are supporting a great cause. I do not expect anything in return but if you are determined, you could always make a donation to my [Extra Life](https://bread4kids.tv/extralife) since this is all for the kids!
 
 <br>
 
