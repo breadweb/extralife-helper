@@ -198,9 +198,9 @@ It's been really rewarding to see the Helper being used by so many people who ar
 
 ## Support and Contact
 
-Please [report issues](https://github.com/breadweb/extralife-helper/issues) here on GitHub. For additional support, you can join my [Discord server](https://bread4kids.tv/discord) and send me a DM.
+Please [report issues](https://github.com/breadweb/extralife-helper/issues) here on GitHub. For additional support, you can join my [Discord server](https://bread4kids.tv/discord) and post in the #extra-life channel or send me a DM.
 
-I'd also love to see the Helper being used on your stream! Let me know about your channel so I can watch and cheer you on. Good luck with your fundraising for Extra Life!
+I'd also love to see the Helper being used on your stream! Let me know about your channel so I can watch and cheer you on. Good luck in your mission to change kids' health!
 
 Adam "Bread" Slesinger
 
