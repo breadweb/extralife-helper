@@ -7,7 +7,7 @@ import confetti from '../modules/confetti';
 import donationAlert from '../assets/audio/donation-alert.mp3';
 import logger from '../modules/logger';
 import MoneyDisplay from './MoneyDisplay';
-import oneEightSevenSeven from '../assets/audio/1877.mp3';
+import oneEightSevenSeven from '../assets/audio/1877-creepy.mp3';
 import React, { useEffect } from 'react';
 import useSound from 'use-sound';
 
