@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import classNames from 'classnames';
 import confetti from '../modules/confetti';
-import donationAlert from '../assets/audio/donation-alert.mp3';
+import donationAlert from '../assets/audio/donation-alert-jump-scare.mp3';
 import logger from '../modules/logger';
 import MoneyDisplay from './MoneyDisplay';
 import oneEightSevenSeven from '../assets/audio/1877-creepy-mas.mp3';
