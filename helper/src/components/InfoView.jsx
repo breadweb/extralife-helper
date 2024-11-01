@@ -4,14 +4,14 @@ import React, { useEffect, useState } from 'react';
 import TimeDisplay from './TimeDisplay';
 
 const InfoView = ({
-    amountRaisedToShow,
+    amountToShow,
     amountToIncrement,
     fundraisingGoal,
     milestones,
     onAmountIncremented,
     settings,
 }) => {
-    const [amountRaised, setAmountRaised] = useState(amountRaisedToShow);
+    const [amountRaised, setAmountRaised] = useState(amountToShow);
     const { t } = useTranslation();
 
     // The amount to increment is the sum of all recent donations that arrived between the previous

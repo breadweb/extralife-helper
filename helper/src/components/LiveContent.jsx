@@ -35,8 +35,9 @@ const isFatalStatusCode = (status) => {
 const LiveContent = ({ errorMessage, settings }) => {
     const [totalRequestErrors, setTotalRequestErrors] = useState(0);
     const [totalDonations, setTotalDontaions] = useState(undefined);
+    const [totalRaised, setTotalRaised] = useState(0);
     const [amountToIncrement, setAmountToIncrement] = useState(0);
-    const [amountRaisedToShow, setAmountRaisedToShow] = useState(0);
+    const [amountToShow, setAmountToShow] = useState(0);
     const [donationToShow, setDonationToShow] = useState(undefined);
     const [milestoneToShow, setMilestoneToShow] = useState(undefined);
     const [settingsErrorMessageToShow, setSettingsErrorMessageToShow] = useState(undefined);
@@ -79,18 +80,30 @@ const LiveContent = ({ errorMessage, settings }) => {
         }
 
         const didTotalChange = totalDonations !== polledDataResponse.extraLifeData.numDonations;
+        const amountRaised =
+            polledDataResponse.extraLifeData.sumDonations +
+            polledDataResponse.extraLifeData.sumPledges;
 
-        if (polledDataResponse.requestCount === 1 || (!settings.areDonationAlertsEnabled && didTotalChange)) {
-            setAmountToIncrement(
-                polledDataResponse.extraLifeData.sumDonations + polledDataResponse.extraLifeData.sumPledges,
-            );
+        if (polledDataResponse.requestCount === 1) {
+            // For the very first request, the amount to increment should be the entire total.
+            setAmountToIncrement(amountRaised);
+        } else {
+            // If the total has changed and donation alerts are disabled, calculate the amount to
+            // increment by getting the difference from the last amount raised. If donation alerts
+            // are enabled, the amount to increment will be set later after donation alerts are
+            // complete.
+            if (didTotalChange && !settings.areDonationAlertsEnabled) {
+                setAmountToIncrement(amountRaised - totalRaised);
+            }
         }
 
-        if (didTotalChange) {
+        setTotalDontaions(polledDataResponse.extraLifeData.numDonations);
+        setTotalRaised(amountRaised);
+
+        if (didTotalChange && settings.areDonationAlertsEnabled) {
             getDonations(getEndpoint(settings, 'donations'));
-            setTotalDontaions(polledDataResponse.extraLifeData.numDonations);
         }
-    }, [getDonations, polledDataResponse, settings, totalDonations]);
+    }, [getDonations, polledDataResponse, settings, totalDonations, totalRaised]);
 
     useEffect(() => {
         let errorLangKey;
@@ -166,7 +179,7 @@ const LiveContent = ({ errorMessage, settings }) => {
             getMilestones(getEndpoint(settings, 'milestones'));
         }
 
-        setAmountRaisedToShow(prevAmountRaisedToShow => prevAmountRaisedToShow + amountToIncrement);
+        setAmountToShow(prevAmountToShow => prevAmountToShow + amountToIncrement);
         setAmountToIncrement(0);
     }, [amountToIncrement, getMilestones, settings]);
 
@@ -213,7 +226,7 @@ const LiveContent = ({ errorMessage, settings }) => {
     if (settings && polledDataResponse.extraLifeData) {
         return (
             <InfoView
-                amountRaisedToShow={amountRaisedToShow}
+                amountToShow={amountToShow}
                 amountToIncrement={amountToIncrement}
                 onAmountIncremented={onAmountIncremented}
                 fundraisingGoal={polledDataResponse.extraLifeData.fundraisingGoal}
