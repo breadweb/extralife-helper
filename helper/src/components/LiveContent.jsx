@@ -173,6 +173,7 @@ const LiveContent = ({ errorMessage, settings }) => {
         // animation of the total has completed. This is now the right time to check and see if any
         // milestones have been completed.
         if (
+            amountToIncrement !== 0 &&
             settings.participantId &&
             (settings.areMilestoneAlertsEnabled || settings.areMilestoneMarkersVisible)
         ) {
