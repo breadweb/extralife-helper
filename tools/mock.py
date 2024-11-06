@@ -142,11 +142,12 @@ def reset(paths):
     set_endpoint_content(paths['participants_donations'], [])
     set_endpoint_content(paths['teams_donations'], [])
 
-    contents = get_endpoint_content(paths['participants_milestones'])
-    for idx, milestone in enumerate(contents):
-        if 'isComplete' in contents[idx]:
-            del contents[idx]['isComplete']
-    set_endpoint_content(paths['participants_milestones'], contents)
+    for path in [paths['participants_milestones'], paths['teams_milestones']]:
+        contents = get_endpoint_content(path)
+        for idx, milestone in enumerate(contents):
+            if 'isComplete' in contents[idx]:
+                del contents[idx]['isComplete']
+        set_endpoint_content(path, contents)
 
 
 def set_totals(args, paths):
@@ -243,6 +244,13 @@ def add_donations(args, paths):
             contents[idx]['isComplete'] = True
     set_endpoint_content(milestones_path, contents)
 
+    milestones_path = paths['teams_milestones']
+    contents = get_endpoint_content(milestones_path)
+    for idx, milestone in enumerate(contents):
+        if total_raised >= contents[idx]['fundraisingGoal']:
+            contents[idx]['isComplete'] = True
+    set_endpoint_content(milestones_path, contents)
+
 
 def main():
     """
@@ -258,7 +266,8 @@ def main():
         'participants_donations': os.path.join(base_dir, 'participants', '531439', 'donations', 'index.html'),
         'participants_milestones': os.path.join(base_dir, 'participants', '531439', 'milestones', 'index.html'),
         'teams_info': os.path.join(base_dir, 'teams', '66495', 'index.html'),
-        'teams_donations': os.path.join(base_dir, 'teams', '66495', 'donations', 'index.html')
+        'teams_donations': os.path.join(base_dir, 'teams', '66495', 'donations', 'index.html'),
+        'teams_milestones': os.path.join(base_dir, 'teams', '66495', 'milestones', 'index.html'),
     }
 
     if args.action == 'reset':

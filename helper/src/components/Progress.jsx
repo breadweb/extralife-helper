@@ -17,8 +17,10 @@ const Progress = ({
     const [markers, setMarkers] = useState([]);
     const { t } = useTranslation();
 
+    console.log('MILESTONES', milestones);
+
     useEffect(() => {
-        if (areMilestoneMarkersVisible) {
+        if (areMilestoneMarkersVisible && milestones) {
             setMarkers(milestones.map(milestone => milestone.fundraisingGoal));
         }
     }, [areMilestoneMarkersVisible, milestones]);

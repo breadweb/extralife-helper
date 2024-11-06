@@ -172,11 +172,7 @@ const LiveContent = ({ errorMessage, settings }) => {
         // After the amount is incremented, all pending donations to show have been shown and the
         // animation of the total has completed. This is now the right time to check and see if any
         // milestones have been completed.
-        if (
-            amountToIncrement !== 0 &&
-            settings.participantId &&
-            (settings.areMilestoneAlertsEnabled || settings.areMilestoneMarkersVisible)
-        ) {
+        if (settings.areMilestoneAlertsEnabled || settings.areMilestoneMarkersVisible) {
             getMilestones(getEndpoint(settings, 'milestones'));
         }
 
