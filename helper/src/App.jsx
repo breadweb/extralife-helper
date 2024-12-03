@@ -13,7 +13,6 @@ import useTestContent from './hooks/useTestDonation';
 const App = () => {
     const { i18n } = useTranslation();
     const [errorMessage, setErrorMessage] = useState(undefined);
-    const [contentScale, setContentScale] = useState(1);
     const helperSettings = useHelperSettings();
     const testContent = useTestContent(helperSettings.data);
 
@@ -50,24 +49,6 @@ const App = () => {
             document.documentElement.classList.add(helperSettings.data.theme);
         }
     }, [helperSettings.data, helperSettings.error, i18n]);
-
-    useEffect(() => {
-        const getScale = () => {
-            return window.innerWidth / import.meta.env.VITE_CONTENT_WIDTH;
-        };
-
-        const onWindowResize = () => {
-            setContentScale(getScale());
-        };
-
-        setContentScale(getScale());
-
-        window.addEventListener('resize', onWindowResize);
-
-        return () => {
-            window.removeEventListener('resize', onWindowResize);
-        };
-    }, []);
 
     // If running in development mode and transparent background setting is enabled, show a transparency
     // grid background image to help visualize how elements will look against a transparent background.
@@ -106,7 +87,7 @@ const App = () => {
         <div
             className={
                 classNames(
-                    'w-full h-screen flex flex-col items-center justify-center overflow-hidden',
+                    'w-full flex h-[80px]',
                     helperSettings.data?.border === 'square' ? 'border-2 border-helper1' : '',
                     helperSettings.data?.border === 'rounded' ? 'border-2 border-helper1 rounded-2xl' : '',
                     helperSettings.data?.isBackgroundTransparent ? 'bg-none' : 'bg-helper5',
@@ -114,18 +95,7 @@ const App = () => {
             }
             style={containerStyle}
         >
-            <div
-                className='flex justify-center'
-                style={
-                    {
-                        transform: `scale(${contentScale})`,
-                        width: `${import.meta.env.VITE_CONTENT_WIDTH}px`,
-                        height: `${import.meta.env.VITE_CONTENT_HEIGHT}px`,
-                    }
-                }
-            >
-                {content}
-            </div>
+            {content}
         </div>
     );
 };

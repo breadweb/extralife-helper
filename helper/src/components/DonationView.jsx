@@ -156,17 +156,8 @@ const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
     let message;
     if (donation.message) {
         message = (
-            <div className='text-helper3 text-[16px] text-center px-4 mt-4'>
+            <div className='text-helper3 text-[16px] text-center'>
                 {donation.message}
-            </div>
-        );
-    }
-
-    let recipient;
-    if (settings.teamId) {
-        recipient = (
-            <div className='text-helper3 flex justify-center w-full text-[16px] font-cantarell leading-none -mb-1'>
-                {t('RECEIVED', { name: donation.recipientName }).toLocaleUpperCase()}
             </div>
         );
     }
@@ -175,48 +166,28 @@ const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
         ? donation.displayName
         : t('ANONYMOUS');
 
-    // Ensure the display of the donation amount is as large as possible.
-    const amountLength = donation.amount.toString().length;
-    const isFancy = settings.moneyFormat === 'fancy';
-    let textSize;
-    if (amountLength > 7) {
-        textSize = isFancy ? 'text-[74px]' : 'text-[66px]';
-    } else if (amountLength > 6) {
-        textSize = isFancy ? 'text-[86px]' : 'text-[72px]';
-    } else if (amountLength > 5) {
-        textSize = isFancy ? 'text-[96px]' : 'text-[78px]';
-    } else {
-        textSize = isFancy ? 'text-[100px]' : 'text-[92px]';
-    }
-
     return (
-        <div className='flex flex-col items-center justify-center'>
-            {recipient}
-            <div
-                className={
-                    classNames(
-                        'leading-none font-cantarell text-helper4 whitespace-nowrap',
-                        textSize,
-                    )
-                }
-            >
-                <MoneyDisplay
-                    amount={donation.amount}
-                    areCentsVisible={true}
-                    format={settings.moneyFormat}
-                />
-            </div>
-            <div
-                className={
-                    classNames(
-                        'text-helper3 whitespace-nowrap',
-                        displayName.length === displayName.normalize('NFD').length
-                            ? 'font-furore text-[34px]'
-                            : 'font-cantarell text-[34px] font-bold',
-                    )
-                }
-            >
-                {displayName}
+        <div className='flex flex-col items-center w-full my-auto'>
+            <div className='flex items-center space-x-4'>
+                <div
+                    className={
+                        classNames(
+                            'text-helper3 whitespace-nowrap',
+                            displayName.length === displayName.normalize('NFD').length
+                                ? 'font-furore text-[24px]'
+                                : 'font-cantarell text-[24px] font-bold',
+                        )
+                    }
+                >
+                    {displayName}
+                </div>
+                <div className='leading-none font-cantarell text-helper4 whitespace-nowrap text-[32px]'>
+                    <MoneyDisplay
+                        amount={donation.amount}
+                        areCentsVisible={true}
+                        format={settings.moneyFormat}
+                    />
+                </div>
             </div>
             {message}
         </div>

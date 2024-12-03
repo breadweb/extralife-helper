@@ -16,7 +16,7 @@ const ProgressBar = ({ backColor, current, fillColor, markers, required }) => {
     ));
 
     return (
-        <div className='relative overflow-hidden rounded-full h-10 w-full'>
+        <div className='relative overflow-hidden rounded-full h-10 w-[300px]'>
             <div
                 className={
                     classNames(
