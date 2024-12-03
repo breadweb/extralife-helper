@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
 import Progress from './Progress';
 import React, { useEffect, useState } from 'react';
-import TimeDisplay from './TimeDisplay';
 
 const InfoView = ({
     amountToShow,
@@ -52,25 +52,21 @@ const InfoView = ({
 
     const isPlural = settings.teamId || settings.isRaisedLinePlural;
 
-    let raisedLine;
-    if (settings.progressFormat !== 'progressBar') {
-        raisedLine = (
-            <div
-                className={
-                    `text-[20px] font-cantarell text-helper3 whitespace-nowrap leading-none mt-2
-                    animate-pop-in animate-delay-[.8s]`
-                }
-            >
-                {isPlural ? t('OUR_AMOUNT_RAISED') : t('MY_AMOUNT_RAISED')}
-            </div>
-        );
-    }
+    const timerLine = t(`YEAR_MODE_TITLE_${settings.yearModeTitleOption}`);
 
     return (
-        <div className='flex flex-col items-center justify-center w-full mx-6'>
-            <TimeDisplay settings={settings} />
-            {raisedLine}
-            <div className='animate-fade-in animate-delay-[1.4s] flex justify-center w-full'>
+        <div className='flex items-center w-full py-2 px-8'>
+            <div
+                className={
+                    classNames(
+                        'text-[24px] text-helper3 text-center leading-none whitespace-pre-line mr-auto',
+                        settings.lang === 'en' ? 'font-furore' : 'font-cantarell',
+                    )
+                }
+            >
+                {timerLine} <span className='text-helper1 font-cantarell ml-6'>!extralife</span>
+            </div>
+            <div className='flex'>
                 <Progress
                     amountRaised={amountRaised}
                     areCentsVisible={settings.areCentsVisible}
