@@ -35,13 +35,13 @@ const TimeDisplay = ({ settings }) => {
     }
 
     return (
-        <>
+        <div className='flex items-center space-x-4'>
             <div
                 className={
                     classNames(
-                        'text-[22px] -mb-1 text-helper3 text-center leading-none whitespace-pre-line',
+                        'text-[24px] text-helper3 text-center leading-none whitespace-pre-line',
                         settings.lang === 'en' ? 'font-furore' : 'font-cantarell',
-                        timerLine === '' ? 'opacity-0' : 'animate-pop-in',
+                        timerLine === '' ? 'opacity-0' : 'animate-fade-in',
                     )
                 }
             >
@@ -50,14 +50,14 @@ const TimeDisplay = ({ settings }) => {
             <div
                 className={
                     classNames(
-                        'text-[92px] leading-none whitespace-nowrap font-digital text-helper4 -mb-2',
+                        'text-[42px] leading-none whitespace-nowrap font-digital text-helper4',
                         time === '00:00:00' ? 'opacity-0' : 'animate-fade-in animate-delay-[.4s]',
                     )
                 }
             >
                 {time}
             </div>
-        </>
+        </div>
     );
 };
 

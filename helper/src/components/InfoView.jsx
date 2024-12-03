@@ -52,25 +52,15 @@ const InfoView = ({
 
     const isPlural = settings.teamId || settings.isRaisedLinePlural;
 
-    let raisedLine;
-    if (settings.progressFormat !== 'progressBar') {
-        raisedLine = (
-            <div
-                className={
-                    `text-[20px] font-cantarell text-helper3 whitespace-nowrap leading-none mt-2
-                    animate-pop-in animate-delay-[.8s]`
-                }
-            >
-                {isPlural ? t('OUR_AMOUNT_RAISED') : t('MY_AMOUNT_RAISED')}
-            </div>
-        );
-    }
-
     return (
-        <div className='flex flex-col items-center justify-center w-full mx-6'>
-            <TimeDisplay settings={settings} />
-            {raisedLine}
-            <div className='animate-fade-in animate-delay-[1.4s] flex justify-center w-full'>
+        <div className='flex items-center w-full py-2 px-4'>
+            <div>
+                <TimeDisplay settings={settings} />
+            </div>
+            <div className='mx-auto text-[24px] text-helper3 font-cantarell leading-none'>
+                <span className='text-helper1'>!donate</span> to help sick and injured kids!
+            </div>
+            <div className='flex'>
                 <Progress
                     amountRaised={amountRaised}
                     areCentsVisible={settings.areCentsVisible}
