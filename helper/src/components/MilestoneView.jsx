@@ -54,46 +54,45 @@ const MilestoneView = ({ milestone, onMilestoneAlertEnded, settings }) => {
     }, [milestone, duration, playAlert]);
 
     return (
-        <div className='flex flex-col justify-center items-center w-full mx-7'>
-            <div
-                className={
-                    classNames(
-                        'text-[30px] mb-4 text-helper3 whitespace-nowrap animate-pop-in leading-none',
-                        settings.lang === 'en' ? 'font-furore' : 'font-cantarell',
-                    )
-                }
-            >
-                {t('MILESTONE_COMPLETED')}
+        <div className='flex flex-col items-center w-full my-auto space-y-1'>
+            <div className='flex items-center space-x-2'>
+                <div
+                    className={
+                        classNames(
+                            'text-[24px] text-helper3 whitespace-nowrap animate-pop-in leading-none',
+                            settings.lang === 'en' ? 'font-furore' : 'font-cantarell',
+                        )
+                    }
+                >
+                    {t('MILESTONE_COMPLETED')}
+                </div>
+                <div
+                    className={
+                        'leading-none font-cantarell text-helper4 whitespace-nowrap text-[32px]'
+                    }
+                >
+                    <MoneyDisplay
+                        amount={milestone.fundraisingGoal}
+                        areCentsVisible={true}
+                        format={settings.moneyFormat}
+                    />
+                </div>
+                <div
+                    className={
+                        'text-helper3 flex flex-col items-center w-full text-[18px] font-cantarell'
+                    }
+                >
+                    {t('RAISED')}
+                </div>
             </div>
             <div
                 className={
-                    `text-helper3 flex flex-col items-center text-center mb-4 leading-6
-                    animate-fade-in animate-delay-[.8s] text-[20px]`
+                    'text-helper3 flex flex-col items-center text-center leading-6 text-[16px]'
                 }
             >
                 &quot;
                 {milestone.description}
                 &quot;
-            </div>
-            <div
-                className={
-                    `leading-none font-cantarell text-helper4 whitespace-nowrap text-[60px]
-                    animate-pop-in animate-delay-[1.2s]`
-                }
-            >
-                <MoneyDisplay
-                    amount={milestone.fundraisingGoal}
-                    areCentsVisible={true}
-                    format={settings.moneyFormat}
-                />
-            </div>
-            <div
-                className={
-                    `text-helper3 flex flex-col items-center w-full text-[18px] font-cantarell
-                    animate-fade-in animate-delay-[1.6s]`
-                }
-            >
-                {t('RAISED')}
             </div>
         </div>
     );

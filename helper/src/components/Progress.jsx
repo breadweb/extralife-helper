@@ -76,22 +76,10 @@ const Progress = ({
     }
 
     if (progressFormat === 'progressBar') {
-        const percentRaised = Math.floor(amountRaised / fundraisingGoal * 100);
-
-        let raisedLangKey = isPlural ? 'OUR_PERCENT_RAISED' : 'MY_PERCENT_RAISED';
-        if (percentRaised >= 1) {
-            raisedLangKey += '_EXCITED';
-        }
-
         return (
-            <div className='flex flex-col mt-2 text-[28px] w-full font-cantarell leading-none'>
-                <div className='flex mb-2 text-helper3'>
-                    <div className='w-1/2'>
-                        {raised}
-                    </div>
-                    <div className='w-1/2 flex justify-end'>
-                        {goal}
-                    </div>
+            <div className='flex flex-row items-center space-x-4 text-[28px] w-full font-cantarell leading-none'>
+                <div className='text-helper3'>
+                    {raised}
                 </div>
                 <ProgressBar
                     current={amountRaised}
@@ -100,13 +88,8 @@ const Progress = ({
                     fillColor='bg-helper4'
                     markers={markers}
                 />
-                <div
-                    className={
-                        `text-[16px] font-cantarell text-helper3 whitespace-nowrap leading-none mt-4
-                        text-center animate-pop-in animate-delay-[1.6s]`
-                    }
-                >
-                    {t(raisedLangKey, { percent: percentRaised })}
+                <div className='text-helper3'>
+                    {goal}
                 </div>
             </div>
         );

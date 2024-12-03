@@ -2,7 +2,7 @@
     "ANONYMOUS": "Anonymous",
     "DAYS_UNTIL": "DAYS UNTIL EXTRA LIFE:",
     "ERROR": "Error!",
-    "HOURS_PLAYED": "TOTAL TIME PLAYED:",
+    "HOURS_PLAYED": "TIME PLAYED:",
     "HOURS_UNTIL": "TIME UNTIL EXTRA LIFE:",
     "KEY_IS_INVALID": "The {{settingName}} setting is invalid. Details: {{message}}",
     "LATEST_DONATIONS": "LATEST DONATIONS",
@@ -25,5 +25,5 @@
     "VISIT_FOR_HELP": "Unsure what to do? Please visit the bread4kids Discord for support: bread4kids.tv/discord",
     "YEAR_MODE_TITLE_1": "CHANGING KIDS' HEALTH\nTO CHANGE THEIR FUTURE",
     "YEAR_MODE_TITLE_2": "THE KIDS CAN'T WAIT!",
-    "YEAR_MODE_TITLE_3": "PLAYING GAMES TO HELP KIDS!"
+    "YEAR_MODE_TITLE_3": "PLAYING GAMES TO HELP SICK KIDS!"
 }
