@@ -5,9 +5,10 @@ import axios from 'axios';
 import classNames from 'classnames';
 import confetti from '../modules/confetti';
 import donationAlert from '../assets/audio/donation-alert.mp3';
+import donationAlertJumpScare from '../assets/audio/donation-alert-jump-scare.mp3';
 import logger from '../modules/logger';
 import MoneyDisplay from './MoneyDisplay';
-import oneEightSevenSeven from '../assets/audio/1877.mp3';
+import oneEightSevenSevenCreepy from '../assets/audio/1877-creepy.mp3';
 import React, { useEffect } from 'react';
 import useSound from 'use-sound';
 
@@ -81,9 +82,16 @@ const flashLights = async () => {
 
 const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
     const { t } = useTranslation();
-    const [playAlert, { duration }] = useSound(donationAlert, { volume: settings?.volume || 0 });
+    const [playAlert, { duration }] = useSound(
+        donationAlert,
+        { volume: settings?.volume || 0 },
+    );
+    const [playAlertJumpScare, { durationJumpScare }] = useSound(
+        donationAlertJumpScare,
+        { volume: settings?.volume || 0 },
+    );
     const [playAlert1877, { duration: duration1877 } ] = useSound(
-        oneEightSevenSeven,
+        oneEightSevenSevenCreepy,
         { volume: settings?.volume || 0 },
     );
 
@@ -141,17 +149,19 @@ const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
     }, [donation, onDonationAlertEnded, settings]);
 
     useEffect(() => {
-        if (!duration || !duration1877) {
+        if (!duration || !durationJumpScare || !duration1877) {
             return;
         }
 
         if (donation.amount.toString().replace('.', '').includes('1877')) {
             playAlert1877();
+        } else if (donation.amount >= 10) {
+            playAlertJumpScare();
         } else {
             playAlert();
         }
 
-    }, [donation, duration, duration1877, playAlert, playAlert1877]);
+    }, [donation, duration, duration1877, durationJumpScare, playAlert, playAlert1877, playAlertJumpScare]);
 
     let message;
     if (donation.message) {
