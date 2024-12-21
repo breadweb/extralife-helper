@@ -52,6 +52,9 @@ def process_args():
         'amount', nargs='?', type=float, default=0.00,
         help='the amount of the donation(s) or leave blank for random amounts')
     parser_add_donos.add_argument(
+        'message', nargs='?',
+        help='the donation message or leave blank for random message')
+    parser_add_donos.add_argument(
         '--anonymous', dest='anonymous', action='store_true',
         help='make the donation anonymous')
     parser_add_donos.add_argument(
@@ -205,7 +208,7 @@ def add_donations(args, paths):
         amount = args.amount if args.amount else float(decimal.Decimal(random.randrange(1,100000))/100)
         total_amount += amount
         name = get_random_display_name(args)
-        message = get_random_donation_message(args)
+        message = args.message if args.message else get_random_donation_message(args)
 
         donation = donation_base.copy()
         donation['amount'] = amount
