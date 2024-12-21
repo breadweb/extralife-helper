@@ -11,8 +11,8 @@ const InfoView = ({
     onAmountIncremented,
     settings,
 }) => {
-    const [amountRaised, setAmountRaised] = useState(amountToShow);
     const { t } = useTranslation();
+    const [amountRaised, setAmountRaised] = useState(amountToShow);
 
     // The amount to increment is the sum of all recent donations that arrived between the previous
     // rendering of this component and the current rendering. It may be one donation if donation alerts
