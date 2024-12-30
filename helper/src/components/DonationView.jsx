@@ -90,7 +90,7 @@ const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
         donationAlertJumpScare,
         { volume: settings?.volume || 0 },
     );
-    const [playAlert1877, { duration: duration1877 } ] = useSound(
+    const [playAlert1877, { duration1877 } ] = useSound(
         oneEightSevenSevenCreepy,
         { volume: settings?.volume || 0 },
     );
