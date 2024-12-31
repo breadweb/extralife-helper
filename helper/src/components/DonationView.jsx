@@ -86,11 +86,11 @@ const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
         donationAlert,
         { volume: settings?.volume || 0 },
     );
-    const [playAlertJumpScare, { durationJumpScare }] = useSound(
+    const [playAlertJumpScare, { duration: durationJumpScare }] = useSound(
         donationAlertJumpScare,
         { volume: settings?.volume || 0 },
     );
-    const [playAlert1877, { duration1877 } ] = useSound(
+    const [playAlert1877, { duration: duration1877 } ] = useSound(
         oneEightSevenSevenCreepy,
         { volume: settings?.volume || 0 },
     );
