@@ -175,14 +175,14 @@ def add_donations(args, paths):
 
     donation_base = {
         'links': {
-            'recipient': link_base_url + '&participantID=531439',
-            'donate': link_base_url + '&participantID=531439#donate'
+            'recipient': link_base_url + '&participantID=548325',
+            'donate': link_base_url + '&participantID=548325#donate'
         },
         'isPledge': False,
         'isFromFacebook': False,
         'thankYouSent': False,
         'recipientImageURL': image_base_url + '/constituent_574EE92A-C29F-F29A-60B307827DB9F948.jpg',
-        'participantID': 531439,
+        'participantID': 548325,
         'displayNameVisibility': 'ALL',
         'isOffline': False,
         'isFulfilled': True,
@@ -192,7 +192,7 @@ def add_donations(args, paths):
         'amountVisibility': 'ALL',
         'recipientName': 'Adam Slesinger',
         'avatarImageURL': image_base_url + '/constituent_EB86576B-C293-34EB-4D85AC4CF292DE8B.jpg',
-        'teamID': 66495,
+        'teamID': 68974,
         'messageVisibility': 'ALL'
     }
 
@@ -265,12 +265,12 @@ def main():
 
     base_dir = os.path.join(os.path.dirname(__file__), '..', 'mock-api', 'api')
     paths = {
-        'participants_info': os.path.join(base_dir, 'participants', '531439', 'index.html'),
-        'participants_donations': os.path.join(base_dir, 'participants', '531439', 'donations', 'index.html'),
-        'participants_milestones': os.path.join(base_dir, 'participants', '531439', 'milestones', 'index.html'),
-        'teams_info': os.path.join(base_dir, 'teams', '66495', 'index.html'),
-        'teams_donations': os.path.join(base_dir, 'teams', '66495', 'donations', 'index.html'),
-        'teams_milestones': os.path.join(base_dir, 'teams', '66495', 'milestones', 'index.html'),
+        'participants_info': os.path.join(base_dir, 'participants', '548325', 'index.html'),
+        'participants_donations': os.path.join(base_dir, 'participants', '548325', 'donations', 'index.html'),
+        'participants_milestones': os.path.join(base_dir, 'participants', '548325', 'milestones', 'index.html'),
+        'teams_info': os.path.join(base_dir, 'teams', '68974', 'index.html'),
+        'teams_donations': os.path.join(base_dir, 'teams', '68974', 'donations', 'index.html'),
+        'teams_milestones': os.path.join(base_dir, 'teams', '68974', 'milestones', 'index.html'),
     }
 
     if args.action == 'reset':
