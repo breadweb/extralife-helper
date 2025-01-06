@@ -8,7 +8,7 @@ import donationAlert from '../assets/audio/donation-alert.mp3';
 import donationAlertJumpScare from '../assets/audio/donation-alert-jump-scare.mp3';
 import logger from '../modules/logger';
 import MoneyDisplay from './MoneyDisplay';
-import oneEightSevenSevenCreepy from '../assets/audio/1877-creepy.mp3';
+import oneEightSevenSeven from '../assets/audio/1877.mp3';
 import React, { useEffect } from 'react';
 import useSound from 'use-sound';
 
@@ -91,7 +91,7 @@ const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
         { volume: settings?.volume || 0 },
     );
     const [playAlert1877, { duration: duration1877 } ] = useSound(
-        oneEightSevenSevenCreepy,
+        oneEightSevenSeven,
         { volume: settings?.volume || 0 },
     );
 
@@ -155,7 +155,7 @@ const DonationView = ({ donation, onDonationAlertEnded, settings }) => {
 
         if (donation.amount.toString().replace('.', '').includes('1877')) {
             playAlert1877();
-        } else if (donation.amount >= 10) {
+        } else if (donation.amount >= 25) {
             playAlertJumpScare();
         } else {
             playAlert();
