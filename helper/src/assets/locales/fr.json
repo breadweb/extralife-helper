@@ -23,7 +23,7 @@
     "REQUEST_ERROR_RATE_LIMITED": "L'API d'Extra Life a limité votre adresse IP. Verififez que plusieurs versions de l'Helper ou d'autres outils Extra Life ne sont pas en cours d'execution.",
     "REQUEST_ERROR_SERVICE_ERROR": "L'API d'Extra Life n'est pas disponible à cause d'un probleme de server. Faite preuve de patience.",
     "VISIT_FOR_HELP": "Perdu? Visite bread4kids Discord pour du support: bread4kids.tv/discord",
-    "YEAR_MODE_TITLE_1": "CHANGING KIDS' HEALTH\nTO CHANGE THEIR FUTURE",
-    "YEAR_MODE_TITLE_2": "THE KIDS CAN'T WAIT!",
-    "YEAR_MODE_TITLE_3": "PLAYING GAMES TO HELP KIDS!"
+    "YEAR_MODE_TITLE_1": "CHANGEONS LA SANTÉ DES ENFANTS\nPOUR CHANGER LEUR AVENIR",
+    "YEAR_MODE_TITLE_2": "LES ENFANTS NE PEUVENT PAS ATTENDRE!",
+    "YEAR_MODE_TITLE_3": "AIDEZ DES ENFANTS GRÂCE AUX JEUX"
 }
