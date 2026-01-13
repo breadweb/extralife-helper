@@ -29,7 +29,7 @@ const LogoView = ({ doFadeOut, settings }) => {
             src={logo}
             className={
                 classNames(
-                    'animate-delay-[.5s]',
+                    'animate-delay-[.5s] w-[90%] h-[90%]',
                     isVisible ? 'animate-fade-in' : 'animate-fade-out',
                 )
             }
