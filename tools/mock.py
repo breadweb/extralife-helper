@@ -192,7 +192,7 @@ def add_donations(args, paths):
         'amountVisibility': 'ALL',
         'recipientName': 'Adam Slesinger',
         'avatarImageURL': image_base_url + '/constituent_EB86576B-C293-34EB-4D85AC4CF292DE8B.jpg',
-        'teamID': 68974,
+        'teamID': 73163,
         'messageVisibility': 'ALL'
     }
 
@@ -268,9 +268,9 @@ def main():
         'participants_info': os.path.join(base_dir, 'participants', '565120', 'index.html'),
         'participants_donations': os.path.join(base_dir, 'participants', '565120', 'donations', 'index.html'),
         'participants_milestones': os.path.join(base_dir, 'participants', '565120', 'milestones', 'index.html'),
-        'teams_info': os.path.join(base_dir, 'teams', '68974', 'index.html'),
-        'teams_donations': os.path.join(base_dir, 'teams', '68974', 'donations', 'index.html'),
-        'teams_milestones': os.path.join(base_dir, 'teams', '68974', 'milestones', 'index.html'),
+        'teams_info': os.path.join(base_dir, 'teams', '73163', 'index.html'),
+        'teams_donations': os.path.join(base_dir, 'teams', '73163', 'donations', 'index.html'),
+        'teams_milestones': os.path.join(base_dir, 'teams', '73163', 'milestones', 'index.html'),
     }
 
     if args.action == 'reset':
