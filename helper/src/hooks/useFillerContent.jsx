@@ -1,5 +1,4 @@
 import LatestDonationsView from '../components/LatestDonationsView';
-import LogoView from '../components/LogoView';
 import React, { useCallback, useEffect, useState } from 'react';
 
 const useFillerContent = (latestDonations, settings) => {
@@ -23,14 +22,8 @@ const useFillerContent = (latestDonations, settings) => {
                 setDelay = import.meta.env.VITE_SHOW_DONORS_INTERVAL;
                 removeDelay = import.meta.env.VITE_DONORS_TTL;
             } else {
-                content = (
-                    <LogoView
-                        doFadeOut={true}
-                        settings={settings}
-                    />
-                );
-                setDelay = import.meta.env.VITE_SHOW_LOGO_INTERVAL;
-                removeDelay = import.meta.env.VITE_LOGO_TTL;
+                // Bread4kids: never rotate in the logo filler. It looks out of place on this layout.
+                return;
             }
 
             showContentInteval = setInterval(() => {
