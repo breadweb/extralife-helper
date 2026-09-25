@@ -45,14 +45,12 @@ const copyBuildArtifact = () => {
         enforce: 'post',
         closeBundle: async () => {
             console.log('Copying build artifact...');
-            let source, destination;
+            // The npm scripts run from helper/, where the build lands in dist/.
+            const source = path.resolve('dist', 'index.html');
+            let destination;
             if (process.platform === 'win32') {
-                source = path.join('D:\\', 'src', 'extralife-helper', 'helper', 'dist', 'index.html');
                 destination = path.join('C:\\', 'Users', 'bread_man', 'Dropbox', 'Helper', 'index.html');
             } else {
-                source = path.join(
-                    '/', 'Users', 'bread', 'src-personal', 'extralife-helper', 'helper', 'dist', 'index.html',
-                );
                 destination = path.join('/', 'Users', 'bread', 'Dropbox', 'Helper', 'index.html');
             }
             fs.copyFile(source, destination, err => {
