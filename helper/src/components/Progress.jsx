@@ -1,4 +1,3 @@
-import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import MoneyDisplay from './MoneyDisplay';
 import ProgressBar from './ProgressBar';
@@ -15,7 +14,6 @@ const Progress = ({
     progressFormat,
 }) => {
     const [markers, setMarkers] = useState([]);
-    const { t } = useTranslation();
 
     useEffect(() => {
         if (areMilestoneMarkersVisible && milestones) {
