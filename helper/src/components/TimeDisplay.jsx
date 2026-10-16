@@ -2,13 +2,10 @@ import { DateTime } from 'luxon';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import React from 'react';
-import useTimer from '../hooks/useTimer';
-
-const ONE_DAY_IN_MS = 86400000;
-const FOUR_DAYS_IN_MS = ONE_DAY_IN_MS * 4;
+import useMarathonTimer from '../hooks/useMarathonTimer';
 
 const TimeDisplay = ({ settings }) => {
-    const timer = useTimer(settings?.startDateTime);
+    const timer = useMarathonTimer(settings?.startDateTime);
     const { t } = useTranslation();
 
     let timerLine = '';
@@ -19,18 +16,10 @@ const TimeDisplay = ({ settings }) => {
             timerLine = t(`YEAR_MODE_TITLE_${settings.yearModeTitleOption}`);
             time = DateTime.now().toFormat('yyyy');
         } else {
-            if (timer.ms < 0) {
-                if (timer.ms < -FOUR_DAYS_IN_MS) {
-                    timerLine = t('DAYS_UNTIL');
-                    time = Math.ceil(timer.ms / ONE_DAY_IN_MS) * -1;
-                } else {
-                    timerLine = t('HOURS_UNTIL');
-                    time = timer.clock;
-                }
-            } else {
-                timerLine = t('HOURS_PLAYED');
-                time = timer.clock;
-            }
+            timerLine = timer.isPlaying
+                ? t('MARATHON_HOURS_PLAYED')
+                : t('MARATHON_HOURS_UNTIL', { day: timer.day });
+            time = timer.clock;
         }
     }
 

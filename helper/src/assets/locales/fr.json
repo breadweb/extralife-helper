@@ -6,6 +6,8 @@
     "HOURS_UNTIL": "NOMBRE D'HEURES JUSQU'À EXTRA LIFE:",
     "KEY_IS_INVALID": "La configuration {{settingName}} n'est pas valide. Details: {{message}}",
     "LATEST_DONATIONS": "DERNIERES DONATIONS",
+    "MARATHON_HOURS_PLAYED": "TEMPS DE JEU AUJOURD'HUI:",
+    "MARATHON_HOURS_UNTIL": "TEMPS AVANT LE DÉBUT DU JOUR #{{day}}!",
     "MILESTONE_COMPLETED": "OBJECTIF ATTEINT!",
     "MY_AMOUNT_RAISED": "Le montant que j'ai amassé:",
     "MY_PERCENT_RAISED_EXCITED": "J'ai atteint {{percent}}% de mon but!",
