@@ -1,5 +1,8 @@
 import { defineConfig } from 'vite';
 import { viteSingleFile } from 'vite-plugin-singlefile';
+import fs from 'fs';
+import os from 'os';
+import path from 'path';
 import react from '@vitejs/plugin-react';
 import voices from './src/modules/voices';
 
@@ -25,6 +28,9 @@ export default defineConfig(({ command }) => {
                 viteSingleFile(),
                 helperSettings(),
             );
+            if (process.env.HELPER_COPY_DESTINATION) {
+                config.plugins.push(copyBuildArtifact(process.env.HELPER_COPY_DESTINATION));
+            }
         }
     } else {
         config.base = '/';
@@ -35,6 +41,20 @@ export default defineConfig(({ command }) => {
 
     return config;
 });
+
+const copyBuildArtifact = (destination) => {
+    return {
+        name: 'copy-build-artifact',
+        enforce: 'post',
+        closeBundle: () => {
+            // The npm scripts run from helper/, where the build lands in dist/.
+            const source = path.resolve('dist', 'index.html');
+            const target = destination.replace(/^~(?=$|\/)/, os.homedir());
+            console.log(`Copying build artifact to ${target}...`);
+            fs.copyFileSync(source, target);
+        },
+    };
+};
 
 const helperSettings = () => {
     return {
