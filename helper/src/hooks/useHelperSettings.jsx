@@ -6,7 +6,9 @@ import Joi from 'joi';
 import logger from '../modules/logger';
 import voices from '../modules/voices';
 
-const themeOptions = ['blue1', 'blue2', 'gray1', 'white1', 'custom'];
+// The 't' querystring param is an index into this list, so only append to it. Reordering would
+// change the theme of every Helper link already in use.
+const themeOptions = ['blue1', 'blue2', 'gray1', 'white1', 'custom', 'white2'];
 const borderOptions = ['none', 'rounded', 'square'];
 const langOptions = ['en', 'fr', 'es'];
 const moneyFormatOptions = ['standard', 'fancy'];

@@ -81,8 +81,9 @@ const getSettingsContent = () => {
             'theme',
             process.env.VITE_THEME,
             true,
-            'Determines what color theme is used for the Helper. The four presets that can be used ' +
-            'are "white1", "gray1", "blue1", or "blue2". If wanting to create a unique theme, set to ' +
+            'Determines what color theme is used for the Helper. The five presets that can be used ' +
+            'are "white1", "white2", "gray1", "blue1", or "blue2". "white2" uses the official ' +
+            'Children\'s Miracle Network colors. If wanting to create a unique theme, set to ' +
             '"custom" and specify the five color values below.',
         ],
         [

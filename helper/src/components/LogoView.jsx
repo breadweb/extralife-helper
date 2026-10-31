@@ -20,7 +20,10 @@ const LogoView = ({ doFadeOut, settings }) => {
         };
     }, [doFadeOut]);
 
-    const logo = settings.theme === 'white1' || settings.color5?.toLowerCase() === 'ffffff'
+    const isWhiteBackground = ['white1', 'white2'].includes(settings.theme)
+        || settings.color5?.toLowerCase() === 'ffffff';
+
+    const logo = isWhiteBackground
         ? logoStandard
         : logoWhite;
 

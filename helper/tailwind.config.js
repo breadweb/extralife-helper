@@ -90,6 +90,15 @@ module.exports = {
                 'helper4': '#28C0E8', // Light Blue
                 'helper5': '#FFFFFF', // White
             },
+            // Official Children's Miracle Network palette (Brand Guidelines v1.0, January 2026). Yellow
+            // is limited to non-text elements since it isn't legible on white. Dark gray is for text.
+            'white2': {
+                'helper1': '#FFCB05', // CMN Yellow
+                'helper2': '#FFFFFF', // White
+                'helper3': '#253746', // CMN Dark Gray
+                'helper4': '#0E7CA2', // CMN Blue
+                'helper5': '#FFFFFF', // White
+            },
             'custom': {
                 'helper1': '#000000', // Will be overridden at runtime by settings.
                 'helper2': '#000000', // Will be overridden at runtime by settings.
